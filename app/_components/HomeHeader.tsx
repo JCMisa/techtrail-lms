@@ -1,0 +1,50 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
+
+const HomeHeader = () => {
+  const { user } = useUser();
+  const router = useRouter();
+
+  return (
+    <div className="w-full container mx-auto px-5">
+      <div className="w-full flex items-center justify-between pt-3">
+        <div className="flex items-center gap-2">
+          <Image
+            src={"/techtrail-logo.svg"}
+            alt="logo"
+            width={1000}
+            height={1000}
+            className="w-10 h-10"
+          />
+          <Link
+            className="flex items-center text-light-100 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+            href="/"
+          >
+            Tech
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7A1CAC] via-[#AD49E1] to-[#1caca7]">
+              Trail
+            </span>
+          </Link>
+        </div>
+
+        <div className="flex w-1/2 justify-end content-center">
+          {user ? (
+            <Button onClick={() => router.push("/dashboard")}>
+              Get Started
+            </Button>
+          ) : (
+            <Button onClick={() => router.push("/sign-in")}>Sign-in</Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HomeHeader;
