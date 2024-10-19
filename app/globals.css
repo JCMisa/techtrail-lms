@@ -89,6 +89,10 @@ body {
   }
 }
 
+.unauthorized-error {
+  background-image: url("/401.avif");
+}
+
 .gradient-header {
   background-image: url("/header-gradient.png");
 }

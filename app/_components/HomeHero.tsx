@@ -25,16 +25,41 @@ const HomeHero = ({ loggedInUser }: { loggedInUser: any }) => {
           <Button variant={"outline"} className="w-full">
             Learn More
           </Button>
-          <Link
-            href={
-              loggedInUser?.role === "admin"
-                ? "/dashboard/admin"
-                : "/dashboard/user"
-            }
-            className="w-full hover:bg-primary-200"
-          >
-            <Button className="w-full hover:bg-primary-200">Get Started</Button>
-          </Link>
+          {/* if user is admin */}
+          {loggedInUser?.role === "admin" && (
+            <Link
+              href={"/dashboard/admin"}
+              className="w-full hover:bg-primary-200"
+            >
+              <Button className="w-full hover:bg-primary-200">
+                Get Started
+              </Button>
+            </Link>
+          )}
+
+          {/* if user is teacher */}
+          {loggedInUser?.role === "teacher" && (
+            <Link
+              href={"/dashboard/teacher"}
+              className="w-full hover:bg-primary-200"
+            >
+              <Button className="w-full hover:bg-primary-200">
+                Get Started
+              </Button>
+            </Link>
+          )}
+
+          {/* if user is user */}
+          {loggedInUser?.role === "user" && (
+            <Link
+              href={"/dashboard/user"}
+              className="w-full hover:bg-primary-200"
+            >
+              <Button className="w-full hover:bg-primary-200">
+                Get Started
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
 

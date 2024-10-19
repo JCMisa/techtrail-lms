@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const UserDashboardPage = () => {
+const TeacherDashboardPage = () => {
   const { user } = useUser();
   const router = useRouter();
 
@@ -53,9 +53,9 @@ const UserDashboardPage = () => {
 
   return (
     <div>
-      {loggedInUser?.role === "user" ? (
+      {loggedInUser?.role === "teacher" ? (
         <div>
-          <p>User Page</p>
+          <p>Teacher Page</p>
         </div>
       ) : (
         <div className="bg-cover bg-fixed unauthorized-error h-screen bg-no-repeat bg-center flex items-center justify-center text-center relative overflow-hidden">
@@ -76,4 +76,4 @@ const UserDashboardPage = () => {
   );
 };
 
-export default UserDashboardPage;
+export default TeacherDashboardPage;
