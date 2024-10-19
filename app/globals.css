@@ -126,6 +126,18 @@ body {
   background: -webkit-linear-gradient(16deg, #7a1cac, #1caca7);
 }
 
+.dashboard-card-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.dashboard-card-scroll::-webkit-scrollbar-track {
+  display: none;
+}
+
+.dashboard-card-scroll::-webkit-scrollbar-thumb {
+  display: none;
+}
+
 /* loader */
 /* From Uiverse.io by Nawsome */
 .socket {
