@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-const HomeHero = () => {
+const HomeHero = ({ loggedInUser }: { loggedInUser: any }) => {
   return (
     <>
       {/* <!--Left Col--> */}
@@ -23,7 +25,16 @@ const HomeHero = () => {
           <Button variant={"outline"} className="w-full">
             Learn More
           </Button>
-          <Button className="w-full hover:bg-primary-200">Get Started</Button>
+          <Link
+            href={
+              loggedInUser?.role === "admin"
+                ? "/dashboard/admin"
+                : "/dashboard/user"
+            }
+            className="w-full hover:bg-primary-200"
+          >
+            <Button className="w-full hover:bg-primary-200">Get Started</Button>
+          </Link>
         </div>
       </div>
 

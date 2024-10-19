@@ -1,7 +1,5 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -35,9 +33,15 @@ const HomeHeader = () => {
 
         <div className="flex w-1/2 justify-end content-center">
           {user ? (
-            <Button onClick={() => router.push("/dashboard")}>
-              Get Started
-            </Button>
+            <div className="flex items-center gap-1">
+              <UserButton />
+              <div className="hidden sm:flex flex-col">
+                <p className="text-light-100 text-sm">{user?.fullName}</p>
+                <p className="text-gray-500 text-xs">
+                  {user?.primaryEmailAddress?.emailAddress}
+                </p>
+              </div>
+            </div>
           ) : (
             <Button onClick={() => router.push("/sign-in")}>Sign-in</Button>
           )}
