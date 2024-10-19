@@ -34,3 +34,12 @@ export const findUserByEmail = async (userEmail: string) => {
     handleError(error);
   }
 };
+
+export const getUsersByRole = async (userRole: string) => {
+  try {
+    const data = await axios.get(api + `userRole/${userRole}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
