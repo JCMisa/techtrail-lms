@@ -7,6 +7,7 @@ import { findUserByEmail } from "@/services/UserService";
 import { useUser } from "@clerk/nextjs";
 import {
   BookOpenText,
+  Brain,
   Calendar,
   GraduationCap,
   Home,
@@ -85,6 +86,12 @@ const Menu = () => {
           icon: <BookOpenText />,
           label: "Courses",
           href: "/courses",
+          visible: ["admin", "teacher", "user"],
+        },
+        {
+          icon: <Brain />,
+          label: "Review",
+          href: "/dashboard/course/review",
           visible: ["admin", "teacher", "user"],
         },
         {

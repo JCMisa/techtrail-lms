@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import Unauthorized from "../_components/Unauthorized";
 import EventCalendar from "../admin/_components/EventCalendar";
 import Announcements from "../admin/_components/Announcements";
+import UserCourses from "./_components/UserCourses";
 
 const UserDashboardPage = () => {
   const { user } = useUser();
@@ -60,7 +61,7 @@ const UserDashboardPage = () => {
         <div className="p-4 flex gap-4 flex-col xl:flex-row">
           {/* left */}
           <div className="w-full xl:w-2/3">
-            <div className="h-full bg-dark-100 p-4 rounded-md">
+            <div className="h-full bg-dark p-4 rounded-md">
               <div className="flex flex-col gap-1">
                 <h1 className="text-3xl">
                   Welcome!{" "}
@@ -73,6 +74,8 @@ const UserDashboardPage = () => {
                   Check and manage your TechTrail courses
                 </p>
               </div>
+              {/* todo: display the course list taken by the user */}
+              <UserCourses />
             </div>
           </div>
 

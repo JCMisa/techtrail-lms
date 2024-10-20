@@ -45,7 +45,7 @@ const Navbar = () => {
   }, [user]);
 
   return (
-    <div className="flex items-center justify-between p-4">
+    <div className="flex items-center justify-between p-4 shadow-lg">
       {/* search bar */}
       <div className="hidden md:flex items-center px-4 bg-dark rounded-lg ring-[1.5px] ring-primary-100">
         <Search className="w-5 h-5" />

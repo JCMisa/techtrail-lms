@@ -29,10 +29,6 @@ const LineTypeChart = () => {
       count: 23,
     },
     {
-      name: "NL Processing",
-      count: 52,
-    },
-    {
       name: "Web Development",
       count: 31,
     },
