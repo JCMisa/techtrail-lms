@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Unauthorized from "../_components/Unauthorized";
 import UserCard from "./_components/UserCard";
+import RadialChart from "./_components/RadialChart";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
@@ -58,13 +59,24 @@ const AdminDashboardPage = () => {
       {loggedInUser?.role === "admin" ? (
         <div className="p-4 flex gap-4 flex-col md:flex-row">
           {/* left */}
-          <div className="w-full lg:w-2/3">
+          <div className="w-full lg:w-2/3 flex flex-col gap-8">
             {/* user cards */}
             <div className="flex gap-4 justify-between flex-wrap">
               <UserCard type="user" />
               <UserCard type="teacher" />
               <UserCard type="admin" />
             </div>
+            {/* middle charts */}
+            <div className="flex gap-4 flex-col lg:flex-row">
+              {/* user count chart */}
+              <div className="w-full lg:w-1/3 h-[450px]">
+                <RadialChart />
+              </div>
+              {/* user attendance chart */}
+              <div className="w-full lg:w-2/3 h-[450px]"></div>
+            </div>
+            {/* bottom chart */}
+            <div className=""></div>
           </div>
           {/* right */}
           <div className="w-full lg:w-1/3">right</div>
