@@ -1,23 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+
+import { findUserByEmail } from "@/services/UserService";
+import { useUser } from "@clerk/nextjs";
 import {
-  BookCheck,
-  BookOpenCheck,
   BookOpenText,
   Calendar,
   GraduationCap,
-  Hand,
   Home,
-  ListChecks,
   LogOut,
   Megaphone,
   MessageCircle,
-  NotebookText,
+  Plus,
   Settings,
-  Shapes,
   UserRound,
   UserRoundPen,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const menuItems = [
   {
@@ -27,85 +30,49 @@ const menuItems = [
         icon: <Home />,
         label: "Home",
         href: "/",
-        visible: ["admin", "teacher", "student", "parent"],
+        visible: ["admin", "teacher", "user"],
+      },
+      {
+        icon: <Plus />,
+        label: "Create",
+        href: "/course/create",
+        visible: ["admin", "teacher"],
+      },
+      {
+        icon: <BookOpenText />,
+        label: "Courses",
+        href: "/courses",
+        visible: ["admin", "teacher", "user"],
       },
       {
         icon: <GraduationCap />,
         label: "Teachers",
         href: "/list/teachers",
-        visible: ["admin", "teacher"],
+        visible: ["admin"],
       },
       {
         icon: <UserRound />,
         label: "Students",
         href: "/list/students",
-        visible: ["admin", "teacher"],
-      },
-      {
-        icon: <UserRound />,
-        label: "Parents",
-        href: "/list/parents",
-        visible: ["admin", "teacher"],
-      },
-      {
-        icon: <BookOpenText />,
-        label: "Subjects",
-        href: "/list/subjects",
         visible: ["admin"],
-      },
-      {
-        icon: <Shapes />,
-        label: "Classes",
-        href: "/list/classes",
-        visible: ["admin", "teacher"],
-      },
-      {
-        icon: <BookCheck />,
-        label: "Lessons",
-        href: "/list/lessons",
-        visible: ["admin", "teacher"],
-      },
-      {
-        icon: <BookOpenCheck />,
-        label: "Exams",
-        href: "/list/exams",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
-      {
-        icon: <NotebookText />,
-        label: "Assignments",
-        href: "/list/assignments",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
-      {
-        icon: <ListChecks />,
-        label: "Results",
-        href: "/list/results",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
-      {
-        icon: <Hand />,
-        label: "Attendance",
-        href: "/list/attendance",
-        visible: ["admin", "teacher", "student", "parent"],
       },
       {
         icon: <Calendar />,
         label: "Events",
         href: "/list/events",
-        visible: ["admin", "teacher", "student", "parent"],
+        visible: ["admin"],
       },
       {
         icon: <MessageCircle />,
         label: "Messages",
         href: "/list/messages",
-        visible: ["admin", "teacher", "student", "parent"],
+        visible: ["admin", "teacher", "user"],
       },
       {
         icon: <Megaphone />,
         label: "Announcements",
         href: "/list/announcements",
-        visible: ["admin", "teacher", "student", "parent"],
+        visible: ["admin"],
       },
     ],
   },
@@ -116,25 +83,58 @@ const menuItems = [
         icon: <UserRoundPen />,
         label: "Profile",
         href: "/profile",
-        visible: ["admin", "teacher", "student", "parent"],
+        visible: ["admin", "teacher", "user"],
       },
       {
         icon: <Settings />,
         label: "Settings",
         href: "/settings",
-        visible: ["admin", "teacher", "student", "parent"],
+        visible: ["admin", "teacher", "user"],
       },
       {
         icon: <LogOut />,
         label: "Logout",
         href: "/logout",
-        visible: ["admin", "teacher", "student", "parent"],
+        visible: ["admin", "teacher", "user"],
       },
     ],
   },
 ];
 
 const Menu = () => {
+  const { user } = useUser();
+
+  const [loggedInUser, setLoggedInUser] = useState<{
+    id: number;
+    email: string;
+    firstname: string;
+    lastname: string;
+    imageUrl: string;
+    createdAt: string;
+    role: string;
+  }>();
+
+  const getLoggedInUserByEmail = async () => {
+    try {
+      const result = await findUserByEmail(
+        user?.primaryEmailAddress?.emailAddress as string
+      );
+      if (result) {
+        setLoggedInUser(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching the user
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    user && getLoggedInUserByEmail();
+  }, [user]);
+
   return (
     <div className="mt-4 text-sm">
       {menuItems.map((item, index) => (
@@ -142,16 +142,19 @@ const Menu = () => {
           <p className="hidden lg:block text-light-100 font-light my-4">
             {item.title}
           </p>
-          {item.items.map((item, index) => (
-            <Link
-              href={item.href}
-              key={index}
-              className="flex items-center justify-center lg:justify-start gap-4 text-gray-400 py-2"
-            >
-              <span>{item.icon}</span>
-              <span className="hidden lg:block">{item.label}</span>
-            </Link>
-          ))}
+          {item.items.map(
+            (item, index) =>
+              item.visible.includes(loggedInUser?.role as string) && (
+                <Link
+                  href={item.href}
+                  key={index}
+                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-400 py-2"
+                >
+                  <span>{item.icon}</span>
+                  <span className="hidden lg:block">{item.label}</span>
+                </Link>
+              )
+          )}
         </div>
       ))}
     </div>
