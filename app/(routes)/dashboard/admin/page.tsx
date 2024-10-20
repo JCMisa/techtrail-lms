@@ -17,6 +17,7 @@ import RadialChart from "./_components/RadialChart";
 import BarTrailChart from "./_components/BarTrailChart";
 import LineTypeChart from "./_components/LineTypeChart";
 import EventCalendar from "./_components/EventCalendar";
+import Announcements from "./_components/Announcements";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
@@ -71,8 +72,9 @@ const AdminDashboardPage = () => {
             </div>
             {/* middle charts */}
             <div className="flex gap-4 flex-col lg:flex-row">
-              {/* user count chart */}
+              {/* user subscribers count chart */}
               <div className="w-full lg:w-1/3 h-[450px]">
+                {/* todo: add the realtime data for the count of users who are subscribed from the database */}
                 <RadialChart />
               </div>
               {/* courses difficulties count chart */}
@@ -90,6 +92,7 @@ const AdminDashboardPage = () => {
           {/* right */}
           <div className="w-full lg:w-1/3 flex flex-col gap-8">
             <EventCalendar />
+            <Announcements />
           </div>
         </div>
       ) : (

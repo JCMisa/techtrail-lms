@@ -72,6 +72,8 @@ const LineTypeChart = () => {
                   contentStyle={{
                     borderRadius: "10px",
                     borderColor: "lightgray",
+                    color: "#EBD3F8",
+                    backgroundColor: "#17141c",
                   }}
                 />
                 <Legend

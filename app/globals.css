@@ -138,6 +138,22 @@ body {
   display: none;
 }
 
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  font-family: "Inter", sans-serif !important;
+  background: #17141c !important;
+}
+
+.react-calendar__tile-active {
+  background-color: #7a1cac !important;
+  color: white !important;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-weight: 600 !important;
+}
+
 /* loader */
 /* From Uiverse.io by Nawsome */
 .socket {
