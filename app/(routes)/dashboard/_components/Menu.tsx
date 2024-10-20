@@ -10,6 +10,7 @@ import {
   Calendar,
   GraduationCap,
   Home,
+  LayoutGrid,
   LogOut,
   Megaphone,
   MessageCircle,
@@ -19,90 +20,13 @@ import {
   UserRoundPen,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const menuItems = [
-  {
-    title: "MENU",
-    items: [
-      {
-        icon: <Home />,
-        label: "Home",
-        href: "/",
-        visible: ["admin", "teacher", "user"],
-      },
-      {
-        icon: <Plus />,
-        label: "Create",
-        href: "/course/create",
-        visible: ["admin", "teacher"],
-      },
-      {
-        icon: <BookOpenText />,
-        label: "Courses",
-        href: "/courses",
-        visible: ["admin", "teacher", "user"],
-      },
-      {
-        icon: <GraduationCap />,
-        label: "Teachers",
-        href: "/list/teachers",
-        visible: ["admin"],
-      },
-      {
-        icon: <UserRound />,
-        label: "Students",
-        href: "/list/students",
-        visible: ["admin"],
-      },
-      {
-        icon: <Calendar />,
-        label: "Events",
-        href: "/list/events",
-        visible: ["admin"],
-      },
-      {
-        icon: <MessageCircle />,
-        label: "Messages",
-        href: "/list/messages",
-        visible: ["admin", "teacher", "user"],
-      },
-      {
-        icon: <Megaphone />,
-        label: "Announcements",
-        href: "/list/announcements",
-        visible: ["admin"],
-      },
-    ],
-  },
-  {
-    title: "OTHER",
-    items: [
-      {
-        icon: <UserRoundPen />,
-        label: "Profile",
-        href: "/profile",
-        visible: ["admin", "teacher", "user"],
-      },
-      {
-        icon: <Settings />,
-        label: "Settings",
-        href: "/settings",
-        visible: ["admin", "teacher", "user"],
-      },
-      {
-        icon: <LogOut />,
-        label: "Logout",
-        href: "/logout",
-        visible: ["admin", "teacher", "user"],
-      },
-    ],
-  },
-];
-
 const Menu = () => {
   const { user } = useUser();
+  const path = usePathname();
 
   const [loggedInUser, setLoggedInUser] = useState<{
     id: number;
@@ -135,6 +59,91 @@ const Menu = () => {
     user && getLoggedInUserByEmail();
   }, [user]);
 
+  const menuItems = [
+    {
+      title: "MENU",
+      items: [
+        {
+          icon: <Home />,
+          label: "Home",
+          href: "/",
+          visible: ["admin", "teacher", "user"],
+        },
+        {
+          icon: <LayoutGrid />,
+          label: "Dashboard",
+          href: `/dashboard/${loggedInUser?.role}`,
+          visible: ["admin", "teacher", "user"],
+        },
+        {
+          icon: <Plus />,
+          label: "Create",
+          href: "/course/create",
+          visible: ["admin", "teacher"],
+        },
+        {
+          icon: <BookOpenText />,
+          label: "Courses",
+          href: "/courses",
+          visible: ["admin", "teacher", "user"],
+        },
+        {
+          icon: <GraduationCap />,
+          label: "Teachers",
+          href: "/list/teachers",
+          visible: ["admin"],
+        },
+        {
+          icon: <UserRound />,
+          label: "Students",
+          href: "/list/students",
+          visible: ["admin"],
+        },
+        {
+          icon: <Calendar />,
+          label: "Events",
+          href: "/list/events",
+          visible: ["admin"],
+        },
+        {
+          icon: <MessageCircle />,
+          label: "Messages",
+          href: "/list/messages",
+          visible: ["admin", "teacher", "user"],
+        },
+        {
+          icon: <Megaphone />,
+          label: "Announcements",
+          href: "/list/announcements",
+          visible: ["admin"],
+        },
+      ],
+    },
+    {
+      title: "OTHER",
+      items: [
+        {
+          icon: <UserRoundPen />,
+          label: "Profile",
+          href: "/profile",
+          visible: ["admin", "teacher", "user"],
+        },
+        {
+          icon: <Settings />,
+          label: "Settings",
+          href: "/dashboard/settings",
+          visible: ["admin", "teacher", "user"],
+        },
+        {
+          icon: <LogOut />,
+          label: "Logout",
+          href: "/logout",
+          visible: ["admin", "teacher", "user"],
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="mt-4 text-sm">
       {menuItems.map((item, index) => (
@@ -148,7 +157,9 @@ const Menu = () => {
                 <Link
                   href={item.href}
                   key={index}
-                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-400 py-2"
+                  className={`flex items-center justify-center lg:justify-start gap-4 text-gray-400 py-2 rounded-md hover:bg-primary hover:text-light-100 transition-all ease-in-out md:px-2 ${
+                    path == item.href && "bg-primary text-light-100"
+                  }`}
                 >
                   <span>{item.icon}</span>
                   <span className="hidden lg:block">{item.label}</span>
