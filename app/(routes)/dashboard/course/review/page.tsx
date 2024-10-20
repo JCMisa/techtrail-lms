@@ -11,6 +11,9 @@ import TopicDescriptions from "../_components/TopicDescriptions";
 import SelectOption from "../_components/SelectOption";
 import { Button } from "@/components/ui/button";
 import LoadingDialog from "@/app/_components/LoadingDialog";
+import { chatSession } from "@/utils/AiModel";
+import { toast } from "sonner";
+import { addAiOutput, getAllAiOutput } from "@/services/AiOutputService";
 
 const CourseReviewPage = () => {
   const { user } = useUser();
@@ -73,13 +76,71 @@ const CourseReviewPage = () => {
     return false;
   };
 
+  // method to generate ai response
+  const generateCourseLayout = async () => {
+    const PROMPT = `Generate a course tutorial on the following details, category with value of ${userCourseInput?.category}, topic with value of ${userCourseInput?.topic}, level with value of ${userCourseInput?.level}, duration with value of ${userCourseInput?.duration}, and chapters which is ${userCourseInput?.chapters}, based on those properties I want additional properties called courseName which is the name of the course, description which is the description of the course, chaptersArray which is an array of objects and each object has properties called chapterName which is the name of the chapter, explanation which is the explanation about the chapterName in not less than 10 sentences, chapterVideo which initially has an empty string or a null value, and codeExample in <precode> format if applicable, make it in JSON format.`;
+
+    setLoading(true);
+    try {
+      const result = await chatSession.sendMessage(PROMPT);
+      if (result) {
+        // saveCourseLayout(JSON.parse(result.response.text()));
+
+        const data = await addAiOutput(
+          JSON.parse(result.response.text()).category,
+          JSON.parse(result.response.text()).chapters,
+          JSON.parse(result.response.text()).courseName,
+          JSON.parse(result.response.text()).description,
+          JSON.parse(result.response.text()).duration,
+          JSON.parse(result.response.text()).level,
+          JSON.parse(result.response.text()).topic,
+          JSON.stringify(JSON.parse(result.response.text()).chaptersArray),
+          user?.primaryEmailAddress?.emailAddress as string,
+          user?.fullName as string,
+          user?.imageUrl as string
+        );
+
+        if (data) {
+          toast(
+            <p className="text-sm font-bold text-green-500">
+              Course layout saved successfully
+            </p>
+          );
+        }
+      }
+    } catch (error) {
+      toast(
+        <p className="text-sm font-bold text-red-500">
+          Internal error occured while generating AI response
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // testing on how to access saved data from database
+  const getAiOutputList = async () => {
+    const result = await getAllAiOutput();
+    if (result) {
+      console.log(
+        "ai output list: ",
+        JSON.parse(result?.data[0]?.chaptersArray)[0]?.explanation
+      );
+    }
+  };
+
+  useEffect(() => {
+    getAiOutputList();
+  }, []);
+
   return (
-    <div>
+    <div className="mt-10">
+      <h2 className="text-4xl text-primary font-medium text-center">
+        Create Course Reviewer
+      </h2>
       {/* stepper */}
-      <div className="flex flex-col items-center justify-center mt-10">
-        <h2 className="text-4xl text-primary font-medium">
-          Create Course Reviewer
-        </h2>
+      <div className="flex flex-col xl:flex-row items-center justify-center mt-10">
         <div className="flex mt-10">
           {stepperOptions.map((item, index) => (
             <div key={item.id || index} className="flex flex-row items-center">
@@ -105,7 +166,7 @@ const CourseReviewPage = () => {
         </div>
       </div>
 
-      <div className="px-10 md:px-20 lg:px-44 mt-10">
+      <div className="px-10 mt-10">
         {/* components */}
         {activeIndex === 0 ? (
           <SelectCategory />
@@ -136,7 +197,7 @@ const CourseReviewPage = () => {
           )}
           {activeIndex === 2 && (
             <Button
-              //   onClick={() => generateCourseLayout()}
+              onClick={() => generateCourseLayout()}
               className="min-w-52"
               disabled={checkStatus()}
             >
