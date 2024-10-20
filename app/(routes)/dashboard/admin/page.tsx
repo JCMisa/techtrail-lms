@@ -14,6 +14,9 @@ import { toast } from "sonner";
 import Unauthorized from "../_components/Unauthorized";
 import UserCard from "./_components/UserCard";
 import RadialChart from "./_components/RadialChart";
+import BarTrailChart from "./_components/BarTrailChart";
+import LineTypeChart from "./_components/LineTypeChart";
+import EventCalendar from "./_components/EventCalendar";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
@@ -72,14 +75,22 @@ const AdminDashboardPage = () => {
               <div className="w-full lg:w-1/3 h-[450px]">
                 <RadialChart />
               </div>
-              {/* user attendance chart */}
-              <div className="w-full lg:w-2/3 h-[450px]"></div>
+              {/* courses difficulties count chart */}
+              <div className="w-full lg:w-2/3 h-[450px]">
+                {/* todo: add the realtime data for the count of courses difficulties from the database */}
+                <BarTrailChart />
+              </div>
             </div>
-            {/* bottom chart */}
-            <div className=""></div>
+            {/* bottom chart for the count of course types created */}
+            <div className="w-full h-[500px]">
+              {/* todo: add the realtime data for the count of courses types from the database */}
+              <LineTypeChart />
+            </div>
           </div>
           {/* right */}
-          <div className="w-full lg:w-1/3">right</div>
+          <div className="w-full lg:w-1/3 flex flex-col gap-8">
+            <EventCalendar />
+          </div>
         </div>
       ) : (
         <Unauthorized />
