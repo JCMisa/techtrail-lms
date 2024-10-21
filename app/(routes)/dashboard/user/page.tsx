@@ -15,6 +15,7 @@ import Unauthorized from "../_components/Unauthorized";
 import EventCalendar from "../admin/_components/EventCalendar";
 import Announcements from "../admin/_components/Announcements";
 import UserCourses from "./_components/UserCourses";
+import UserReviewers from "./_components/UserReviewers";
 
 const UserDashboardPage = () => {
   const { user } = useUser();
@@ -76,6 +77,18 @@ const UserDashboardPage = () => {
               </div>
               {/* todo: display the course list taken by the user */}
               <UserCourses />
+              <div className="flex flex-col gap-1">
+                <h1 className="text-3xl">
+                  Manage your{" "}
+                  <span className="text-primary-100 font-semibold">
+                    Reviewers
+                  </span>
+                </h1>
+                <p className="text-xs text-gray-400">
+                  Check and manage your TechTrail reviewers
+                </p>
+              </div>
+              <UserReviewers />
             </div>
           </div>
 

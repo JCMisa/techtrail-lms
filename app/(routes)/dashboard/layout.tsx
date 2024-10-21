@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import Menu from "./_components/Menu";
 import Navbar from "./_components/Navbar";
 import { UserInputContext } from "./course/_context/UserInputContext";
+import { Button } from "@/components/ui/button";
+import { Brain } from "lucide-react";
 
 const DashboardLayout = ({
   children,
@@ -49,6 +51,11 @@ const DashboardLayout = ({
           <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-dark-100 overflow-scroll dashboard-card-scroll">
             <Navbar />
             {children}
+            <Link href={"/dashboard/course/review"}>
+              <Button className="absolute bottom-5 right-5 rounded-full w-14 h-14">
+                <Brain />
+              </Button>
+            </Link>
           </div>
         </div>
       </UserInputContext.Provider>

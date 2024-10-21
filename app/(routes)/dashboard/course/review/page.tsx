@@ -14,6 +14,7 @@ import LoadingDialog from "@/app/_components/LoadingDialog";
 import { chatSession } from "@/utils/AiModel";
 import { toast } from "sonner";
 import { addAiOutput, getAllAiOutput } from "@/services/AiOutputService";
+import uuid4 from "uuid4";
 
 const CourseReviewPage = () => {
   const { user } = useUser();
@@ -40,10 +41,6 @@ const CourseReviewPage = () => {
   const [loading, setLoading] = useState(false);
   const [activeIndex, setactiveIndex] = useState(0);
   const { userCourseInput, setUserCourseInput } = useContext(UserInputContext);
-
-  useEffect(() => {
-    console.log("user course context: ", userCourseInput);
-  }, [userCourseInput]);
 
   // check if context array is empty, then disable te next button
   const checkStatus = () => {
@@ -85,8 +82,9 @@ const CourseReviewPage = () => {
       const result = await chatSession.sendMessage(PROMPT);
       if (result) {
         // saveCourseLayout(JSON.parse(result.response.text()));
-
+        const courseId = uuid4();
         const data = await addAiOutput(
+          courseId,
           JSON.parse(result.response.text()).category,
           JSON.parse(result.response.text()).chapters,
           JSON.parse(result.response.text()).courseName,
@@ -95,6 +93,7 @@ const CourseReviewPage = () => {
           JSON.parse(result.response.text()).level,
           JSON.parse(result.response.text()).topic,
           JSON.stringify(JSON.parse(result.response.text()).chaptersArray),
+          "https://linda-hoang.com/wp-content/uploads/2014/10/img-placeholder-dark.jpg",
           user?.primaryEmailAddress?.emailAddress as string,
           user?.fullName as string,
           user?.imageUrl as string
@@ -106,6 +105,7 @@ const CourseReviewPage = () => {
               Course layout saved successfully
             </p>
           );
+          router.replace(`/dashboard/course/review/reviewCreate/${courseId}`);
         }
       }
     } catch (error) {
@@ -120,19 +120,18 @@ const CourseReviewPage = () => {
   };
 
   // testing on how to access saved data from database
-  const getAiOutputList = async () => {
-    const result = await getAllAiOutput();
-    if (result) {
-      console.log(
-        "ai output list: ",
-        JSON.parse(result?.data[0]?.chaptersArray)[0]?.explanation
-      );
-    }
-  };
-
-  useEffect(() => {
-    getAiOutputList();
-  }, []);
+  // const getAiOutputList = async () => {
+  //   const result = await getAllAiOutput();
+  //   if (result) {
+  //     console.log(
+  //       "ai output list: ",
+  //       JSON.parse(result?.data[0]?.chaptersArray)[0]?.explanation
+  //     );
+  //   }
+  // };
+  // useEffect(() => {
+  //   getAiOutputList();
+  // }, []);
 
   return (
     <div className="mt-10">
