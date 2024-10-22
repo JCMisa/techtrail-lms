@@ -14,8 +14,9 @@ import { toast } from "sonner";
 import Unauthorized from "../_components/Unauthorized";
 import EventCalendar from "../admin/_components/EventCalendar";
 import Announcements from "../admin/_components/Announcements";
-import UserCourses from "./_components/UserCourses";
-import UserReviewers from "./_components/UserReviewers";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CoursesList from "./_components/CoursesList";
+import ReviewersList from "./_components/ReviewersList";
 
 const UserDashboardPage = () => {
   const { user } = useUser();
@@ -61,35 +62,32 @@ const UserDashboardPage = () => {
       {loggedInUser?.role === "user" ? (
         <div className="p-4 flex gap-4 flex-col xl:flex-row">
           {/* left */}
-          <div className="w-full xl:w-2/3">
-            <div className="h-full bg-dark p-4 rounded-md">
-              <div className="flex flex-col gap-1">
-                <h1 className="text-3xl">
-                  Welcome!{" "}
-                  <span className="text-primary-100 font-semibold">
-                    {user?.firstName}
-                  </span>{" "}
-                  👋🏻
-                </h1>
-                <p className="text-xs text-gray-400">
-                  Check and manage your TechTrail courses
-                </p>
+          <div className="w-full xl:w-2/3 flex flex-col gap-8">
+            <div>
+              <div className="flex flex-row items-center gap-2">
+                <h2 className="font-bold text-2xl">
+                  Welcome! {user?.firstName} 👋🏻
+                </h2>
               </div>
-              {/* todo: display the course list taken by the user */}
-              <UserCourses />
-              <div className="flex flex-col gap-1">
-                <h1 className="text-3xl">
-                  Manage your{" "}
-                  <span className="text-primary-100 font-semibold">
+
+              <Tabs defaultValue="courses" className="w-full mt-5 bg-dark">
+                <TabsList className="w-full justify-start bg-primary">
+                  <TabsTrigger value="courses" className="text-light">
+                    Courses
+                  </TabsTrigger>
+                  <TabsTrigger value="reviewers" className="text-light">
                     Reviewers
-                  </span>
-                </h1>
-                <p className="text-xs text-gray-400">
-                  Check and manage your TechTrail reviewers
-                </p>
-              </div>
-              <UserReviewers />
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="courses" className="p-5">
+                  <CoursesList />
+                </TabsContent>
+                <TabsContent value="reviewers" className="p-5">
+                  <ReviewersList />
+                </TabsContent>
+              </Tabs>
             </div>
+            <LoadingDialog loading={loading} />
           </div>
 
           {/* right */}

@@ -6,7 +6,7 @@ const CourseComponent = ({ chapter }: { chapter: any }) => {
   return (
     <div className="flex flex-col gap-2">
       {/* content */}
-      <div className="flex flex-col gap-3 w- -mt-16">
+      <div className="flex flex-col gap-3 w-full -mt-16">
         <CourseContent content={chapter} />
       </div>
     </div>

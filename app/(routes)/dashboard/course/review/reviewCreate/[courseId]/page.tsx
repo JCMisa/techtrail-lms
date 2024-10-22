@@ -71,7 +71,9 @@ const ReviewCreate = ({ params }: PROPS) => {
               Congratulations🎉 Your reviewer is ready
             </p>
           );
-          router.replace(`/dashboard/review/reviewView/${reviewer?.courseId}`);
+          router.replace(
+            `/dashboard/course/review/reviewView/${reviewer?.courseId}`
+          );
         }
       };
     } catch (error) {

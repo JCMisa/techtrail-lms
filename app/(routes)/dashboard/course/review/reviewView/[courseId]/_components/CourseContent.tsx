@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 
 const CourseContent = ({ content }: { content: any }) => {
   return (
-    <div className="bg-dark-100 p-5 py-10 rounded-md w-full min-h-52 max-h-52 overflow-auto card-scroll">
+    <div className="bg-dark-100 p-5 py-10 rounded-md w-full h-full overflow-auto card-scroll">
       <h2 className="font-medium text-2xl">{content?.chapterName}</h2>
       <ReactMarkdown className="text-sm text-gray-400">
         {content?.explanation}
