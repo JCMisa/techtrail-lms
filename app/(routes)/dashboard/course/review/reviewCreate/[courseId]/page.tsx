@@ -34,7 +34,6 @@ const ReviewCreate = ({ params }: PROPS) => {
     try {
       const result = await getReviewerByCourseId(params?.courseId);
       if (result) {
-        console.log("reviewer: ", result?.data);
         setReviewer(result?.data);
       }
     } catch (error) {

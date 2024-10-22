@@ -37,7 +37,7 @@ const UploadImage = ({
       })
       .then((resp) => {
         getDownloadURL(storageRef).then(async (downloadUrl) => {
-          console.log("img url: ", downloadUrl); // this will get the viewable url of the img
+          // this will get the viewable url of the img
           try {
             const result = await updateReviewerBanner(course?.id, downloadUrl);
             if (result) {
