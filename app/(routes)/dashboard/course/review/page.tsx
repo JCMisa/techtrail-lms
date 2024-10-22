@@ -75,7 +75,7 @@ const CourseReviewPage = () => {
 
   // method to generate ai response
   const generateCourseLayout = async () => {
-    const PROMPT = `Generate a course tutorial on the following details, category with value of ${userCourseInput?.category}, topic with value of ${userCourseInput?.topic}, level with value of ${userCourseInput?.level}, duration with value of ${userCourseInput?.duration}, and chapters which is ${userCourseInput?.chapters}, based on those properties I want additional properties called courseName which is the name of the course, description which is the description of the course, chaptersArray which is an array of objects and each object has properties called chapterName which is the name of the chapter, explanation which is the explanation about the chapterName in not less than 10 sentences, chapterVideo which initially has an empty string or a null value, and codeExample in <precode> format if applicable, make it in JSON format.`;
+    const PROMPT = `Generate a course tutorial on the following details, category with value of ${userCourseInput?.category}, topic with value of ${userCourseInput?.topic}, level with value of ${userCourseInput?.level}, duration with value of ${userCourseInput?.duration}, and chapters which is ${userCourseInput?.chapters}, based on those properties I want additional properties called courseName which is the name of the course, description which is the description of the course, chaptersArray which is an array of objects and each object has properties called chapterName which is the name of the chapter, explanation which is the explanation about the chapterName in not less than 10 sentences, and codeExample in <precode> format if applicable, make it in JSON format.`;
 
     setLoading(true);
     try {
@@ -92,6 +92,7 @@ const CourseReviewPage = () => {
           JSON.parse(result.response.text()).duration,
           JSON.parse(result.response.text()).level,
           JSON.parse(result.response.text()).topic,
+          "",
           JSON.stringify(JSON.parse(result.response.text()).chaptersArray),
           "https://linda-hoang.com/wp-content/uploads/2014/10/img-placeholder-dark.jpg",
           user?.primaryEmailAddress?.emailAddress as string,
@@ -118,20 +119,6 @@ const CourseReviewPage = () => {
       setLoading(false);
     }
   };
-
-  // testing on how to access saved data from database
-  // const getAiOutputList = async () => {
-  //   const result = await getAllAiOutput();
-  //   if (result) {
-  //     console.log(
-  //       "ai output list: ",
-  //       JSON.parse(result?.data[0]?.chaptersArray)[0]?.explanation
-  //     );
-  //   }
-  // };
-  // useEffect(() => {
-  //   getAiOutputList();
-  // }, []);
 
   return (
     <div className="mt-10">

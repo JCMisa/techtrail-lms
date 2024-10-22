@@ -12,6 +12,7 @@ export const addAiOutput = async (
   duration: string,
   level: string,
   topic: string,
+  courseVideo: string,
   chaptersArray: string,
   courseBanner: string,
   createdBy: string,
@@ -28,6 +29,7 @@ export const addAiOutput = async (
       duration: duration,
       level: level,
       topic: topic,
+      courseVideo: courseVideo,
       chaptersArray: chaptersArray,
       courseBanner: courseBanner,
       createdBy: createdBy,
@@ -81,6 +83,17 @@ export const updateReviewerBanner = async (
   try {
     const data = await axios.put(api + `updateBanner/${id}`, {
       courseBanner: courseBanner,
+    });
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const updateReviewerVideo = async (id: number, courseVideo: string) => {
+  try {
+    const data = await axios.put(api + `updateVideo/${id}`, {
+      courseVideo: courseVideo,
     });
     return data;
   } catch (error) {
