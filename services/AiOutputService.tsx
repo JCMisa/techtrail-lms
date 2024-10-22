@@ -73,3 +73,17 @@ export const updateBasicInfo = async (
     handleError(error);
   }
 };
+
+export const updateReviewerBanner = async (
+  id: number,
+  courseBanner: string
+) => {
+  try {
+    const data = await axios.put(api + `updateBanner/${id}`, {
+      courseBanner: courseBanner,
+    });
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};

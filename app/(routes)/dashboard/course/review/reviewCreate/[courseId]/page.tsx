@@ -4,7 +4,7 @@
 
 import LoadingDialog from "@/app/_components/LoadingDialog";
 import { getReviewerByCourseId } from "@/services/AiOutputService";
-import { ArrowLeftCircle, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -52,11 +52,7 @@ const ReviewCreate = ({ params }: PROPS) => {
   return (
     <div className="p-5">
       <div className="flex flex-row items-center justify-center gap-2 my-5">
-        <ArrowLeftCircle
-          className="cursor-pointer"
-          onClick={() => router.push("/dashboard")}
-        />
-        <h2 className="text-center text-3xl font-bold">Review Your Reviewer</h2>
+        <h2 className="text-center text-3xl font-bold">Manage Your Reviewer</h2>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -88,7 +84,7 @@ const ReviewCreate = ({ params }: PROPS) => {
         {loading ? (
           <LoaderCircle className={"animate-spin"} />
         ) : (
-          "Generate Course"
+          "Generate Reviewer"
         )}
       </Button>
       <LoadingDialog loading={loading} />

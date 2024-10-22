@@ -2,6 +2,7 @@
 import { LayoutGrid } from "lucide-react";
 import React from "react";
 import EditCourseInfo from "./EditCourseInfo";
+import UploadImage from "./UploadImage";
 
 const BasicInfo = ({
   reviewer,
@@ -10,7 +11,7 @@ const BasicInfo = ({
 }: {
   reviewer: any;
   refreshData: () => void;
-  edit: boolean;
+  edit?: boolean;
 }) => {
   return (
     <div className="p-10 flex flex-col md:flex-row items-center justify-between gap-10">
@@ -27,7 +28,9 @@ const BasicInfo = ({
         </div>
         <p className="text-gray-400 text-xs mt-2">{reviewer?.description}</p>
       </div>
-      <div>{/* <UploadImage course={course} edit={edit} /> */}</div>
+      <div>
+        <UploadImage course={reviewer} edit={edit} />
+      </div>
     </div>
   );
 };
