@@ -97,7 +97,8 @@ const CourseReviewPage = () => {
           "https://linda-hoang.com/wp-content/uploads/2014/10/img-placeholder-dark.jpg",
           user?.primaryEmailAddress?.emailAddress as string,
           user?.fullName as string,
-          user?.imageUrl as string
+          user?.imageUrl as string,
+          user?.primaryEmailAddress?.emailAddress as string
         );
 
         if (data) {

@@ -17,10 +17,11 @@ export const addAiOutput = async (
   courseBanner: string,
   createdBy: string,
   username: string,
-  profileImage: string
+  profileImage: string,
+  userEmail: string
 ) => {
   try {
-    const data = await axios.post(api, {
+    const data = await axios.post(api + userEmail, {
       courseId: courseId,
       category: category,
       chapters: chapters,

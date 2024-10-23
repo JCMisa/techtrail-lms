@@ -56,11 +56,11 @@ const ReviewerCard = ({
       </div>
       <div className="p-5 flex flex-col gap-5">
         <div>
-          <p className="w-full p-2 min-h-14 max-h-14 bg-dark overflow-hidden font-bold text-light-100 text-sm">
+          <p className="w-full p-2 min-h-14 max-h-14 bg-dark overflow-hidden font-bold text-light-100 text-sm rounded-lg">
             {reviewer?.courseName}
           </p>
         </div>
-        <p className="w-full min-h-52 max-h-52 bg-dark overflow-hidden overflow-y-auto card-scroll text-xs p-3 text-gray-400">
+        <p className="w-full min-h-52 max-h-52 bg-dark overflow-hidden overflow-y-auto card-scroll text-xs p-3 text-gray-400 rounded-lg">
           {reviewer?.description}
         </p>
         <div className="flex flex-row items-center justify-between">
