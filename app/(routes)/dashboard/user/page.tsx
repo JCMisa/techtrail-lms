@@ -82,7 +82,7 @@ const UserDashboardPage = () => {
                 <TabsContent value="courses" className="p-5">
                   <CoursesList />
                 </TabsContent>
-                <TabsContent value="reviewers" className="p-5">
+                <TabsContent value="reviewers" className="p-5 pb-10 relative">
                   <ReviewersList />
                 </TabsContent>
               </Tabs>

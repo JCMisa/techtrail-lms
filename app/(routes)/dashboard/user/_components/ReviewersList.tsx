@@ -53,6 +53,12 @@ const ReviewersList = () => {
                 refreshData={() => getAllUserReviewers()}
               />
             ))}
+          {reviewersList?.length >= 6 && (
+            <p className="absolute bottom-2 right-2 text-xs text-gray-500 max-h-5 p-2 overflow-hidden">
+              You&apos;ve reached the maximum of 6 reviewers. Adding another
+              will remove the oldest reviewer from your list.
+            </p>
+          )}
         </div>
       ) : (
         // skeleton
