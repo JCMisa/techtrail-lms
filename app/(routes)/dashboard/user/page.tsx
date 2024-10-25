@@ -17,11 +17,14 @@ import Announcements from "../admin/_components/Announcements";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CoursesList from "./_components/CoursesList";
 import ReviewersList from "./_components/ReviewersList";
+import { getAllCurrentEvents } from "@/services/EventService";
+import moment from "moment";
 
 const UserDashboardPage = () => {
   const { user } = useUser();
   const router = useRouter();
 
+  const [currentEvents, setCurrentEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState<{
     id: number;
@@ -56,6 +59,25 @@ const UserDashboardPage = () => {
   useEffect(() => {
     user && getUserByEmail();
   }, [user]);
+
+  const getCurrentEvents = async () => {
+    try {
+      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
+      if (result) {
+        setCurrentEvents(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching events
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    getCurrentEvents();
+  }, []);
 
   return (
     <div>
@@ -92,7 +114,7 @@ const UserDashboardPage = () => {
 
           {/* right */}
           <div className="w-full xl:w-1/3 flex flex-col gap-8">
-            <EventCalendar />
+            <EventCalendar eventsList={currentEvents} canEdit={false} />
             <Announcements />
           </div>
         </div>

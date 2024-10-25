@@ -18,11 +18,14 @@ import BarTrailChart from "./_components/BarTrailChart";
 import LineTypeChart from "./_components/LineTypeChart";
 import EventCalendar from "./_components/EventCalendar";
 import Announcements from "./_components/Announcements";
+import { getAllCurrentEvents } from "@/services/EventService";
+import moment from "moment";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
   const router = useRouter();
 
+  const [currentEvents, setCurrentEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState<{
     id: number;
@@ -58,6 +61,25 @@ const AdminDashboardPage = () => {
     user && getUserByEmail();
   }, [user]);
 
+  const getCurrentEvents = async () => {
+    try {
+      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
+      if (result) {
+        setCurrentEvents(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching events
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    getCurrentEvents();
+  }, []);
+
   return (
     <div>
       {loggedInUser?.role === "admin" ? (
@@ -91,7 +113,11 @@ const AdminDashboardPage = () => {
           </div>
           {/* right */}
           <div className="w-full lg:w-1/3 flex flex-col gap-8">
-            <EventCalendar />
+            <EventCalendar
+              eventsList={currentEvents}
+              canEdit={true}
+              refreshData={() => getCurrentEvents()}
+            />
             <Announcements />
           </div>
         </div>
