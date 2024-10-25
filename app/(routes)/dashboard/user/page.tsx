@@ -114,7 +114,11 @@ const UserDashboardPage = () => {
 
           {/* right */}
           <div className="w-full xl:w-1/3 flex flex-col gap-8">
-            <EventCalendar eventsList={currentEvents} canEdit={false} />
+            <EventCalendar
+              eventsList={currentEvents}
+              canEdit={false}
+              refreshData={() => {}}
+            />
             <Announcements />
           </div>
         </div>

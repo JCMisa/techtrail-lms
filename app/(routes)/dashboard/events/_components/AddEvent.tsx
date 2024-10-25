@@ -70,7 +70,7 @@ const AddEvent = ({ refreshData }: { refreshData: () => void }) => {
       {/* add modal */}
       <Dialog>
         <DialogTrigger asChild>
-          <Plus />
+          <Plus className="cursor-pointer" />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
