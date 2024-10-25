@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import React, { useState } from "react";
 import {
   Table,
@@ -61,23 +59,13 @@ const CurrentEventList = ({
     }
   };
 
-  const handleSearch = async (query: string) => {
-    console.log(query);
+  const handleSearch = async (titleQuery: string) => {
+    console.log(titleQuery);
   };
 
   return (
     <div>
-      <div className="flex flex-row items-center justify-between">
-        <h2 className="text-xl font-semibold text-gray-500">Current Events</h2>
-        <div className="bg-dark px-5 flex flex-row items-center rounded-lg">
-          <Search />
-          <Input
-            className="bg-transparent border-none"
-            placeholder="Search..."
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-        </div>
-      </div>
+      <h2 className="text-xl font-semibold text-gray-500">Current Events</h2>
       {eventList?.length > 0 ? (
         <Table>
           <TableCaption>A list of current events.</TableCaption>

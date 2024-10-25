@@ -70,3 +70,35 @@ export const deleteEventById = async (eventId: number) => {
     handleError(error);
   }
 };
+
+export const updateEventById = async (
+  eventId: number,
+  title: string,
+  description: string,
+  startTime: string,
+  endTime: string,
+  date: string
+) => {
+  try {
+    const data = await axios.put(api + eventId, {
+      title: title,
+      description: description,
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
+    });
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const filterByTitle = async (title: string) => {
+  try {
+    const data = await axios.get(api + `titleFilter/${title}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+    console.log(error);
+  }
+};

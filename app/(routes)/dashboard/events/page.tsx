@@ -7,17 +7,13 @@
 import { ArrowLeftCircle, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import EventList from "./_components/EventList";
 import { findUserByEmail } from "@/services/UserService";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import Unauthorized from "../_components/Unauthorized";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import {
-  addEvent,
   getAllCurrentEvents,
+  getAllEvents,
   getAllExpiredEvents,
   getAllUpcomingEvents,
 } from "@/services/EventService";
@@ -26,6 +22,7 @@ import CurrentEventList from "./_components/CurrentEventList";
 import PastEventsList from "./_components/PastEventsList";
 import UpcomingEventsList from "./_components/UpcomingEventsList";
 import AddEvent from "./_components/AddEvent";
+import AllEventsList from "./_components/AllEventsList";
 
 const EventsPage = () => {
   const { user } = useUser();
@@ -41,6 +38,7 @@ const EventsPage = () => {
     createdAt: string;
     role: string;
   }>();
+  const [allEvents, setAllEvents] = useState<any>([]);
   const [currentEventList, setCurrentEventList] = useState<any>([]);
   const [pastEventList, setPastEventList] = useState<any>([]);
   const [upcommingEventList, setUpcommingEventList] = useState<any>([]);
@@ -123,7 +121,26 @@ const EventsPage = () => {
     }
   };
 
+  const getEvents = async () => {
+    setLoading(true);
+    try {
+      const result = await getAllEvents();
+      if (result) {
+        setAllEvents(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching all events
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    getEvents();
     getCurrentEvents();
     getExpiredEvents();
     getUpcommingEvents();
@@ -144,6 +161,7 @@ const EventsPage = () => {
             <div className="bg-primary rounded-full w-10 h-10 p-3 flex items-center justify-center cursor-pointer">
               <AddEvent
                 refreshData={() => {
+                  getEvents();
                   getCurrentEvents();
                   getUpcommingEvents();
                   getExpiredEvents();
@@ -153,34 +171,53 @@ const EventsPage = () => {
           </div>
 
           {/* table list */}
-          <div className="flex flex-col gap-5 mt-10 col-span-2">
-            {/* current events */}
-            <div className="my-10 shadow-lg p-5">
-              <div className="">
-                <CurrentEventList
-                  eventList={currentEventList}
-                  refreshData={() => getCurrentEvents()}
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            {/* separated list */}
+            <div className="flex flex-col gap-5">
+              {/* current events */}
+              <div className="my-10 shadow-lg p-5 min-h-[40rem] max-h-[40rem] overflow-auto card-scroll">
+                <div className="">
+                  <CurrentEventList
+                    eventList={currentEventList}
+                    refreshData={() => getCurrentEvents()}
+                  />
+                </div>
+              </div>
+
+              {/* upcoming events */}
+              <div className="my-10 shadow-lg p-5 min-h-[40rem] max-h-[40rem] overflow-auto card-scroll">
+                <div className="">
+                  <UpcomingEventsList
+                    eventList={upcommingEventList}
+                    refreshData={() => getUpcommingEvents()}
+                  />
+                </div>
+              </div>
+
+              {/* past events */}
+              <div className="my-10 shadow-lg p-5 min-h-[40rem] max-h-[40rem] overflow-auto card-scroll">
+                <div className="">
+                  <PastEventsList
+                    eventList={pastEventList}
+                    refreshData={() => getExpiredEvents()}
+                  />
+                </div>
               </div>
             </div>
-
-            {/* upcoming events */}
-            <div className="my-10 shadow-lg p-5">
-              <div className="">
-                <UpcomingEventsList
-                  eventList={upcommingEventList}
-                  refreshData={() => getUpcommingEvents()}
-                />
-              </div>
-            </div>
-
-            {/* past events */}
-            <div className="my-10 shadow-lg p-5">
-              <div className="">
-                <PastEventsList
-                  eventList={pastEventList}
-                  refreshData={() => getExpiredEvents()}
-                />
+            {/* all list */}
+            <div className="col-span-2">
+              <div className="my-10 shadow-lg p-5 min-h-[132.5rem] max-h-[132.5rem] overflow-auto card-scroll">
+                <div className="">
+                  <AllEventsList
+                    eventList={allEvents}
+                    refreshData={() => {
+                      getEvents();
+                      getCurrentEvents();
+                      getUpcommingEvents();
+                      getExpiredEvents();
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
