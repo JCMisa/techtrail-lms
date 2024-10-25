@@ -8,6 +8,21 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import AddEvent from "../../events/_components/AddEvent";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Trash } from "lucide-react";
+import { toast } from "sonner";
+import { deleteEventById } from "@/services/EventService";
+import LoadingDialog from "@/app/_components/LoadingDialog";
 
 type ValuePiece = Date | null;
 
@@ -23,7 +38,30 @@ const EventCalendar = ({
   refreshData: () => void;
 }) => {
   const [value, onChange] = useState<Value>(new Date());
-  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const deleteEvent = async (eventId: number) => {
+    setLoading(true);
+    try {
+      const result = await deleteEventById(eventId);
+      if (result) {
+        toast(
+          <p className="font-bold text-sm text-green-500">
+            Event deleted successfully
+          </p>
+        );
+        refreshData();
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while deleting the event
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-dark p-4 rounded-xl">
@@ -38,7 +76,7 @@ const EventCalendar = ({
           ? eventsList?.map((event: any, index: number) => (
               <div
                 key={event?.id || index}
-                className="p-5 rounded-md border-2 border-dark-100 border-t-4 odd:border-t-primary even:border-t-secondary"
+                className="p-5 rounded-md border-2 border-dark-100 border-t-4 odd:border-t-primary even:border-t-secondary relative"
               >
                 <div className="flex items-center justify-between">
                   <h1 className="font-semibold text-light">{event?.title}</h1>
@@ -52,10 +90,40 @@ const EventCalendar = ({
                 <p className="mt-2 text-gray-400 text-sm">
                   {event?.description}
                 </p>
+
+                {/* delete button */}
+                {canEdit && (
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <Trash className="w-5 h-5 absolute bottom-3 right-3 text-red-500" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete your event and remove related data from our
+                          servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => deleteEvent(event?.id)}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                )}
               </div>
             ))
           : [1, 2, 3].map((item) => <div key={item}></div>)}
       </div>
+      <LoadingDialog loading={loading} />
     </div>
   );
 };

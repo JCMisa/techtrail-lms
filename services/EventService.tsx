@@ -61,3 +61,12 @@ export const getAllExpiredEvents = async (date: string) => {
     handleError(error);
   }
 };
+
+export const deleteEventById = async (eventId: number) => {
+  try {
+    const data = await axios.delete(api + eventId);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
