@@ -109,7 +109,7 @@ const Menu = () => {
         {
           icon: <Calendar />,
           label: "Events",
-          href: "/list/events",
+          href: "/dashboard/events",
           visible: ["admin"],
         },
         {
