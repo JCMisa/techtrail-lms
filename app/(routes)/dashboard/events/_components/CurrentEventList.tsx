@@ -1,16 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  deleteEventById,
-  getAllCurrentEvents,
-  getAllExpiredEvents,
-  getAllUpcomingEvents,
-} from "@/services/EventService";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -20,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,74 +23,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { deleteEventById } from "@/services/EventService";
 import TableSkeleton from "./TableSkeleton";
 import LoadingDialog from "@/app/_components/LoadingDialog";
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
 
-const EventList = ({ date }: { date?: string }) => {
+const CurrentEventList = ({
+  eventList,
+  refreshData,
+}: {
+  eventList: [];
+  refreshData: () => void;
+}) => {
   const [loading, setLoading] = useState(false);
-  const [eventList, setEventList] = useState([]);
-
-  const getCurrentEvents = async () => {
-    setLoading(true);
-    try {
-      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
-      if (result) {
-        setEventList(result?.data);
-      }
-    } catch (error) {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching current events
-        </p>
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getUpcommingEvents = async () => {
-    setLoading(true);
-    try {
-      const result = await getAllUpcomingEvents(moment().format("MM-DD-YYYY"));
-      if (result) {
-        setEventList(result?.data);
-      }
-    } catch (error) {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching upcoming events
-        </p>
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getExpiredEvents = async () => {
-    setLoading(true);
-    try {
-      const result = await getAllExpiredEvents(moment().format("MM-DD-YYYY"));
-      if (result) {
-        setEventList(result?.data);
-      }
-    } catch (error) {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching past events
-        </p>
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    date === "current" && getCurrentEvents();
-    date === "upcoming" && getUpcommingEvents();
-    date === "expired" && getExpiredEvents();
-  }, [date]);
 
   const deleteEvent = async (eventId: number) => {
     setLoading(true);
@@ -111,9 +48,7 @@ const EventList = ({ date }: { date?: string }) => {
             Event deleted successfully
           </p>
         );
-        getCurrentEvents();
-        getUpcommingEvents();
-        getExpiredEvents();
+        refreshData();
       }
     } catch (error) {
       toast(
@@ -133,7 +68,7 @@ const EventList = ({ date }: { date?: string }) => {
   return (
     <div>
       <div className="flex flex-row items-center justify-between">
-        <h2 className="text-xl font-semibold text-gray-500">{date} events</h2>
+        <h2 className="text-xl font-semibold text-gray-500">Current Events</h2>
         <div className="bg-dark px-5 flex flex-row items-center rounded-lg">
           <Search />
           <Input
@@ -145,7 +80,7 @@ const EventList = ({ date }: { date?: string }) => {
       </div>
       {eventList?.length > 0 ? (
         <Table>
-          <TableCaption>A list of {date} events.</TableCaption>
+          <TableCaption>A list of current events.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Title</TableHead>
@@ -205,4 +140,4 @@ const EventList = ({ date }: { date?: string }) => {
   );
 };
 
-export default EventList;
+export default CurrentEventList;

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { ArrowLeftCircle } from "lucide-react";
+import { ArrowLeftCircle, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import EventList from "./_components/EventList";
@@ -11,6 +12,19 @@ import { findUserByEmail } from "@/services/UserService";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import Unauthorized from "../_components/Unauthorized";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  addEvent,
+  getAllCurrentEvents,
+  getAllExpiredEvents,
+  getAllUpcomingEvents,
+} from "@/services/EventService";
+import moment from "moment";
+import CurrentEventList from "./_components/CurrentEventList";
+import PastEventsList from "./_components/PastEventsList";
+import UpcomingEventsList from "./_components/UpcomingEventsList";
 import AddEvent from "./_components/AddEvent";
 
 const EventsPage = () => {
@@ -27,6 +41,9 @@ const EventsPage = () => {
     createdAt: string;
     role: string;
   }>();
+  const [currentEventList, setCurrentEventList] = useState<any>([]);
+  const [pastEventList, setPastEventList] = useState<any>([]);
+  const [upcommingEventList, setUpcommingEventList] = useState<any>([]);
 
   const getUserByEmail = async () => {
     setLoading(true);
@@ -52,6 +69,66 @@ const EventsPage = () => {
     user && getUserByEmail();
   }, [user]);
 
+  const getCurrentEvents = async () => {
+    setLoading(true);
+    try {
+      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
+      if (result) {
+        setCurrentEventList(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching current events
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getExpiredEvents = async () => {
+    setLoading(true);
+    try {
+      const result = await getAllExpiredEvents(moment().format("MM-DD-YYYY"));
+      if (result) {
+        setPastEventList(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching past events
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getUpcommingEvents = async () => {
+    setLoading(true);
+    try {
+      const result = await getAllUpcomingEvents(moment().format("MM-DD-YYYY"));
+      if (result) {
+        setUpcommingEventList(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching upcoming events
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentEvents();
+    getExpiredEvents();
+    getUpcommingEvents();
+  }, []);
+
   return (
     <div className="p-5">
       {loggedInUser?.role === "admin" ? (
@@ -64,40 +141,46 @@ const EventsPage = () => {
               />
               <h1 className="text-2xl font-bold">Manage Events</h1>
             </div>
-
-            <div className="w-10 h-10 bg-primary rounded-full p-3 flex items-center justify-center cursor-pointer">
-              <AddEvent refreshData={() => {}} />
+            <div className="bg-primary rounded-full w-10 h-10 p-3 flex items-center justify-center cursor-pointer">
+              <AddEvent
+                refreshData={() => {
+                  getCurrentEvents();
+                  getUpcommingEvents();
+                  getExpiredEvents();
+                }}
+              />
             </div>
           </div>
 
-          <div className="flex flex-col gap-5 mt-10">
+          {/* table list */}
+          <div className="flex flex-col gap-5 mt-10 col-span-2">
             {/* current events */}
-            <div className="my-10">
-              <h2 className="text-xl font-semibold text-gray-500">
-                Current Events
-              </h2>
+            <div className="my-10 shadow-lg p-5">
               <div className="">
-                <EventList date="current" />
+                <CurrentEventList
+                  eventList={currentEventList}
+                  refreshData={() => getCurrentEvents()}
+                />
               </div>
             </div>
 
             {/* upcoming events */}
-            <div className="my-10">
-              <h2 className="text-xl font-semibold text-gray-500">
-                Upcoming Events
-              </h2>
+            <div className="my-10 shadow-lg p-5">
               <div className="">
-                <EventList date="upcoming" />
+                <UpcomingEventsList
+                  eventList={upcommingEventList}
+                  refreshData={() => getUpcommingEvents()}
+                />
               </div>
             </div>
 
             {/* past events */}
-            <div className="my-10">
-              <h2 className="text-xl font-semibold text-gray-500">
-                Past Events
-              </h2>
+            <div className="my-10 shadow-lg p-5">
               <div className="">
-                <EventList date="expired" />
+                <PastEventsList
+                  eventList={pastEventList}
+                  refreshData={() => getExpiredEvents()}
+                />
               </div>
             </div>
           </div>
