@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -137,11 +137,6 @@ const AllEventsList = ({
             onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
-
-        {/* {filteredEventList?.length > 0 &&
-          filteredEventList?.map((item: any, index: number) => (
-            <p key={index}>{item?.title}</p>
-          ))} */}
       </div>
       {eventList?.length > 0 || filteredEventList?.length > 0 ? (
         <Table>
