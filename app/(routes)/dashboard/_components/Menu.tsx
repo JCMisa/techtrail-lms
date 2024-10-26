@@ -122,7 +122,7 @@ const Menu = () => {
           icon: <Megaphone />,
           label: "Announcements",
           href: "/dashboard/announcements",
-          visible: ["admin"],
+          visible: ["admin", "teacher", "user"],
         },
       ],
     },

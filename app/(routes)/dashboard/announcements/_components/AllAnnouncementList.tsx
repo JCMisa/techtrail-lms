@@ -30,43 +30,43 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import {
-  deleteEventById,
-  filterByTitle,
-  updateEventById,
-} from "@/services/EventService";
-import TableSkeleton from "./TableSkeleton";
 import LoadingDialog from "@/app/_components/LoadingDialog";
+import TableSkeleton from "../../events/_components/TableSkeleton";
+import {
+  deleteAnnouncement,
+  filterAnnouncementsByTitle,
+  updateAnnouncement,
+} from "@/services/AnnouncementService";
+import moment from "moment";
 import { Search, SquarePen, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import moment from "moment";
 
-const AllEventsList = ({
-  eventList,
+const AllAnnouncementList = ({
+  announcementList,
   refreshData,
 }: {
-  eventList: [];
+  announcementList: [];
   refreshData: () => void;
 }) => {
   const [loading, setLoading] = useState(false);
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDescription, setNewDescription] = useState<string>("");
-  const [newStartTime, setNewStartTime] = useState<string>("");
-  const [newEndTime, setNewEndTime] = useState<string>("");
   const [newDate, setNewDate] = useState<string>("");
-  const [filteredEventList, setFilteredEventList] = useState<[] | any>([]);
+  const [filteredAnnouncementList, setFilteredAnnouncementList] = useState<
+    [] | any
+  >([]);
 
-  const deleteEvent = async (eventId: number) => {
+  const deleteAnnouncementById = async (announcementId: number) => {
     setLoading(true);
     try {
-      const result = await deleteEventById(eventId);
+      const result = await deleteAnnouncement(announcementId);
       if (result) {
         toast(
           <p className="font-bold text-sm text-green-500">
-            Event deleted successfully
+            Announcement deleted successfully
           </p>
         );
         refreshData();
@@ -74,7 +74,7 @@ const AllEventsList = ({
     } catch (error) {
       toast(
         <p className="font-bold text-sm text-red-500">
-          Internal error occured while deleting the event
+          Internal error occured while deleting the announcement
         </p>
       );
     } finally {
@@ -82,20 +82,18 @@ const AllEventsList = ({
     }
   };
 
-  const updateEvent = async (eventId: number) => {
+  const updateAnnouncementById = async (announcementId: number) => {
     try {
-      const result = await updateEventById(
-        eventId,
+      const result = await updateAnnouncement(
+        announcementId,
         newTitle,
         newDescription,
-        newStartTime,
-        newEndTime,
         moment(newDate).format("MM-DD-YYYY")
       );
       if (result) {
         toast(
           <p className="font-bold text-sm text-green-500">
-            Event updated successfully
+            Announcement updated successfully
           </p>
         );
         refreshData();
@@ -103,7 +101,7 @@ const AllEventsList = ({
     } catch (error) {
       toast(
         <p className="font-bold text-sm text-red-500">
-          Internal error occured while updating the event
+          Internal error occured while updating the announcement
         </p>
       );
     }
@@ -111,14 +109,14 @@ const AllEventsList = ({
 
   const handleSearch = async (titleQuery: string) => {
     try {
-      const result = await filterByTitle(titleQuery);
+      const result = await filterAnnouncementsByTitle(titleQuery);
       if (result) {
-        setFilteredEventList(result?.data);
+        setFilteredAnnouncementList(result?.data);
       }
     } catch (error) {
       toast(
         <p className="font-bold text-sm text-red-500">
-          Internal error occured while searching events
+          Internal error occured while searching announcements
         </p>
       );
     }
@@ -127,7 +125,9 @@ const AllEventsList = ({
   return (
     <div>
       <div className="flex flex-row items-center justify-between">
-        <h2 className="text-xl font-semibold text-gray-500">All Events</h2>
+        <h2 className="text-xl font-semibold text-gray-500">
+          All Announcements
+        </h2>
         <div className="flex flex-row items-center gap-2 bg-dark px-5 rounded-lg">
           <Search className="w-4 h-4" />
           <Input
@@ -137,43 +137,40 @@ const AllEventsList = ({
           />
         </div>
       </div>
-      {eventList?.length > 0 || filteredEventList?.length > 0 ? (
+      {announcementList?.length > 0 || filteredAnnouncementList?.length > 0 ? (
         <Table>
-          <TableCaption>A list of all the events.</TableCaption>
+          <TableCaption>List of all the announcements.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Title</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead>Time Start</TableHead>
-              <TableHead>Time End</TableHead>
               <TableHead>Created By</TableHead>
               <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {(filteredEventList?.length > 0
-              ? filteredEventList
-              : eventList
+            {(filteredAnnouncementList?.length > 0
+              ? filteredAnnouncementList
+              : announcementList
             )?.map((event: any, index: number) => (
               <TableRow key={event?.id || index}>
                 <TableCell className="font-medium">{event?.title}</TableCell>
                 <TableCell>{event?.date}</TableCell>
-                <TableCell>{event?.startTime}</TableCell>
-                <TableCell>{event?.endTime}</TableCell>
                 <TableCell>{event?.createdBy}</TableCell>
                 <TableCell className="text-right">
                   <div className="flex flex-row items-center gap-5 justify-center">
-                    {/* edit dialog */}
+                    {/* edit button */}
                     <Dialog>
                       <DialogTrigger>
                         <SquarePen className="text-yellow-500 hover:text-yellow-600 cursor-pointer" />
                       </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Edit Event</DialogTitle>
+                          <DialogTitle>Edit Announcement</DialogTitle>
                           <DialogDescription>
-                            Customize your event to fit your specific needs.
-                            Update the information and settings to your liking.
+                            Customize your announcement to fit your specific
+                            needs. Update the information and settings to your
+                            liking.
                           </DialogDescription>
                         </DialogHeader>
                         <div className="flex flex-col gap-3">
@@ -205,43 +202,9 @@ const AllEventsList = ({
                               }
                             />
                           </div>
-                          <div className="flex flex-col md:flex-row justify-center items-center gap-3 w-full">
-                            <div className="flex flex-col gap-1 w-full">
-                              <label className="text-xs text-gray-500">
-                                Time Start
-                              </label>
-                              <Input
-                                type="time"
-                                defaultValue={event?.startTime}
-                                onChange={(e) =>
-                                  setNewStartTime(
-                                    e.target.value
-                                      ? e.target.value
-                                      : event?.startTime
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="flex flex-col gap-1 w-full">
-                              <label className="text-xs text-gray-500">
-                                Time End
-                              </label>
-                              <Input
-                                type="time"
-                                defaultValue={event?.endTime}
-                                onChange={(e) =>
-                                  setNewEndTime(
-                                    e.target.value
-                                      ? e.target.value
-                                      : event?.endTime
-                                  )
-                                }
-                              />
-                            </div>
-                          </div>
                           <div className="flex flex-col gap-1">
                             <label className="text-xs text-gray-500">
-                              Event Date
+                              Announcement Date
                             </label>
                             <Input
                               type="date"
@@ -259,14 +222,17 @@ const AllEventsList = ({
                             <Button variant={"outline"}>Close</Button>
                           </DialogClose>
                           <DialogClose>
-                            <Button onClick={() => updateEvent(event?.id)}>
+                            <Button
+                              onClick={() => updateAnnouncementById(event?.id)}
+                            >
                               Edit
                             </Button>
                           </DialogClose>
                         </div>
                       </DialogContent>
                     </Dialog>
-                    {/* delete dialog */}
+
+                    {/* delete button */}
                     <AlertDialog>
                       <AlertDialogTrigger>
                         <Trash className="text-red-500 hover:text-red-600 cursor-pointer" />
@@ -278,14 +244,14 @@ const AllEventsList = ({
                           </AlertDialogTitle>
                           <AlertDialogDescription>
                             This action cannot be undone. This will permanently
-                            delete your event and remove related data from our
-                            servers.
+                            delete your announcement and remove related data
+                            from our servers.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
-                            onClick={() => deleteEvent(event?.id)}
+                            onClick={() => deleteAnnouncementById(event?.id)}
                           >
                             Continue
                           </AlertDialogAction>
@@ -306,4 +272,4 @@ const AllEventsList = ({
   );
 };
 
-export default AllEventsList;
+export default AllAnnouncementList;

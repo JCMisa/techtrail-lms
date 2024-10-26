@@ -56,8 +56,7 @@ const CurrentEvents = () => {
                     </div>
                   </div>
                   <p className="mt-2 text-gray-400 text-sm">
-                    {event?.description} Lorem ipsum, dolor sit amet consectetur
-                    adipisicing elit. Officiis, cum!
+                    {event?.description}
                   </p>
                 </div>
               ))}

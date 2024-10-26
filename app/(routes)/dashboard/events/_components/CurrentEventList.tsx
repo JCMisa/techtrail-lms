@@ -59,10 +59,6 @@ const CurrentEventList = ({
     }
   };
 
-  const handleSearch = async (titleQuery: string) => {
-    console.log(titleQuery);
-  };
-
   return (
     <div>
       <h2 className="text-xl font-semibold text-gray-500">Current Events</h2>

@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import AddAnnouncement from "../../announcements/_components/AddAnnouncement";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,17 +21,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { LoaderCircle, Trash } from "lucide-react";
-import { deleteAnnouncement } from "@/services/AnnouncementService";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import LoadingDialog from "@/app/_components/LoadingDialog";
+import TableSkeleton from "../../events/_components/TableSkeleton";
+import { deleteAnnouncement } from "@/services/AnnouncementService";
 
-const Announcements = ({
+const PastAnnouncementList = ({
   announcementList,
-  canEdit = false,
   refreshData,
 }: {
-  announcementList?: [] | any;
-  canEdit: boolean;
+  announcementList: [];
   refreshData: () => void;
 }) => {
   const [loading, setLoading] = useState(false);
@@ -52,31 +60,33 @@ const Announcements = ({
   };
 
   return (
-    <div className="bg-dark p-4 rounded-xl">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Announcements</h1>
-        {canEdit && <AddAnnouncement refreshData={refreshData} />}
-      </div>
-      <div className="flex flex-col gap-4 mt-4">
-        {announcementList?.length > 0
-          ? announcementList?.map((item: any, index: number) => (
-              <div
-                key={item.id || index}
-                className="bg-dark-100 rounded-md p-4 relative"
-              >
-                <div className="flex items-center justify-between">
-                  <h2 className="font-semibold text-light">{item.title}</h2>
-                  <span className="text-xs text-gray-300 bg-dark-100 rounded-md px-1 py-1">
-                    {item.date}
-                  </span>
-                </div>
-                <p className="mt-2 text-gray-400 text-sm">{item.description}</p>
-
-                {/* delete button */}
-                {canEdit && (
+    <div>
+      <h2 className="text-xl font-semibold text-gray-500">
+        Past Announcements
+      </h2>
+      {announcementList?.length > 0 ? (
+        <Table>
+          <TableCaption>A list of past announcements.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Title</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Created By</TableHead>
+              <TableHead className="text-right">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {announcementList?.map((event: any, index: number) => (
+              <TableRow key={event?.id || index}>
+                <TableCell className="font-medium">{event?.title}</TableCell>
+                <TableCell>{event?.date}</TableCell>
+                <TableCell>{event?.createdBy}</TableCell>
+                <TableCell className="text-right">
                   <AlertDialog>
                     <AlertDialogTrigger>
-                      <Trash className="w-5 h-5 absolute bottom-3 right-3 text-red-500" />
+                      <Button className="bg-red-500 hover:bg-red-600">
+                        Delete
+                      </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
@@ -92,24 +102,24 @@ const Announcements = ({
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
-                          onClick={() => deleteAnnouncementById(item?.id)}
+                          onClick={() => deleteAnnouncementById(event?.id)}
                         >
-                          {loading ? (
-                            <LoaderCircle className="animate-spin" />
-                          ) : (
-                            "Continue"
-                          )}
+                          Continue
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
-                )}
-              </div>
-            ))
-          : [1, 2, 3].map((item) => <div key={item}>no item</div>)}
-      </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <TableSkeleton />
+      )}
+      <LoadingDialog loading={loading} />
     </div>
   );
 };
 
-export default Announcements;
+export default PastAnnouncementList;
