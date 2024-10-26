@@ -23,6 +23,9 @@ import PastEventsList from "./_components/PastEventsList";
 import UpcomingEventsList from "./_components/UpcomingEventsList";
 import AddEvent from "./_components/AddEvent";
 import AllEventsList from "./_components/AllEventsList";
+import CurrentEvents from "./_components/NonAdminEventsPage/CurrentEvents";
+import UpcommingEvents from "./_components/NonAdminEventsPage/UpcommingEvents";
+import ExpiredEvents from "./_components/NonAdminEventsPage/ExpiredEvents";
 
 const EventsPage = () => {
   const { user } = useUser();
@@ -223,7 +226,11 @@ const EventsPage = () => {
           </div>
         </>
       ) : (
-        <Unauthorized />
+        <div className="p-5 flex flex-col gap-10">
+          <CurrentEvents />
+          <UpcommingEvents />
+          <ExpiredEvents />
+        </div>
       )}
     </div>
   );

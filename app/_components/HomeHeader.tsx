@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const HomeHeader = () => {
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
   const router = useRouter();
 
   return (
@@ -32,7 +32,7 @@ const HomeHeader = () => {
         </div>
 
         <div className="flex w-1/2 justify-end content-center">
-          {user ? (
+          {isSignedIn ? (
             <div className="flex items-center gap-1">
               <UserButton />
               <div className="hidden sm:flex flex-col">

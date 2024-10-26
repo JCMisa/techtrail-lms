@@ -110,7 +110,7 @@ const Menu = () => {
           icon: <Calendar />,
           label: "Events",
           href: "/dashboard/events",
-          visible: ["admin"],
+          visible: ["admin", "teacher", "user"],
         },
         {
           icon: <MessageCircle />,
@@ -121,7 +121,7 @@ const Menu = () => {
         {
           icon: <Megaphone />,
           label: "Announcements",
-          href: "/list/announcements",
+          href: "/dashboard/announcements",
           visible: ["admin"],
         },
       ],

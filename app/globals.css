@@ -126,6 +126,18 @@ body {
   background: -webkit-linear-gradient(16deg, #7a1cac, #1caca7);
 }
 
+.event-card-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.event-card-scroll::-webkit-scrollbar-track {
+  display: none;
+}
+
+.event-card-scroll::-webkit-scrollbar-thumb {
+  display: none;
+}
+
 .dashboard-card-scroll::-webkit-scrollbar {
   display: none;
 }
