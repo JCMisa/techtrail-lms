@@ -4,13 +4,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { ArrowLeftCircle, LoaderCircle } from "lucide-react";
+import { ArrowLeftCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { findUserByEmail } from "@/services/UserService";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
-import Unauthorized from "../_components/Unauthorized";
 import {
   getAllCurrentEvents,
   getAllEvents,

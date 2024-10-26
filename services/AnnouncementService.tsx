@@ -31,6 +31,15 @@ export const getAllAnnouncements = async () => {
   }
 };
 
+export const getAllLatestAnnouncements = async (limit: number) => {
+  try {
+    const data = await axios.get(api + `latest/${limit}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const getAnnouncementById = async (announcementId: number) => {
   try {
     const data = await axios.get(api + announcementId);

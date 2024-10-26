@@ -20,6 +20,7 @@ import EventCalendar from "./_components/EventCalendar";
 import Announcements from "./_components/Announcements";
 import { getAllCurrentEvents } from "@/services/EventService";
 import moment from "moment";
+import { getAllLatestAnnouncements } from "@/services/AnnouncementService";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
@@ -36,6 +37,7 @@ const AdminDashboardPage = () => {
     createdAt: string;
     role: string;
   }>();
+  const [latestAnnouncements, setLatestAnnouncements] = useState([]);
 
   const getUserByEmail = async () => {
     setLoading(true);
@@ -80,6 +82,25 @@ const AdminDashboardPage = () => {
     getCurrentEvents();
   }, []);
 
+  const getLatestAnnouncements = async () => {
+    try {
+      const result = await getAllLatestAnnouncements(5);
+      if (result) {
+        setLatestAnnouncements(result?.data);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching latest announcements
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    getLatestAnnouncements();
+  }, []);
+
   return (
     <div>
       {loggedInUser?.role === "admin" ? (
@@ -118,7 +139,11 @@ const AdminDashboardPage = () => {
               canEdit={true}
               refreshData={() => getCurrentEvents()}
             />
-            <Announcements />
+            <Announcements
+              announcementList={latestAnnouncements}
+              refreshData={() => getLatestAnnouncements()}
+              canEdit={true}
+            />
           </div>
         </div>
       ) : (
