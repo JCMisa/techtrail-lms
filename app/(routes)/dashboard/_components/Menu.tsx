@@ -79,13 +79,13 @@ const Menu = () => {
         {
           icon: <Plus />,
           label: "Create",
-          href: "/course/create",
+          href: "/dashboard/courses/create",
           visible: ["admin", "teacher"],
         },
         {
           icon: <BookOpenText />,
           label: "Courses",
-          href: "/courses",
+          href: "/dashboard/courses",
           visible: ["admin", "teacher", "user"],
         },
         {
@@ -113,12 +113,6 @@ const Menu = () => {
           visible: ["admin", "teacher", "user"],
         },
         {
-          icon: <MessageCircle />,
-          label: "Messages",
-          href: "/list/messages",
-          visible: ["admin", "teacher", "user"],
-        },
-        {
           icon: <Megaphone />,
           label: "Announcements",
           href: "/dashboard/announcements",
@@ -139,12 +133,6 @@ const Menu = () => {
           icon: <Settings />,
           label: "Settings",
           href: "/dashboard/settings",
-          visible: ["admin", "teacher", "user"],
-        },
-        {
-          icon: <LogOut />,
-          label: "Logout",
-          href: "/logout",
           visible: ["admin", "teacher", "user"],
         },
       ],
