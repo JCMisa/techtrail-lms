@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
+// const { withUt } = require("uploadthing/tw");
 
 const config: Config = {
   darkMode: ["class"],

@@ -68,7 +68,7 @@ const TitleForm = ({ initialData, courseId, refreshData }: TitpleFormProps) => {
         </Button>
       </div>
       {!isEditing ? (
-        <p className="text-sm mt-2">{initialData?.title}</p>
+        <p className="text-xs mt-2">{initialData?.title}</p>
       ) : (
         <div className="space-y-4 mt-4 flex flex-col">
           <div className="flex flex-col gap-1">

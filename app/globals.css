@@ -529,3 +529,5 @@ body {
   border-radius: 27% 73% 29% 71% / 76% 25% 75% 24%;
   background: -webkit-linear-gradient(16deg, #0ec4e8, #9e30a9);
 }
+
+/* @import "~@uploadthing/react/styles.css"; */

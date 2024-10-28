@@ -17,6 +17,7 @@ import { IconBadge } from "@/components/custom/icon-badge";
 import { LayoutDashboard } from "lucide-react";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
+import ImageForm from "./_components/ImageForm";
 
 interface PROPS {
   params: {
@@ -137,6 +138,12 @@ const CourseLayoutPage = ({ params }: PROPS) => {
                   />
 
                   <DescriptionForm
+                    initialData={courseModel}
+                    courseId={courseModel?.courseId}
+                    refreshData={() => getCourseById()}
+                  />
+
+                  <ImageForm
                     initialData={courseModel}
                     courseId={courseModel?.courseId}
                     refreshData={() => getCourseById()}
