@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import Unauthorized from "../../../_components/Unauthorized";
 import LoadingDialog from "@/app/_components/LoadingDialog";
 import { db } from "@/utils/db";
-import { course } from "@/utils/schema";
+import { category, course } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
 import Empty from "@/app/_components/Empty";
 import { IconBadge } from "@/components/custom/icon-badge";
@@ -18,6 +18,7 @@ import { LayoutDashboard } from "lucide-react";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
 import ImageForm from "./_components/ImageForm";
+import CategoryForm from "./_components/CategoryForm";
 
 interface PROPS {
   params: {
@@ -39,6 +40,7 @@ const CourseLayoutPage = ({ params }: PROPS) => {
   }>();
   const [loading, setLoading] = useState(false);
   const [courseModel, setCourseModel] = useState<any>();
+  const [categories, setCategories] = useState<[] | any>();
 
   const getUserByEmail = async () => {
     setLoading(true);
@@ -98,6 +100,25 @@ const CourseLayoutPage = ({ params }: PROPS) => {
     user && getCourseById();
   }, [user]);
 
+  const getCourseCategories = async () => {
+    try {
+      const result = await db.select().from(category);
+      if (result) {
+        setCategories(result);
+      }
+    } catch {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching all categories
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    getCourseCategories();
+  }, []);
+
   const requiredFields = [
     courseModel && courseModel?.title,
     courseModel && courseModel?.description,
@@ -147,6 +168,13 @@ const CourseLayoutPage = ({ params }: PROPS) => {
                     initialData={courseModel}
                     courseId={courseModel?.courseId}
                     refreshData={() => getCourseById()}
+                  />
+
+                  <CategoryForm
+                    initialData={courseModel}
+                    courseId={courseModel?.courseId}
+                    refreshData={() => getCourseById()}
+                    options={categories && categories}
                   />
                 </div>
               </div>
