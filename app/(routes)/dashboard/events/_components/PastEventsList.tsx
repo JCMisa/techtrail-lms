@@ -24,8 +24,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { deleteEventById } from "@/services/EventService";
-import TableSkeleton from "./TableSkeleton";
 import LoadingDialog from "@/app/_components/LoadingDialog";
+import Empty from "@/app/_components/Empty";
 
 const PastEventsList = ({
   eventList,
@@ -121,7 +121,10 @@ const PastEventsList = ({
           </TableBody>
         </Table>
       ) : (
-        <TableSkeleton />
+        <Empty
+          header="No Past Events Available"
+          subheader="Please wait while we retrieve data from the database"
+        />
       )}
       <LoadingDialog loading={loading} />
     </div>
