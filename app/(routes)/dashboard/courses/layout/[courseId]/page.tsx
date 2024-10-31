@@ -14,11 +14,12 @@ import { category, course } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
 import Empty from "@/app/_components/Empty";
 import { IconBadge } from "@/components/custom/icon-badge";
-import { LayoutDashboard } from "lucide-react";
+import { CircleDollarSign, LayoutDashboard, ListCheck } from "lucide-react";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
 import ImageForm from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
+import PriceForm from "./_components/PriceForm";
 
 interface PROPS {
   params: {
@@ -176,6 +177,28 @@ const CourseLayoutPage = ({ params }: PROPS) => {
                     refreshData={() => getCourseById()}
                     options={categories && categories}
                   />
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <div className="flex items-center gap-x-2">
+                      <IconBadge icon={ListCheck} />
+                      <h2 className="text-xl">Course Chapters</h2>
+                    </div>
+                    <div>todo: chapters</div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-x-2">
+                      <IconBadge icon={CircleDollarSign} />
+                      <h2 className="text-xl">Sell your course</h2>
+                    </div>
+                    <PriceForm
+                      initialData={courseModel}
+                      courseId={courseModel?.courseId}
+                      refreshData={() => getCourseById()}
+                    />
+                  </div>
                 </div>
               </div>
             </>
