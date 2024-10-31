@@ -10,16 +10,22 @@ import { toast } from "sonner";
 import Unauthorized from "../../../_components/Unauthorized";
 import LoadingDialog from "@/app/_components/LoadingDialog";
 import { db } from "@/utils/db";
-import { category, course } from "@/utils/schema";
+import { attachment, category, course } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
 import Empty from "@/app/_components/Empty";
 import { IconBadge } from "@/components/custom/icon-badge";
-import { CircleDollarSign, LayoutDashboard, ListCheck } from "lucide-react";
+import {
+  CircleDollarSign,
+  File,
+  LayoutDashboard,
+  ListCheck,
+} from "lucide-react";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
 import ImageForm from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
 import PriceForm from "./_components/PriceForm";
+import AttachmentForm from "./_components/AttachmentForm";
 
 interface PROPS {
   params: {
@@ -42,6 +48,7 @@ const CourseLayoutPage = ({ params }: PROPS) => {
   const [loading, setLoading] = useState(false);
   const [courseModel, setCourseModel] = useState<any>();
   const [categories, setCategories] = useState<[] | any>();
+  const [attachmentModel, setAttachmentModel] = useState<any>([]);
 
   const getUserByEmail = async () => {
     setLoading(true);
@@ -99,7 +106,39 @@ const CourseLayoutPage = ({ params }: PROPS) => {
 
   useEffect(() => {
     user && getCourseById();
-  }, [user]);
+  }, [user, params]);
+
+  const getAllCourseAttachments = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(attachment)
+        .where(
+          and(
+            eq(attachment?.courseId, params?.courseId),
+            eq(
+              attachment?.updatedBy,
+              user?.primaryEmailAddress?.emailAddress as string
+            )
+          )
+        );
+
+      if (result) {
+        setAttachmentModel(result);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fething the course attachments
+        </p>
+      );
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    user && getAllCourseAttachments();
+  }, [user, params]);
 
   const getCourseCategories = async () => {
     try {
@@ -197,6 +236,18 @@ const CourseLayoutPage = ({ params }: PROPS) => {
                       initialData={courseModel}
                       courseId={courseModel?.courseId}
                       refreshData={() => getCourseById()}
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-x-2">
+                      <IconBadge icon={File} />
+                      <h2 className="text-xl">Resources & Attachments</h2>
+                    </div>
+                    <AttachmentForm
+                      initialData={attachmentModel}
+                      courseId={courseModel?.courseId}
+                      refreshData={() => getAllCourseAttachments()}
                     />
                   </div>
                 </div>

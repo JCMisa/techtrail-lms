@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
@@ -80,7 +81,7 @@ const CategoryForm = ({
   };
 
   useEffect(() => {
-    getCategoryLabel();
+    initialData?.categoryId && getCategoryLabel();
   }, [initialData?.categoryId]);
 
   return (

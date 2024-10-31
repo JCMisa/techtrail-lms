@@ -2,7 +2,6 @@ import { relations } from "drizzle-orm";
 import {
   boolean,
   decimal,
-  integer,
   pgTable,
   serial,
   text,
@@ -35,10 +34,9 @@ export const attachment = pgTable("attachment", {
   id: serial("id").primaryKey(),
   name: varchar("name"),
   url: text("url").notNull(),
-  courseId: integer("courseId"),
-
   createdAt: varchar("createdAt"),
   updatedBy: varchar("updatedBy"),
+  courseId: varchar("courseId"),
 });
 
 // relationships
