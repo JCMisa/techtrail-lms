@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import {
   boolean,
   decimal,
+  integer,
   pgTable,
   serial,
   text,
@@ -37,6 +38,56 @@ export const attachment = pgTable("attachment", {
   createdAt: varchar("createdAt"),
   updatedBy: varchar("updatedBy"),
   courseId: varchar("courseId"),
+});
+
+export const chapter = pgTable("chapter", {
+  id: serial("id").primaryKey(),
+  chapterId: varchar("chapterId"),
+  title: varchar("title"),
+  description: varchar("description"),
+  videoUrl: varchar("videoUrl"),
+  position: integer("position"),
+  isPublished: boolean("isPublished").default(false),
+  isFree: boolean("isFree").default(false),
+  courseId: varchar("courseId"),
+  createdAt: varchar("createdAt"),
+  updatedAt: varchar("updatedAt"),
+  createdBy: varchar("createdBy"),
+});
+
+export const muxData = pgTable("muxData", {
+  id: serial("id").primaryKey(),
+  assetId: varchar("assetId"),
+  playbackId: varchar("playbackId"),
+  chapterId: varchar("chapterId"),
+});
+
+export const userProgress = pgTable("userProgress", {
+  id: serial("id").primaryKey(),
+  userId: varchar("userId"),
+  userEmail: varchar("userEmail"),
+  chapterId: varchar("chapterId"),
+  isCompleted: boolean("isCompleted").default(false),
+  createdAt: varchar("createdAt"),
+  updatedAt: varchar("updatedAt"),
+});
+
+export const purchase = pgTable("purchase", {
+  id: serial("id").primaryKey(),
+  userId: varchar("userId"),
+  userEmail: varchar("userEmail"),
+  courseId: varchar("courseId"),
+  createdAt: varchar("createdAt"),
+  updatedAt: varchar("updatedAt"),
+});
+
+export const stripeCustomer = pgTable("stripeCustomer", {
+  id: serial("id").primaryKey(),
+  userId: varchar("userId"),
+  userEmail: varchar("userEmail"),
+  stripeCustomerId: varchar("stripeCustomerId"),
+  createdAt: varchar("createdAt"),
+  updatedAt: varchar("updatedAt"),
 });
 
 // relationships

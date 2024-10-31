@@ -10,8 +10,8 @@ import { toast } from "sonner";
 import Unauthorized from "../../../_components/Unauthorized";
 import LoadingDialog from "@/app/_components/LoadingDialog";
 import { db } from "@/utils/db";
-import { attachment, category, course } from "@/utils/schema";
-import { and, eq } from "drizzle-orm";
+import { attachment, category, chapter, course } from "@/utils/schema";
+import { and, asc, eq } from "drizzle-orm";
 import Empty from "@/app/_components/Empty";
 import { IconBadge } from "@/components/custom/icon-badge";
 import {
@@ -26,6 +26,7 @@ import ImageForm from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
 import PriceForm from "./_components/PriceForm";
 import AttachmentForm from "./_components/AttachmentForm";
+import ChaptersForm from "./_components/ChaptersForm";
 
 interface PROPS {
   params: {
@@ -49,6 +50,7 @@ const CourseLayoutPage = ({ params }: PROPS) => {
   const [courseModel, setCourseModel] = useState<any>();
   const [categories, setCategories] = useState<[] | any>();
   const [attachmentModel, setAttachmentModel] = useState<any>([]);
+  const [courseChapters, setCourseChapters] = useState<any>([]);
 
   const getUserByEmail = async () => {
     setLoading(true);
@@ -140,6 +142,39 @@ const CourseLayoutPage = ({ params }: PROPS) => {
     user && getAllCourseAttachments();
   }, [user, params]);
 
+  const getAllCourseChapters = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(chapter)
+        .where(
+          and(
+            eq(chapter?.courseId, params?.courseId),
+            eq(
+              chapter?.createdBy,
+              user?.primaryEmailAddress?.emailAddress as string
+            )
+          )
+        )
+        .orderBy(asc(chapter.position));
+
+      if (result) {
+        setCourseChapters(result);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fething the course chapters
+        </p>
+      );
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    user && getAllCourseChapters();
+  }, [user, params]);
+
   const getCourseCategories = async () => {
     try {
       const result = await db.select().from(category);
@@ -165,6 +200,7 @@ const CourseLayoutPage = ({ params }: PROPS) => {
     courseModel && courseModel?.imageUrl,
     courseModel && courseModel?.price,
     courseModel && courseModel?.categoryId,
+    courseChapters && courseChapters?.length > 0,
   ];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
@@ -224,7 +260,11 @@ const CourseLayoutPage = ({ params }: PROPS) => {
                       <IconBadge icon={ListCheck} />
                       <h2 className="text-xl">Course Chapters</h2>
                     </div>
-                    <div>todo: chapters</div>
+                    <ChaptersForm
+                      initialData={courseChapters}
+                      courseId={courseModel?.courseId}
+                      refreshData={() => getAllCourseChapters()}
+                    />
                   </div>
 
                   <div>
