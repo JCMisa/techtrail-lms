@@ -530,4 +530,9 @@ body {
   background: -webkit-linear-gradient(16deg, #0ec4e8, #9e30a9);
 }
 
+/* change the quill rich text editor font size */
+.ql-container {
+  font-size: 11px !important;
+}
+
 /* @import "~@uploadthing/react/styles.css"; */

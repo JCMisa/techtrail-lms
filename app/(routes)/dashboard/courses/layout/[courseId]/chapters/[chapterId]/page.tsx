@@ -17,6 +17,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ChapterTitleForm from "./_components/ChapterTitleForm";
+import ChapterDescriptionForm from "./_components/ChapterDescriptionForm";
 
 interface PROPS {
   params: {
@@ -151,6 +152,12 @@ const ChapterEdit = ({ params }: PROPS) => {
                     <h2 className="text-xl">Customize your chapter</h2>
                   </div>
                   <ChapterTitleForm
+                    initialData={chapterRecord}
+                    courseId={params?.courseId}
+                    chapterId={params?.chapterId}
+                    refreshData={() => getChapter()}
+                  />
+                  <ChapterDescriptionForm
                     initialData={chapterRecord}
                     courseId={params?.courseId}
                     chapterId={params?.chapterId}
