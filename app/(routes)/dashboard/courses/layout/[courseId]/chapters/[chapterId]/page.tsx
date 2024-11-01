@@ -12,12 +12,13 @@ import { db } from "@/utils/db";
 import { chapter } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq } from "drizzle-orm";
-import { ArrowLeft, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, Eye, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ChapterTitleForm from "./_components/ChapterTitleForm";
 import ChapterDescriptionForm from "./_components/ChapterDescriptionForm";
+import ChapterAccessForm from "./_components/ChapterAccessForm";
 
 interface PROPS {
   params: {
@@ -158,6 +159,18 @@ const ChapterEdit = ({ params }: PROPS) => {
                     refreshData={() => getChapter()}
                   />
                   <ChapterDescriptionForm
+                    initialData={chapterRecord}
+                    courseId={params?.courseId}
+                    chapterId={params?.chapterId}
+                    refreshData={() => getChapter()}
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-x-2">
+                    <IconBadge icon={Eye} />
+                    <h2 className="text-xl">Access Settings</h2>
+                  </div>
+                  <ChapterAccessForm
                     initialData={chapterRecord}
                     courseId={params?.courseId}
                     chapterId={params?.chapterId}
