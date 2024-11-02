@@ -133,7 +133,7 @@ const ChaptersForm = ({
       {isCreating && (
         <div className="space-y-4 mt-4 flex flex-col">
           <div className="flex flex-col gap-1">
-            <p className="text-xs text-gray-500">Chapter description</p>
+            <p className="text-xs text-gray-500">Chapter Title</p>
             <Input
               placeholder="e.g. Introduction to the course"
               onChange={(e) => setChapterTitle(e.target.value)}

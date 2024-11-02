@@ -64,7 +64,6 @@ const ChapterDescriptionForm = ({
   };
 
   const handleQuillChange = (value: string) => {
-    console.log(value);
     setUpdatedDescription(value);
   };
 
