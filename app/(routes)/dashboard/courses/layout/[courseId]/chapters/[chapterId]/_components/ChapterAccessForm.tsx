@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Preview } from "@/components/custom/preview";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { db } from "@/utils/db";
 import { chapter } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
-import { LoaderCircle, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -24,13 +23,10 @@ const ChapterAccessForm = ({
   refreshData,
 }: ChapterAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [updatedAccess, setUpdatedAccess] = useState<boolean>();
-  const [loading, setLoading] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const onSubmit = async (value: any) => {
-    setLoading(true);
     try {
       const result = await db
         .update(chapter)
@@ -55,8 +51,6 @@ const ChapterAccessForm = ({
           Internal error occured while updating chapter access
         </p>
       );
-    } finally {
-      setLoading(false);
     }
   };
 
