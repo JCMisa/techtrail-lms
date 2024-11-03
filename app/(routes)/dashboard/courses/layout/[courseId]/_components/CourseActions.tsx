@@ -20,6 +20,7 @@ import { chapter, course } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
+import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 interface CourseActionsProps {
   disabled: boolean;
@@ -36,6 +37,7 @@ const CourseActions = ({
 }: CourseActionsProps) => {
   const { user } = useUser();
   const router = useRouter();
+  const confetti = useConfettiStore();
 
   const [loading, setLoading] = useState(false);
 
@@ -130,6 +132,7 @@ const CourseActions = ({
               Course published successfully
             </p>
           );
+          confetti.onOpen();
           refreshData();
         }
       }
