@@ -56,7 +56,7 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        border: "#17141c",
+        border: "#231f26",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {

@@ -17,6 +17,7 @@ import {
   MessageCircle,
   Plus,
   Settings,
+  Telescope,
   UserRound,
   UserRoundPen,
 } from "lucide-react";
@@ -77,6 +78,12 @@ const Menu = () => {
           visible: ["admin", "teacher", "user"],
         },
         {
+          icon: <Telescope />,
+          label: "Browse",
+          href: `/dashboard/browse`,
+          visible: ["admin", "teacher", "user"],
+        },
+        {
           icon: <Plus />,
           label: "Create",
           href: "/dashboard/courses/create",
@@ -86,7 +93,7 @@ const Menu = () => {
           icon: <BookOpenText />,
           label: "Courses",
           href: "/dashboard/courses",
-          visible: ["admin", "teacher", "user"],
+          visible: ["admin", "teacher"],
         },
         {
           icon: <Brain />,

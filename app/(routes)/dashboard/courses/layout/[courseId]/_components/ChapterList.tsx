@@ -91,12 +91,22 @@ const ChapterList = ({ items, onReorder, onEdit }: ChapterListProps) => {
                       </div>
                       {chapter?.title}
                       <div className="ml-auto pr-2 flex items-center gap-x-2">
-                        {chapter?.isFree && <Badge>Free</Badge>}
+                        {chapter?.isFree && (
+                          <Badge
+                            className={cn(
+                              "bg-dark",
+                              chapter?.isPublished &&
+                                "bg-emerald-600 hover:bg-emerald-700"
+                            )}
+                          >
+                            Free
+                          </Badge>
+                        )}
                         <Badge
                           className={cn(
                             "bg-dark",
                             chapter?.isPublished &&
-                              "bg-emerald-600 hover:bg-emerald-700"
+                              "bg-primary hover:bg-primary-200"
                           )}
                         >
                           {chapter?.isPublished ? "Published" : "Draft"}

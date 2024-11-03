@@ -123,7 +123,7 @@ const CourseReviewPage = () => {
 
   return (
     <div className="mt-10">
-      <h2 className="text-4xl text-primary font-medium text-center">
+      <h2 className="text-4xl font-medium text-center">
         Create Course Reviewer
       </h2>
       {/* stepper */}
