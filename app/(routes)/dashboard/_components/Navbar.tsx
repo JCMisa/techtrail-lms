@@ -4,11 +4,15 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { useDebounce } from "@/hooks/use-debounce";
 import { findUserByEmail } from "@/services/UserService";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { Megaphone, MessageCircleMore, Search } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import qs from "query-string";
+import SearchInput from "./SearchInput";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -47,14 +51,6 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between p-4 shadow-lg">
       {/* search bar */}
-      <div className="hidden md:flex items-center px-4 bg-dark rounded-lg ring-[1.5px] ring-primary-100">
-        <Search className="w-5 h-5" />
-        <Input
-          placeholder="Search..."
-          type="text"
-          className="border-none bg-transparent w-[200px] p-2 outline-none"
-        />
-      </div>
 
       {/* icons and user */}
       <div className="flex items-center gap-6 justify-end w-full">
