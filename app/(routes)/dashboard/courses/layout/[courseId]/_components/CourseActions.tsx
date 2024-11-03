@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { db } from "@/utils/db";
-import { chapter, course } from "@/utils/schema";
+import { attachment, chapter, course } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
@@ -50,25 +50,31 @@ const CourseActions = ({
         .where(eq(chapter.courseId, courseId));
 
       if (deleteChapterResult) {
-        const deleteCourseResult = await db
-          .delete(course)
-          .where(
-            and(
-              eq(course.courseId, courseId),
-              eq(
-                course.userEmail,
-                user?.primaryEmailAddress?.emailAddress as string
-              )
-            )
-          );
+        const deleteCourseAttachmentsResult = await db
+          .delete(attachment)
+          .where(eq(attachment.courseId, courseId));
 
-        if (deleteCourseResult) {
-          toast(
-            <p className="font-bold text-sm text-green-500">
-              Course deleted successfully
-            </p>
-          );
-          router.replace(`/dashboard/courses`);
+        if (deleteCourseAttachmentsResult) {
+          const deleteCourseResult = await db
+            .delete(course)
+            .where(
+              and(
+                eq(course.courseId, courseId),
+                eq(
+                  course.userEmail,
+                  user?.primaryEmailAddress?.emailAddress as string
+                )
+              )
+            );
+
+          if (deleteCourseResult) {
+            toast(
+              <p className="font-bold text-sm text-green-500">
+                Course deleted successfully
+              </p>
+            );
+            router.replace(`/dashboard/courses`);
+          }
         }
       }
     } catch {
