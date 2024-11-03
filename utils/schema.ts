@@ -55,13 +55,6 @@ export const chapter = pgTable("chapter", {
   createdBy: varchar("createdBy"),
 });
 
-export const muxData = pgTable("muxData", {
-  id: serial("id").primaryKey(),
-  assetId: varchar("assetId"),
-  playbackId: varchar("playbackId"),
-  chapterId: varchar("chapterId"),
-});
-
 export const userProgress = pgTable("userProgress", {
   id: serial("id").primaryKey(),
   userId: varchar("userId"),

@@ -58,7 +58,10 @@ const ChapterVideoForm = ({
   return (
     <div className="mt-6 border bg-dark rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        <p>Chapter Video</p>
+        <p>
+          Chapter Video{" "}
+          <span className="text-sm italic text-gray-500">(optional)</span>
+        </p>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && "Cancel"}
           {!isEditing && !initialData?.videoUrl && (

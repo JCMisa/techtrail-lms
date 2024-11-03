@@ -9,7 +9,7 @@ import LoadingDialog from "@/app/_components/LoadingDialog";
 import { IconBadge } from "@/components/custom/icon-badge";
 import { findUserByEmail } from "@/services/UserService";
 import { db } from "@/utils/db";
-import { chapter } from "@/utils/schema";
+import { chapter, course } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq } from "drizzle-orm";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
@@ -44,6 +44,7 @@ const ChapterEdit = ({ params }: PROPS) => {
   }>();
   const [loading, setLoading] = useState(false);
   const [chapterRecord, setChapterRecord] = useState<any>();
+  const [courseRecord, setCourseRecord] = useState<any>();
 
   const getUserByEmail = async () => {
     setLoading(true);
@@ -105,6 +106,41 @@ const ChapterEdit = ({ params }: PROPS) => {
     user && getChapter();
   }, [user, params]);
 
+  // get course record based on the params?.courseId for ai chapter description generator purpose
+  const getCourse = async () => {
+    setLoading(true);
+    try {
+      const result = await db
+        .select()
+        .from(course)
+        .where(
+          and(
+            eq(course.courseId, params?.courseId),
+            eq(
+              course.userEmail,
+              user?.primaryEmailAddress?.emailAddress as string
+            )
+          )
+        );
+
+      if (result) {
+        setCourseRecord(result[0]);
+      }
+    } catch {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching the course
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    user && getCourse();
+  }, [user, params]);
+
   // get all required fields to be filled inside a single chapter
   const requiredFields = [
     chapterRecord && chapterRecord?.title,
@@ -133,7 +169,7 @@ const ChapterEdit = ({ params }: PROPS) => {
               {!chapterRecord?.isPublished && (
                 <Banner
                   variant={"warning"}
-                  label="This chapter is unpublished. It will not be visible in the course"
+                  label="This chapter is unpublished. It will not be visible in the course."
                 />
               )}
               <div className="p-6">
@@ -182,6 +218,7 @@ const ChapterEdit = ({ params }: PROPS) => {
                       />
                       <ChapterDescriptionForm
                         initialData={chapterRecord}
+                        courseRecord={courseRecord}
                         courseId={params?.courseId}
                         chapterId={params?.chapterId}
                         refreshData={() => getChapter()}

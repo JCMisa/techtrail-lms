@@ -3,17 +3,20 @@ import { Editor } from "@/components/custom/editor";
 import { Preview } from "@/components/custom/preview";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { chatSession } from "@/utils/AiModel";
 import { db } from "@/utils/db";
 import { chapter } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
-import { LoaderCircle, Pencil } from "lucide-react";
+import { Brain, LoaderCircle, Pencil } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
 interface ChapterDescriptionFormProps {
   initialData: {
+    title: string;
     description: string;
   };
+  courseRecord: any;
   courseId: string;
   chapterId: string;
   refreshData: () => void;
@@ -21,6 +24,7 @@ interface ChapterDescriptionFormProps {
 
 const ChapterDescriptionForm = ({
   initialData,
+  courseRecord,
   courseId,
   chapterId,
   refreshData,
@@ -28,8 +32,33 @@ const ChapterDescriptionForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const [updatedDescription, setUpdatedDescription] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [aiOutputChapterDescription, setAiOutputChapterDescription] = useState<
+    string | null
+  >("");
 
   const toggleEdit = () => setIsEditing((current) => !current);
+
+  const generateAiChapterDescription = async () => {
+    try {
+      setLoading(true);
+
+      const PROMPT = `based on the chapter title named: ${initialData?.title} under the course named: ${courseRecord?.title}, generate a object with property named aiChapterDescription with a value of course chapter description in string format that will explain the chapter in a professional manner, add list of ideas if possible, make it in JSON format.`;
+      const result = await chatSession.sendMessage(PROMPT);
+      if (result) {
+        setAiOutputChapterDescription(
+          JSON.parse(result?.response?.text())?.aiChapterDescription
+        );
+      }
+    } catch {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while generate AI response
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onSubmit = async () => {
     setLoading(true);
@@ -97,8 +126,30 @@ const ChapterDescriptionForm = ({
       ) : (
         <div className="space-y-4 mt-4 flex flex-col">
           <div className="flex flex-col gap-1">
-            <p className="text-xs text-gray-500">Chapter description</p>
+            <div className="flex flex-row items-center justify-between">
+              <p className="text-xs text-gray-500">Chapter description</p>
+              <Button onClick={() => generateAiChapterDescription()}>
+                {loading ? (
+                  <LoaderCircle className="animate-spin" />
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Brain />
+                    <p className="text-sm">Ask AI</p>
+                  </div>
+                )}
+              </Button>
+            </div>
             <Editor onChange={handleQuillChange} value={updatedDescription} />
+            {aiOutputChapterDescription ? (
+              <p className="text-xs text-gray-500">
+                {aiOutputChapterDescription}
+              </p>
+            ) : (
+              <p className="text-xs text-gray-500">
+                Copy and paste the AI generated chapter description that will be
+                shown here after clicking the Ask AI button
+              </p>
+            )}
           </div>
           <div className="flex items-center gap-x-2">
             <Button

@@ -50,7 +50,10 @@ const ImageForm = ({ initialData, courseId, refreshData }: ImageFormProps) => {
   return (
     <div className="mt-6 border bg-dark rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        <p>Course Image</p>
+        <p>
+          Course Image{" "}
+          <span className="text-sm text-gray-500 italic">(optional)</span>
+        </p>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && "Cancel"}
           {!isEditing && !initialData?.imageUrl && (

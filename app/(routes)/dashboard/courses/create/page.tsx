@@ -15,6 +15,7 @@ import { findUserByEmail } from "@/services/UserService";
 import Unauthorized from "../../_components/Unauthorized";
 import { useRouter } from "next/navigation";
 import uuid4 from "uuid4";
+import moment from "moment";
 
 const CreateCoursePage = () => {
   const { user } = useUser();
@@ -65,6 +66,8 @@ const CreateCoursePage = () => {
         userId: user?.id,
         userEmail: user?.primaryEmailAddress?.emailAddress,
         title: title,
+        createdAt: moment().format("MM-DD-YYYY"),
+        updatedBy: user?.primaryEmailAddress?.emailAddress,
       });
 
       if (data) {
