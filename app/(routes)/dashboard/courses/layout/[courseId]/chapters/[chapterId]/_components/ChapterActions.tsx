@@ -25,6 +25,7 @@ interface ChapterActionsProps {
   courseId: string;
   chapterId: string;
   isPublished: boolean;
+  refreshData: () => void;
 }
 
 const ChapterActions = ({
@@ -32,6 +33,7 @@ const ChapterActions = ({
   courseId,
   chapterId,
   isPublished,
+  refreshData,
 }: ChapterActionsProps) => {
   const router = useRouter();
 
@@ -66,10 +68,68 @@ const ChapterActions = ({
     }
   };
 
+  const handlePublish = async () => {
+    try {
+      setLoading(true);
+
+      if (isPublished) {
+        const resultUnpublish = await db
+          .update(chapter)
+          .set({
+            isPublished: false,
+          })
+          .where(
+            and(
+              eq(chapter.courseId, courseId),
+              eq(chapter.chapterId, chapterId)
+            )
+          );
+
+        if (resultUnpublish) {
+          toast(
+            <p className="font-bold text-sm text-green-500">
+              Chapter unpublished successfully
+            </p>
+          );
+          refreshData();
+        }
+      } else {
+        const resultPublish = await db
+          .update(chapter)
+          .set({
+            isPublished: true,
+          })
+          .where(
+            and(
+              eq(chapter.courseId, courseId),
+              eq(chapter.chapterId, chapterId)
+            )
+          );
+
+        if (resultPublish) {
+          toast(
+            <p className="font-bold text-sm text-green-500">
+              Chapter published successfully
+            </p>
+          );
+          refreshData();
+        }
+      }
+    } catch {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while publishing chapter
+        </p>
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex items-center gap-x-2">
       <Button
-        onClick={() => {}}
+        onClick={() => handlePublish()}
         disabled={disabled}
         variant={"outline"}
         size={"sm"}

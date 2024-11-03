@@ -95,7 +95,8 @@ const ChapterList = ({ items, onReorder, onEdit }: ChapterListProps) => {
                         <Badge
                           className={cn(
                             "bg-dark",
-                            chapter?.isPublished && "bg-primary-100"
+                            chapter?.isPublished &&
+                              "bg-emerald-600 hover:bg-emerald-700"
                           )}
                         >
                           {chapter?.isPublished ? "Published" : "Draft"}
