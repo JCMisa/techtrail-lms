@@ -5,7 +5,7 @@
 
 import { db } from "@/utils/db";
 import { category, course } from "@/utils/schema";
-import { asc, desc, eq, ilike, or } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, or } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import Categories from "./_components/Categories";
 import SearchInput from "../_components/SearchInput";
@@ -47,15 +47,17 @@ const BrowseCourses = () => {
         .select()
         .from(course)
         .where(
-          or(
-            eq(course.categoryId, selectedCategory),
-            ilike(course.title, typedCourseTitle as string)
+          and(
+            eq(course.isPublished, true),
+            or(
+              eq(course.categoryId, selectedCategory),
+              ilike(course.title, typedCourseTitle as string)
+            )
           )
         )
         .orderBy(desc(course.id));
 
       if (result) {
-        console.log(result);
         setCourses(result);
       }
     } catch (error) {
@@ -74,7 +76,7 @@ const BrowseCourses = () => {
           setValue={(courseTitle) => setTypedCourseTitle(courseTitle)}
         />
       </div>
-      <div className="p-6">
+      <div className="p-6 space-y-4">
         <Categories
           items={categories}
           selectCategory={(categoryId) => setSelectedCategory(categoryId)}
