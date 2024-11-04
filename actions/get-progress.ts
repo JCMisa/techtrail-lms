@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/utils/db";
 import { chapter, userProgress } from "@/utils/schema";
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 
 export const getProgress = async (
-  userId: string,
-  courseId: string
+  userId: any,
+  courseId: any
 ): Promise<number | any> => {
   try {
     const publishedChapters = await db
@@ -14,7 +15,9 @@ export const getProgress = async (
         and(eq(chapter.courseId, courseId), eq(chapter.isPublished, true))
       );
 
-    const publishedChapterIds = publishedChapters?.map((chapter) => chapter.id);
+    const publishedChapterIds = publishedChapters?.map(
+      (chapter: any) => chapter.id
+    );
 
     const validCompletedChapters = await db
       .select()
@@ -23,10 +26,7 @@ export const getProgress = async (
         and(
           eq(userProgress.userId, userId),
           eq(userProgress.isCompleted, true),
-          sql`${userProgress.chapterId} IN (${sql.join(
-            publishedChapterIds,
-            ","
-          )})`
+          inArray(userProgress.chapterId, publishedChapterIds)
         )
       );
 
