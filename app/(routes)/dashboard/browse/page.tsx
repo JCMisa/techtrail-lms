@@ -14,7 +14,7 @@ import { toast } from "sonner";
 
 const BrowseCourses = () => {
   const [categories, setCategories] = useState<any>();
-  const [selectedCategory, setSelectedCategory] = useState<any>();
+  const [selectedCategory, setSelectedCategory] = useState<any>(4);
   const [typedCourseTitle, setTypedCourseTitle] = useState<string>("");
   const [courses, setCourses] = useState<any>();
 

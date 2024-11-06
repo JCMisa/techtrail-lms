@@ -9,14 +9,16 @@ export const getProgress = async (
 ): Promise<number | any> => {
   try {
     const publishedChapters = await db
-      .select()
+      .select({
+        chapterId: chapter.chapterId,
+      })
       .from(chapter)
       .where(
         and(eq(chapter.courseId, courseId), eq(chapter.isPublished, true))
       );
 
     const publishedChapterIds = publishedChapters?.map(
-      (chapter: any) => chapter.id
+      (chapter: any) => chapter.chapterId
     );
 
     const validCompletedChapters = await db

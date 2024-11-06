@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/utils/db";
 import { course } from "@/utils/schema";
 import { and, eq, like } from "drizzle-orm";
 
 type CourseWithProgressWithCategory = {
   category: any | null;
-  chapters: { id: string }[];
+  chapters: { chapterId: string }[];
   progress: number | null;
 };
 
