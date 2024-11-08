@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { cn } from "@/lib/utils";
 import { Lock, PlayCircle } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";

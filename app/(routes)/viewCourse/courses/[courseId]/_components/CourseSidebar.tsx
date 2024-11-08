@@ -59,7 +59,8 @@ const CourseSidebar = ({
       const result = await db
         .select()
         .from(chapter)
-        .where(eq(chapter.courseId, course?.courseId));
+        .where(eq(chapter.courseId, course?.courseId))
+        .orderBy(chapter.position);
 
       if (result) {
         setCourseChapters(result);

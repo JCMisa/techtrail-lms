@@ -5,7 +5,7 @@
 
 import { db } from "@/utils/db";
 import { chapter, course } from "@/utils/schema";
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { toast } from "sonner";
@@ -19,17 +19,17 @@ const ViewCoursePage = ({
 }) => {
   const router = useRouter();
 
-  const getCourseWithChapters = async () => {
+  const getChapter = async () => {
     try {
       const result = await db
         .select()
-        .from(course)
-        .leftJoin(chapter, eq(course.courseId, chapter.courseId))
-        .where(eq(course.courseId, params?.courseId));
+        .from(chapter)
+        .where(eq(chapter.courseId, params?.courseId))
+        .orderBy(asc(chapter.position));
 
       if (result) {
         router.push(
-          `/viewCourse/courses/${result[0]?.course?.courseId}/chapters/${result[0]?.chapter?.chapterId}`
+          `/viewCourse/courses/${params?.courseId}/chapters/${result[0]?.chapterId}`
         );
       } else router.replace("/dashboard/browse");
     } catch (error) {
@@ -43,7 +43,7 @@ const ViewCoursePage = ({
   };
 
   useEffect(() => {
-    getCourseWithChapters();
+    getChapter();
   }, [params?.courseId]);
 };
 
