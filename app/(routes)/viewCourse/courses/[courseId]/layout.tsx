@@ -38,7 +38,6 @@ const ViewCourseLayout = ({
 
       if (result) {
         setCourseRecord(result[0]);
-        console.log("course with chapters: ", result[0]);
         setProgressCount(await getProgress(user?.id, courseRecord?.courseId));
       }
     } catch {

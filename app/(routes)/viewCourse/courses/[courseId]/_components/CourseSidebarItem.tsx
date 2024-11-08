@@ -34,7 +34,7 @@ const CourseSidebarItem = ({
       className={cn(
         "flex items-center gap-x-2 text-gray-400 text-sm font-[500] pl-6 transition-all hover:text-light-100 hover:bg-dark-100",
         isActive &&
-          "text-light bg-primary-100 hover:bg-primary hover:text-light-100"
+          "text-light bg-dark-100 hover:bg-[#231f29] hover:text-light-100"
       )}
     >
       <div className="flex items-center gap-x-2 py-4">
@@ -45,7 +45,7 @@ const CourseSidebarItem = ({
       </div>
       <div
         className={cn(
-          "ml-auto opacity-0 border-2 border-slate-700 h-full transition-all",
+          "ml-auto opacity-0 border-2 border-primary-100 h-full transition-all",
           isActive && "opacity-100"
         )}
       ></div>

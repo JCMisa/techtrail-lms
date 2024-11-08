@@ -25,7 +25,7 @@ const CourseNavbar = ({
           onClick={() => router.back()}
         >
           <LogOut className="w-4 h-4" />
-          <p className="text-xs">Exit</p>
+          <p className="text-xs">Back</p>
         </div>
         <Image
           src={user?.imageUrl as string}

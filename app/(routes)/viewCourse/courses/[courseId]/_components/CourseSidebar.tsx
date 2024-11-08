@@ -8,6 +8,8 @@ import { and, eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import CourseSidebarItem from "./CourseSidebarItem";
+import { ArrowLeftCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const CourseSidebar = ({
   course,
@@ -17,6 +19,7 @@ const CourseSidebar = ({
   progressCount: number;
 }) => {
   const { user } = useUser();
+  const router = useRouter();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [purchaseState, setPurchaseState] = useState<any>();
@@ -79,23 +82,38 @@ const CourseSidebar = ({
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
       <div className="p-8 flex flex-col border-b">
-        <h1 className="font-semibold">{course?.title}</h1>
+        <div className="flex flex-row items-center gap-x-2">
+          <ArrowLeftCircle
+            className="w-4 h-4 cursor-pointer"
+            onClick={() => router.replace("/dashboard/browse")}
+          />
+          <h1 className="font-semibold">{course?.title}</h1>
+        </div>
         {/* check purchase and add progress */}
       </div>
       <div className="flex flex-col w-full">
-        {!loading
-          ? courseChapters &&
-            courseChapters?.map((chapter: any) => (
-              <CourseSidebarItem
-                key={chapter?.id}
-                chapterId={chapter?.chapterId}
-                label={chapter?.title}
-                courseId={course?.courseId}
-                isLocked={!chapter?.isFree && !purchase}
-                progressCount={progressCount}
-              />
-            ))
-          : [1, 2, 3, 4, 5].map((item) => <div key={item}></div>)}
+        {!loading ? (
+          courseChapters &&
+          courseChapters?.map((chapter: any) => (
+            <CourseSidebarItem
+              key={chapter?.id}
+              chapterId={chapter?.chapterId}
+              label={chapter?.title}
+              courseId={course?.courseId}
+              isLocked={!chapter?.isFree && !purchaseState}
+              progressCount={progressCount}
+            />
+          ))
+        ) : (
+          <div className="flex items-center py-2 flex-col gap-2">
+            {[1, 2, 3].map((item) => (
+              <div
+                key={item}
+                className="pl-6 bg-dark-100 w-[90%] min-h-16 animate-pulse rounded-lg"
+              ></div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
