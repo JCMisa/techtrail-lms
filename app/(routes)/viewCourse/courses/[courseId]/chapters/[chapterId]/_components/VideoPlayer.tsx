@@ -3,17 +3,9 @@ import React, { useState } from "react";
 import ReactPlayer from "react-player";
 
 const VideoPlayer = ({
-  chapterId,
-  title,
-  courseId,
-  nextChapterId,
   playbackUrl,
   isLocked,
 }: {
-  chapterId: string;
-  title: string;
-  courseId: string;
-  nextChapterId?: string;
   playbackUrl: string;
   isLocked: boolean;
 }) => {
@@ -41,7 +33,6 @@ const VideoPlayer = ({
           controls={true}
           width="100%"
           height="100%"
-          onEnded={() => {}}
           onPlay={() => setIsReady(true)}
         />
       )}

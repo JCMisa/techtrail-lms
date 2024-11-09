@@ -62,6 +62,7 @@ const CourseProgressButton = ({
         await db.insert(userProgress).values({
           userId: user?.id,
           userEmail: user?.primaryEmailAddress?.emailAddress,
+          courseId: courseId,
           chapterId: chapterId,
           isCompleted: !isCompleted,
           createdAt: moment().format("MM-DD-YYYY"),

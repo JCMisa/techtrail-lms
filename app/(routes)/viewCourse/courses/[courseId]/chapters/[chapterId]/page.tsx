@@ -179,14 +179,7 @@ const ChapterIdPage = ({
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
         <div className="p-4">
-          <VideoPlayer
-            chapterId={params?.chapterId}
-            title={chapterRecordState?.title}
-            courseId={params?.courseId}
-            nextChapterId={nextChapter?.chapterId}
-            playbackUrl={chapterVideoUrl}
-            isLocked={isLocked}
-          />
+          <VideoPlayer playbackUrl={chapterVideoUrl} isLocked={isLocked} />
         </div>
         <Separator />
         <div>

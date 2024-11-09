@@ -5,7 +5,6 @@
 "use client";
 
 import LoadingDialog from "@/app/_components/LoadingDialog";
-import { Button } from "@/components/ui/button";
 import { findUserByEmail } from "@/services/UserService";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -15,11 +14,11 @@ import Unauthorized from "../_components/Unauthorized";
 import EventCalendar from "../admin/_components/EventCalendar";
 import Announcements from "../admin/_components/Announcements";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CoursesList from "./_components/CoursesList";
 import ReviewersList from "./_components/ReviewersList";
 import { getAllCurrentEvents } from "@/services/EventService";
 import moment from "moment";
 import { getAllLatestAnnouncements } from "@/services/AnnouncementService";
+import UserCoursesList from "./_components/UserCoursesList";
 
 const UserDashboardPage = () => {
   const { user } = useUser();
@@ -123,7 +122,7 @@ const UserDashboardPage = () => {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="courses" className="p-5">
-                  <CoursesList />
+                  <UserCoursesList />
                 </TabsContent>
                 <TabsContent value="reviewers" className="p-5 pb-10 relative">
                   <ReviewersList />

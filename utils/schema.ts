@@ -59,6 +59,7 @@ export const userProgress = pgTable("userProgress", {
   id: serial("id").primaryKey(),
   userId: varchar("userId"),
   userEmail: varchar("userEmail"),
+  courseId: varchar("courseId"),
   chapterId: varchar("chapterId"),
   isCompleted: boolean("isCompleted").default(false),
   createdAt: varchar("createdAt"),
