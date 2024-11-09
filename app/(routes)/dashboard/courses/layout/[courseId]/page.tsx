@@ -200,7 +200,7 @@ const CourseLayoutPage = ({ params }: PROPS) => {
     courseModel && courseModel?.title,
     courseModel && courseModel?.description,
     // courseModel && courseModel?.imageUrl,
-    courseModel && courseModel?.price,
+    // courseModel && courseModel?.price,
     courseModel && courseModel?.categoryId,
     courseChapters && courseChapters?.length > 0,
   ];

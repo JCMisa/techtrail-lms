@@ -38,7 +38,7 @@ const ViewCourseLayout = ({
 
       if (result) {
         setCourseRecord(result[0]);
-        setProgressCount(await getProgress(user?.id, courseRecord?.courseId));
+        setProgressCount(await getProgress(user?.id, result[0]?.courseId));
       }
     } catch {
       toast(

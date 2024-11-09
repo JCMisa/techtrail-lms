@@ -1,15 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Banner from "@/components/custom/banner";
 import { db } from "@/utils/db";
-import { attachment, chapter, purchase } from "@/utils/schema";
+import { attachment, chapter, course, purchase } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq, gt } from "drizzle-orm";
 
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import VideoPlayer from "./_components/VideoPlayer";
+import CourseEnrollButton from "./_components/CourseEnrollButton";
+import { Separator } from "@/components/ui/separator";
+import { Preview } from "@/components/custom/preview";
+import { File } from "lucide-react";
 
 const ChapterIdPage = ({
   params,
@@ -26,9 +32,20 @@ const ChapterIdPage = ({
   const [nextChapter, setNextChapter] = useState<any>();
   const [chapterRecordState, setChapterRecordState] = useState<any>();
   const [purchaseRecordState, setPurchaseRecordState] = useState<[] | any>([]);
+  const [courseRecordState, setCourseRecordState] = useState<any>();
 
   const getChapterInfo = async () => {
     try {
+      // get the course based on courseId
+      const courseRecord = await db
+        .select()
+        .from(course)
+        .where(eq(course.courseId, params?.courseId));
+
+      if (courseRecord) {
+        setCourseRecordState(courseRecord[0]);
+      }
+
       // check if the course is purchased
       const purchaseRecord = await db
         .select()
@@ -41,7 +58,11 @@ const ChapterIdPage = ({
         );
 
       // if a userId is in the purchase schema, meaning this course is purchased, then show to attachments of the course
-      if (purchaseRecord?.length > 0) {
+      if (
+        courseRecord[0]?.price === null ||
+        Number(courseRecord[0]?.price) === 0 ||
+        purchaseRecord?.length > 0
+      ) {
         setPurchaseRecordState(purchaseRecord);
 
         const attachmentsRecord = await db
@@ -111,7 +132,7 @@ const ChapterIdPage = ({
       {isLocked && (
         <Banner
           variant={"warning"}
-          label="You need to purchase this course to watch this chapter."
+          label="You need to enroll to this course to watch this chapter."
         />
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
@@ -124,6 +145,47 @@ const ChapterIdPage = ({
             playbackUrl={chapterVideoUrl}
             isLocked={isLocked}
           />
+        </div>
+        <Separator />
+        <div>
+          <div className="p-4 flex flex-col md:flex-row items-center justify-between">
+            <h2 className="text-2xl font-semibold mb-2">
+              {chapterRecordState?.title}
+            </h2>
+            {!chapterRecordState?.isFree &&
+              (purchaseRecordState?.length > 0 ? (
+                // todo: add course progress button
+                <div></div>
+              ) : (
+                <CourseEnrollButton
+                  courseId={params?.courseId}
+                  price={courseRecordState?.price}
+                  courseName={courseRecordState?.title}
+                />
+              ))}
+          </div>
+          <Separator />
+          <div>
+            <Preview value={chapterRecordState?.description} />
+          </div>
+          {!!courseAttachments.length && (
+            <>
+              <Separator />
+              <div className="p-4 flex flex-col gap-2">
+                {courseAttachments?.map((attachment: any) => (
+                  <a
+                    href={attachment?.url}
+                    key={attachment?.id}
+                    target="_blank"
+                    className="flex gap-2 items-center p-3 w-full bg-dark-100 border text-light rounded-md hover:underline"
+                  >
+                    <File />
+                    <p className="line-clamp-1 text-xs">{attachment?.name}</p>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

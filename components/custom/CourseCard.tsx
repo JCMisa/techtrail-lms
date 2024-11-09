@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { db } from "@/utils/db";
-import { category, chapter } from "@/utils/schema";
-import { eq } from "drizzle-orm";
+import { category, chapter, course, purchase } from "@/utils/schema";
+import { and, eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -11,6 +12,8 @@ import { toast } from "sonner";
 import { IconBadge } from "./icon-badge";
 import { BookOpen } from "lucide-react";
 import { formatCurrency } from "@/lib/formatCurrency";
+import { Badge } from "../ui/badge";
+import { useUser } from "@clerk/nextjs";
 
 interface CourseCardProps {
   courseId: string;
@@ -26,8 +29,12 @@ const CourseCard = ({
   price,
   categoryId,
 }: CourseCardProps) => {
+  const { user } = useUser();
+
   const [courseChaptersList, setCourseChaptersList] = useState<[] | any>([]);
   const [courseCategory, setCourseCategory] = useState<any>({});
+  const [isPurchased, setIsPurchased] = useState(false);
+  const [isFree, setIsFree] = useState(false);
 
   // get the chapters based on the courseId from the props
   const getChaptersByCourseId = async () => {
@@ -77,6 +84,59 @@ const CourseCard = ({
     getCategoryName();
   }, [categoryId]);
 
+  // check if course is purchased
+  const checkIfPurchased = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(purchase)
+        .where(
+          and(
+            eq(purchase.userId, user?.id as string),
+            eq(purchase.courseId, courseId)
+          )
+        );
+
+      if (result?.length > 0) {
+        setIsPurchased(true);
+      }
+    } catch {
+      toast(
+        <p className="text-sm font-bold text-red-500">
+          Internal error occured while checking if course is purchased
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    user && checkIfPurchased();
+  }, [user, courseId]);
+
+  // check if course is free
+  const checkIfFree = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(course)
+        .where(eq(course.courseId, courseId));
+
+      if (Number(result[0]?.price) === 0 || result[0]?.price === null) {
+        setIsFree(true);
+      }
+    } catch {
+      toast(
+        <p className="text-sm font-bold text-red-500">
+          Internal error occured while checking if course is free
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    checkIfFree();
+  }, [courseId]);
+
   return (
     <Link href={`/viewCourse/courses/${courseId}`}>
       <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
@@ -107,9 +167,21 @@ const CourseCard = ({
             </div>
           </div>
           {/* todo: show progress */}
-          <p className="text-md md:text-sm font-medium text-gray-600">
-            {formatCurrency(price)}
-          </p>
+          {isPurchased && (
+            <Badge className="w-[50%] flex items-center justify-center text-xs text-white bg-emerald-600 hover:bg-emerald-700">
+              Purchased
+            </Badge>
+          )}
+          {!isPurchased && !isFree && (
+            <p className="text-md md:text-sm font-medium text-gray-600">
+              {formatCurrency(price)}
+            </p>
+          )}
+          {isFree && (
+            <Badge className="w-[50%] flex items-center justify-center text-xs">
+              Free
+            </Badge>
+          )}
         </div>
       </div>
     </Link>

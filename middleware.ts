@@ -2,10 +2,7 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
-  "/create-course(.*)",
-  "/view-course(.*)",
-  "/setting(.*)",
-  "/payment-success(.*)",
+  "/viewCourse(.*)",
 ]); // protects the path with folder dashboard with page.tsx
 
 export default clerkMiddleware((auth, req) => {

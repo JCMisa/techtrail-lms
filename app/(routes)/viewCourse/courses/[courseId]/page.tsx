@@ -4,7 +4,7 @@
 "use client";
 
 import { db } from "@/utils/db";
-import { chapter, course } from "@/utils/schema";
+import { chapter } from "@/utils/schema";
 import { asc, eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
