@@ -5,7 +5,13 @@
 
 import Banner from "@/components/custom/banner";
 import { db } from "@/utils/db";
-import { attachment, chapter, course, purchase } from "@/utils/schema";
+import {
+  attachment,
+  chapter,
+  course,
+  purchase,
+  userProgress,
+} from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq, gt } from "drizzle-orm";
 
@@ -16,6 +22,7 @@ import CourseEnrollButton from "./_components/CourseEnrollButton";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/custom/preview";
 import { File } from "lucide-react";
+import CourseProgressButton from "./_components/CourseProgressButton";
 
 const ChapterIdPage = ({
   params,
@@ -33,6 +40,7 @@ const ChapterIdPage = ({
   const [chapterRecordState, setChapterRecordState] = useState<any>();
   const [purchaseRecordState, setPurchaseRecordState] = useState<[] | any>([]);
   const [courseRecordState, setCourseRecordState] = useState<any>();
+  const [userProgressRecord, setUserProgressRecord] = useState<any>();
 
   const getChapterInfo = async () => {
     try {
@@ -123,6 +131,34 @@ const ChapterIdPage = ({
     user && getChapterInfo();
   }, [user, params?.courseId, params?.chapterId]);
 
+  const getUserProgress = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(userProgress)
+        .where(
+          and(
+            eq(userProgress.userId, user?.id as string),
+            eq(userProgress.chapterId, params?.chapterId)
+          )
+        );
+
+      if (result) {
+        setUserProgressRecord(result[0]);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fetching user progress
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    user && getUserProgress();
+  }, [user, params?.chapterId]);
+
   // is locked if the chapter record is not free and if the user does not purchase to course
   const isLocked: boolean =
     chapterRecordState?.isFree == false && purchaseRecordState?.length == 0;
@@ -133,6 +169,12 @@ const ChapterIdPage = ({
         <Banner
           variant={"warning"}
           label="You need to enroll to this course to watch this chapter."
+        />
+      )}
+      {userProgressRecord?.isCompleted && (
+        <Banner
+          variant={"success"}
+          label="You already completed this chapter."
         />
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
@@ -152,17 +194,31 @@ const ChapterIdPage = ({
             <h2 className="text-2xl font-semibold mb-2">
               {chapterRecordState?.title}
             </h2>
-            {!chapterRecordState?.isFree &&
-              (purchaseRecordState?.length > 0 ? (
-                // todo: add course progress button
-                <div></div>
+            {!chapterRecordState?.isFree ? (
+              purchaseRecordState?.length > 0 ? (
+                <CourseProgressButton
+                  courseId={params?.courseId}
+                  chapterId={params?.chapterId}
+                  nextChapterId={nextChapter?.chapterId}
+                  isCompleted={!!userProgressRecord?.isCompleted}
+                  refreshData={() => getUserProgress()}
+                />
               ) : (
                 <CourseEnrollButton
                   courseId={params?.courseId}
                   price={courseRecordState?.price}
                   courseName={courseRecordState?.title}
                 />
-              ))}
+              )
+            ) : (
+              <CourseProgressButton
+                courseId={params?.courseId}
+                chapterId={params?.chapterId}
+                nextChapterId={nextChapter?.chapterId}
+                isCompleted={!!userProgressRecord?.isCompleted}
+                refreshData={() => getUserProgress()}
+              />
+            )}
           </div>
           <Separator />
           <div>

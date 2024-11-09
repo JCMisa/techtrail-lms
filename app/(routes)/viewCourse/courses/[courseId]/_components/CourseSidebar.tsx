@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import CourseSidebarItem from "./CourseSidebarItem";
 import { ArrowLeftCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import CourseProgress from "@/components/custom/CourseProgress";
 
 const CourseSidebar = ({
   course,
@@ -90,7 +91,14 @@ const CourseSidebar = ({
           />
           <h1 className="font-semibold">{course?.title}</h1>
         </div>
-        {/* check purchase and add progress */}
+        {purchaseState && (
+          <div className="mt-10">
+            <CourseProgress
+              variant={progressCount === 100 ? "success" : "default"}
+              value={progressCount}
+            />
+          </div>
+        )}
       </div>
       <div className="flex flex-col w-full">
         {!loading ? (
