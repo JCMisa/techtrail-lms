@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LoaderCircle, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import React, { useState } from "react";
 import {
   AlertDialog,
@@ -19,6 +19,7 @@ import { db } from "@/utils/db";
 import { chapter } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/custom/Spinner";
 
 interface ChapterActionsProps {
   disabled: boolean;
@@ -153,7 +154,7 @@ const ChapterActions = ({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={() => handleDelete()}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Continue"}
+              {loading ? <Spinner /> : "Continue"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

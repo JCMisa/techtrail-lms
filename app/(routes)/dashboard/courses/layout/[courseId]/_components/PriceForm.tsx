@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/formatCurrency";
@@ -6,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { db } from "@/utils/db";
 import { course } from "@/utils/schema";
 import { eq } from "drizzle-orm";
-import { LoaderCircle, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -91,7 +92,7 @@ const PriceForm = ({ initialData, courseId, refreshData }: PriceFormProps) => {
           </div>
           <div className="flex items-center gap-x-2">
             <Button disabled={updatedPrice === ""} onClick={() => onSubmit()}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+              {loading ? <Spinner /> : "Save"}
             </Button>
           </div>
         </div>

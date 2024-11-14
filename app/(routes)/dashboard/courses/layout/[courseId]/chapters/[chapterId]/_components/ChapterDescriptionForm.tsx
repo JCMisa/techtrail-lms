@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Editor } from "@/components/custom/editor";
 import { Preview } from "@/components/custom/preview";
+import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { chatSession } from "@/utils/AiModel";
 import { db } from "@/utils/db";
 import { chapter } from "@/utils/schema";
 import { and, eq } from "drizzle-orm";
-import { Brain, LoaderCircle, Pencil } from "lucide-react";
+import { Brain, Pencil } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -130,7 +131,7 @@ const ChapterDescriptionForm = ({
               <p className="text-xs text-gray-500">Chapter description</p>
               <Button onClick={() => generateAiChapterDescription()}>
                 {loading ? (
-                  <LoaderCircle className="animate-spin" />
+                  <Spinner />
                 ) : (
                   <div className="flex items-center gap-2">
                     <Brain />
@@ -156,7 +157,7 @@ const ChapterDescriptionForm = ({
               disabled={updatedDescription === ""}
               onClick={() => onSubmit()}
             >
-              {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+              {loading ? <Spinner /> : "Save"}
             </Button>
           </div>
         </div>

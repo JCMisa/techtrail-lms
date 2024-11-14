@@ -14,12 +14,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { LoaderCircle, SquarePen } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { updateBasicInfo } from "@/services/AiOutputService";
+import Spinner from "@/components/custom/Spinner";
 
 const EditCourseInfo = ({
   course,
@@ -104,7 +105,7 @@ const EditCourseInfo = ({
         <DialogFooter>
           <DialogClose>
             <Button onClick={() => onUpdateHandler()}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Update"}
+              {loading ? <Spinner /> : "Update"}
             </Button>
           </DialogClose>
         </DialogFooter>

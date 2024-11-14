@@ -96,7 +96,7 @@ const ChapterAccessForm = ({
           </div>
           {/* <div className="flex items-center gap-x-2">
             <Button onClick={() => onSubmit()}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+              {loading ? <Spinner /> : "Save"}
             </Button>
           </div> */}
         </div>

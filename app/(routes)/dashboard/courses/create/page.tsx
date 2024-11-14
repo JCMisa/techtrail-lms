@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { LoaderCircle } from "lucide-react";
 import { db } from "@/utils/db";
 import { course } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
@@ -16,6 +15,7 @@ import Unauthorized from "../../_components/Unauthorized";
 import { useRouter } from "next/navigation";
 import uuid4 from "uuid4";
 import moment from "moment";
+import Spinner from "@/components/custom/Spinner";
 
 const CreateCoursePage = () => {
   const { user } = useUser();
@@ -119,11 +119,7 @@ const CreateCoursePage = () => {
                 Cancel
               </Button>
               <Button disabled={title == ""} onClick={() => onSubmit()}>
-                {loading ? (
-                  <LoaderCircle className="animate-spin" />
-                ) : (
-                  "Continue"
-                )}
+                {loading ? <Spinner /> : "Continue"}
               </Button>
             </div>
           </div>

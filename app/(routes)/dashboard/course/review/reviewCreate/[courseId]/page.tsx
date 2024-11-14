@@ -8,7 +8,6 @@ import {
   getReviewerByCourseId,
   updateReviewerVideo,
 } from "@/services/AiOutputService";
-import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -17,6 +16,7 @@ import Details from "./_components/Details";
 import ChapterList from "./_components/ChapterList";
 import { Button } from "@/components/ui/button";
 import ytService from "@/utils/ytService";
+import Spinner from "@/components/custom/Spinner";
 
 interface PROPS {
   params: {
@@ -117,11 +117,7 @@ const ReviewCreate = ({ params }: PROPS) => {
 
       {/* submit button */}
       <Button onClick={generateChapterContent} className="my-5 float-end">
-        {loading ? (
-          <LoaderCircle className={"animate-spin"} />
-        ) : (
-          "Generate Reviewer"
-        )}
+        {loading ? <Spinner /> : "Generate Reviewer"}
       </Button>
       <LoadingDialog loading={loading} />
     </div>

@@ -6,13 +6,14 @@ import { db } from "@/utils/db";
 import { chapter } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { desc, eq } from "drizzle-orm";
-import { Loader2, LoaderCircle, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import moment from "moment";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import uuid4 from "uuid4";
 import ChapterList from "./ChapterList";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/custom/Spinner";
 
 interface ChaptersFormProps {
   initialData: any;
@@ -115,7 +116,7 @@ const ChaptersForm = ({
     <div className="mt-6 border bg-dark rounded-md p-4 relative">
       {isUpdating && (
         <div className="absolute h-full w-full bg-dark/60 top-0 right-0 rounded-md flex items-center justify-center">
-          <Loader2 className="animate-spin h-6 w-6 text-light-100" />
+          <Spinner />
         </div>
       )}
       <div className="font-medium flex items-center justify-between">
@@ -140,7 +141,7 @@ const ChaptersForm = ({
             />
           </div>
           <Button onClick={() => onSubmit()}>
-            {loading ? <LoaderCircle className="animate-spin" /> : "Create"}
+            {loading ? <Spinner /> : "Create"}
           </Button>
         </div>
       )}

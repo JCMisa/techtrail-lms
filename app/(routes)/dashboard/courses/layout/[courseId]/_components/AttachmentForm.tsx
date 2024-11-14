@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { db } from "@/utils/db";
 import { attachment } from "@/utils/schema";
-import { File, LoaderCircle, PlusCircle, Trash } from "lucide-react";
+import { File, PlusCircle, Trash } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import FileUpload from "../../../_components/FileUpload";
@@ -20,6 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { eq } from "drizzle-orm";
+import Spinner from "@/components/custom/Spinner";
 
 interface AttachmentFormProps {
   initialData: any;
@@ -146,11 +147,7 @@ const AttachmentForm = ({
                         <AlertDialogAction
                           onClick={() => deleteAttachment(attachment?.id)}
                         >
-                          {loading ? (
-                            <LoaderCircle className="animate-spin" />
-                          ) : (
-                            "Continue"
-                          )}
+                          {loading ? <Spinner /> : "Continue"}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

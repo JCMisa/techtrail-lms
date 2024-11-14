@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/formatCurrency";
 import axios from "axios";
-import { LoaderCircle } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -15,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Spinner from "@/components/custom/Spinner";
 
 const CourseEnrollButton = ({
   courseId,
@@ -49,7 +49,7 @@ const CourseEnrollButton = ({
       <AlertDialogTrigger>
         <Button disabled={loading} className="w-full md:w-auto" size={"sm"}>
           {loading ? (
-            <LoaderCircle className="animate-spin" />
+            <Spinner />
           ) : (
             `Enroll for ${formatCurrency(price ? price : 0)}`
           )}
@@ -69,7 +69,7 @@ const CourseEnrollButton = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={onClick}>
-            {loading ? <LoaderCircle className="animate-spin" /> : "Proceed"}
+            {loading ? <Spinner /> : "Proceed"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -2,7 +2,7 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { LayoutGrid, Lightbulb, LoaderCircle, Settings } from "lucide-react";
+import { LayoutGrid, Lightbulb, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { UserInputContext } from "../_context/UserInputContext";
@@ -18,6 +18,7 @@ import uuid4 from "uuid4";
 import { UserSubscriptionContext } from "@/app/_context/UserSubscriptionContext";
 import { TotalUsageContext } from "@/app/_context/TotalUsageContext";
 import Banner from "@/components/custom/banner";
+import Spinner from "@/components/custom/Spinner";
 
 const CourseReviewPage = () => {
   const { user } = useUser();
@@ -200,11 +201,7 @@ const CourseReviewPage = () => {
                   className="min-w-52"
                   disabled={checkStatus()}
                 >
-                  {loading ? (
-                    <LoaderCircle className="animate-spin" />
-                  ) : (
-                    "Generate Course Layout"
-                  )}
+                  {loading ? <Spinner /> : "Generate Course Layout"}
                 </Button>
               )}
             </div>

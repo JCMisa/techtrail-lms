@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import Spinner from "@/components/custom/Spinner";
 import { getUsersByRole } from "@/services/UserService";
-import { LoaderCircle, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -36,7 +37,7 @@ const UserCard = ({ type }: { type: string }) => {
         <MoreHorizontal width={20} height={20} />
       </div>
       <h1 className="text-2xl font-semibold my-4">
-        {loading ? <LoaderCircle className="animate-spin" /> : userCount}
+        {loading ? <Spinner /> : userCount}
       </h1>
       <h2 className="capitalize text-sm font-medium text-gray-200">
         {type === "user" ? "student" : type === "admin" ? "staff" : "teacher"}

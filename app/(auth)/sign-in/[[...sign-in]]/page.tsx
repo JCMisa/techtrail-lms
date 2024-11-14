@@ -1,5 +1,5 @@
+import Spinner from "@/components/custom/Spinner";
 import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/nextjs";
-import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
@@ -72,7 +72,7 @@ const SignInPage = () => {
                   <SignIn />
                 </ClerkLoaded>
                 <ClerkLoading>
-                  <Loader2 className="animate-spin text-muted-foreground" />
+                  <Spinner />
                 </ClerkLoading>
               </div>
             </div>

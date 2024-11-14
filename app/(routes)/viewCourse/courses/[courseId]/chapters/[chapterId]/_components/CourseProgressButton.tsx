@@ -1,10 +1,11 @@
+import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 import { db } from "@/utils/db";
 import { userProgress } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq } from "drizzle-orm";
-import { CheckCircle, LoaderCircle, XCircle } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import moment from "moment";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -104,7 +105,7 @@ const CourseProgressButton = ({
       className="w-full md:w-auto"
     >
       {loading ? (
-        <LoaderCircle className="animate-spin" />
+        <Spinner />
       ) : (
         <>
           {isCompleted ? "Restart Progress" : "Mark as complete"}

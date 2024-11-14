@@ -13,10 +13,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { LoaderCircle, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import { deleteAnnouncement } from "@/services/AnnouncementService";
 import { toast } from "sonner";
 import Empty from "@/app/_components/Empty";
+import Spinner from "@/components/custom/Spinner";
 
 const Announcements = ({
   announcementList,
@@ -95,11 +96,7 @@ const Announcements = ({
                       <AlertDialogAction
                         onClick={() => deleteAnnouncementById(item?.id)}
                       >
-                        {loading ? (
-                          <LoaderCircle className="animate-spin" />
-                        ) : (
-                          "Continue"
-                        )}
+                        {loading ? <Spinner /> : "Continue"}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

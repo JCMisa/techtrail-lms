@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { db } from "@/utils/db";
 import { course } from "@/utils/schema";
 import { eq } from "drizzle-orm";
-import { LoaderCircle, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -80,7 +81,7 @@ const TitleForm = ({ initialData, courseId, refreshData }: TitpleFormProps) => {
           </div>
           <div className="flex items-center gap-x-2">
             <Button disabled={updatedTitle === ""} onClick={() => onSubmit()}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+              {loading ? <Spinner /> : "Save"}
             </Button>
           </div>
         </div>

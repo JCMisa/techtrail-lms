@@ -13,7 +13,6 @@ import { toast } from "sonner";
 import Details from "../../reviewCreate/[courseId]/_components/Details";
 import CourseComponent from "./_components/CourseComponent";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-react";
 import YoutubeIframe from "./_components/YoutubeIframe";
 
 interface PROPS {
@@ -174,7 +173,7 @@ const ViewReviewer = ({ params }: PROPS) => {
                 JSON.parse(course?.chaptersArray)?.length && (
                   <Button onClick={() => completeCourse()} className="min-w-32">
                     {loading ? (
-                      <LoaderCircle className="animate-spin" />
+                      <Spinner />
                     ) : (
                       "Complete Course"
                     )}

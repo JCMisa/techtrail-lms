@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LoaderCircle, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import React, { useState } from "react";
 import {
   AlertDialog,
@@ -21,6 +21,7 @@ import { and, eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
+import Spinner from "@/components/custom/Spinner";
 
 interface CourseActionsProps {
   disabled: boolean;
@@ -180,7 +181,7 @@ const CourseActions = ({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={() => handleDelete()}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Continue"}
+              {loading ? <Spinner /> : "Continue"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
