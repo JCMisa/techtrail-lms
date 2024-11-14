@@ -1,18 +1,20 @@
+import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const HomeHeader = () => {
-  const { user, isSignedIn } = useUser();
-  const router = useRouter();
+  const { user } = useUser();
 
   return (
-    <div className="w-full container mx-auto px-5">
-      <div className="w-full flex items-center justify-between pt-3">
-        <div className="flex items-center gap-2">
+    <header className="text-gray-400 bg-dark-100 body-font">
+      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <Link
+          href={"/"}
+          className="flex title-font font-medium items-center text-white mb-4 md:mb-0 cursor-pointer"
+        >
           <Image
             src={"/techtrail-logo.svg"}
             alt="logo"
@@ -20,34 +22,38 @@ const HomeHeader = () => {
             height={1000}
             className="w-8 h-8"
           />
-          <Link
-            className="flex items-center text-light no-underline hover:no-underline font-bold text-xl lg:text-2xl"
-            href="/"
-          >
-            Tech
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0098ff] via-[#007acc] to-[#AD49E1]">
-              Trail
-            </span>
-          </Link>
-        </div>
-
-        <div className="flex w-1/2 justify-end content-center">
-          {isSignedIn ? (
-            <div className="flex items-center gap-1">
+          <p className="ml-3 text-xl logo-text">TechTrail</p>
+        </Link>
+        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+          <a className="mr-5 hover:text-white cursor-pointer">Home</a>
+          <a className="mr-5 hover:text-white cursor-pointer">About</a>
+          <a className="mr-5 hover:text-white cursor-pointer">Guide</a>
+          <a className="mr-5 hover:text-white cursor-pointer">Contact</a>
+        </nav>
+        {user ? (
+          <div className="flex items-center gap-3">
+            <ClerkLoading>
+              <Spinner />
+            </ClerkLoading>
+            <ClerkLoaded>
               <UserButton />
-              <div className="hidden sm:flex flex-col">
-                <p className="text-light-100 text-sm">{user?.fullName}</p>
-                <p className="text-gray-500 text-xs">
-                  {user?.primaryEmailAddress?.emailAddress}
-                </p>
+              <div className="flex flex-col">
+                <p className="text-md">{user && user?.fullName}</p>
+                <span className="text-xs text-gray-400">
+                  {user && user?.primaryEmailAddress?.emailAddress}
+                </span>
               </div>
-            </div>
-          ) : (
-            <Button onClick={() => router.push("/sign-in")}>Sign-in</Button>
-          )}
-        </div>
+            </ClerkLoaded>
+          </div>
+        ) : (
+          <Button asChild>
+            <Link href={"/sign-in"} className="min-w-32 max-w-32">
+              Sign in
+            </Link>
+          </Button>
+        )}
       </div>
-    </div>
+    </header>
   );
 };
 

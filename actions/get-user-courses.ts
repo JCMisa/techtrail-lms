@@ -13,7 +13,7 @@ type UserCourses = {
   coursesInProgress: CourseWithProgressWithCategory[];
 };
 
-export const getUserCourses = async (userId: string): Promise<UserCourses> => {
+export const getUserCourses = async (userId: string) => {
   try {
     const purchasedCourses = await db
       .select()
