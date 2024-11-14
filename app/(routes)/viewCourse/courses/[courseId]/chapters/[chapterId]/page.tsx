@@ -146,7 +146,7 @@ const ChapterIdPage = ({
       if (result) {
         setUserProgressRecord(result[0]);
       }
-    } catch (error) {
+    } catch {
       toast(
         <p className="font-bold text-sm text-red-500">
           Internal error occured while fetching user progress
@@ -217,7 +217,7 @@ const ChapterIdPage = ({
           <div>
             <Preview value={chapterRecordState?.description} />
           </div>
-          {!!courseAttachments.length && (
+          {!!courseAttachments.length ? (
             <>
               <Separator />
               <div className="p-4 flex flex-col gap-2">
@@ -234,6 +234,11 @@ const ChapterIdPage = ({
                 ))}
               </div>
             </>
+          ) : (
+            <Banner
+              variant={"warning"}
+              label="Buy this course to access course attachments if any."
+            />
           )}
         </div>
       </div>

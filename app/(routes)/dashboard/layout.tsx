@@ -37,9 +37,7 @@ const DashboardLayout = ({
               />
               <p className="lg:flex items-center text-light-100 no-underline hover:no-underline font-bold text-lg lg:text-xl hidden">
                 Tech
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7A1CAC] via-[#AD49E1] to-[#1caca7]">
-                  Trail
-                </span>
+                <span className="logo-text">Trail</span>
               </p>
             </Link>
 

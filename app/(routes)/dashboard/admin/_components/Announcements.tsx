@@ -16,6 +16,7 @@ import {
 import { LoaderCircle, Trash } from "lucide-react";
 import { deleteAnnouncement } from "@/services/AnnouncementService";
 import { toast } from "sonner";
+import Empty from "@/app/_components/Empty";
 
 const Announcements = ({
   announcementList,
@@ -58,55 +59,60 @@ const Announcements = ({
         {canEdit && <AddAnnouncement refreshData={refreshData} />}
       </div>
       <div className="flex flex-col gap-4 mt-4">
-        {announcementList?.length > 0
-          ? announcementList?.map((item: any, index: number) => (
-              <div
-                key={item.id || index}
-                className="bg-dark-100 rounded-md p-4 relative"
-              >
-                <div className="flex items-center justify-between">
-                  <h2 className="font-semibold text-light">{item.title}</h2>
-                  <span className="text-xs text-gray-300 bg-dark-100 rounded-md px-1 py-1">
-                    {item.date}
-                  </span>
-                </div>
-                <p className="mt-2 text-gray-400 text-sm">{item.description}</p>
-
-                {/* delete button */}
-                {canEdit && (
-                  <AlertDialog>
-                    <AlertDialogTrigger>
-                      <Trash className="w-5 h-5 absolute bottom-3 right-3 text-red-500" />
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete your announcement and remove related data from
-                          our servers.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => deleteAnnouncementById(item?.id)}
-                        >
-                          {loading ? (
-                            <LoaderCircle className="animate-spin" />
-                          ) : (
-                            "Continue"
-                          )}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                )}
+        {announcementList?.length > 0 ? (
+          announcementList?.map((item: any, index: number) => (
+            <div
+              key={item.id || index}
+              className="bg-dark-100 rounded-md p-4 relative"
+            >
+              <div className="flex items-center justify-between">
+                <h2 className="font-semibold text-light">{item.title}</h2>
+                <span className="text-xs text-gray-300 bg-dark-100 rounded-md px-1 py-1">
+                  {item.date}
+                </span>
               </div>
-            ))
-          : [1, 2, 3].map((item) => <div key={item}>no item</div>)}
+              <p className="mt-2 text-gray-400 text-sm">{item.description}</p>
+
+              {/* delete button */}
+              {canEdit && (
+                <AlertDialog>
+                  <AlertDialogTrigger>
+                    <Trash className="w-5 h-5 absolute bottom-3 right-3 text-red-500" />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your announcement and remove related data from
+                        our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => deleteAnnouncementById(item?.id)}
+                      >
+                        {loading ? (
+                          <LoaderCircle className="animate-spin" />
+                        ) : (
+                          "Continue"
+                        )}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
+            </div>
+          ))
+        ) : (
+          <Empty
+            header="No Announcements Available"
+            subheader="Please wait for further announcements"
+          />
+        )}
       </div>
     </div>
   );

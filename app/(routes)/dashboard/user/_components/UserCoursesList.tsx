@@ -1,13 +1,15 @@
-import CourseCard from "@/components/custom/CourseCard";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/utils/db";
-import { course, purchase, userProgress } from "@/utils/schema";
+import { course, purchase } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq, isNull } from "drizzle-orm";
 import { toast } from "sonner";
 import React, { useEffect, useState } from "react";
 import UserCourseCard from "./UserCourseCard";
-import SkeletonCard from "./SkeletonCard";
 import { LoaderCircle } from "lucide-react";
+import Empty from "@/app/_components/Empty";
 
 const UserCoursesList = () => {
   const { user } = useUser();
@@ -77,22 +79,36 @@ const UserCoursesList = () => {
         <>
           <div className="flex flex-col gap-2 my-3 mb-10">
             <h2 className="text-lg font-semibold">Purchased Courses</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-              {userCourses?.length > 0 &&
-                userCourses?.map((item: any) => (
+
+            {userCourses?.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                {userCourses?.map((item: any) => (
                   <UserCourseCard courseId={item?.courseId} key={item?.id} />
                 ))}
-            </div>
+              </div>
+            ) : (
+              <Empty
+                header="No Purchased Courses"
+                subheader="You have no purchased courses yet. Please buy a course first"
+              />
+            )}
           </div>
 
           <div className="flex flex-col gap-2 my-3">
             <h2 className="text-lg font-semibold">Free Courses</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-              {freeCourses?.length > 0 &&
-                freeCourses?.map((item: any) => (
+
+            {freeCourses?.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                {freeCourses?.map((item: any) => (
                   <UserCourseCard courseId={item?.courseId} key={item?.id} />
                 ))}
-            </div>
+              </div>
+            ) : (
+              <Empty
+                header="No Free Courses"
+                subheader="Please wait for any free courses to be available"
+              />
+            )}
           </div>
         </>
       )}

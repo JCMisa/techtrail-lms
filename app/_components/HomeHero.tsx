@@ -9,14 +9,14 @@ const HomeHero = ({ loggedInUser }: { loggedInUser: any }) => {
     <>
       {/* <!--Left Col--> */}
       <div className="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
-        <h1 className="my-4 text-3xl md:text-4xl text-light-100 opacity-75 font-bold leading-tight text-center md:text-left">
+        <h1 className="my-4 text-3xl md:text-4xl text-light opacity-75 font-bold leading-tight text-center md:text-left">
           Ready to Level Up? Start Your{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7A1CAC] via-[#AD49E1] to-[#1caca7]">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0098ff] via-[#007acc] to-[#AD49E1]">
             TechTrail{" "}
           </span>
           Today
         </h1>
-        <p className="leading-normal text-base md:text-xl mb-8 text-center md:text-left">
+        <p className="leading-normal text-gray-300 md:text-lg mb-8 text-center md:text-left">
           Master tech, one step at a time. TechTrail offers tailored learning
           paths to guide you towards your tech goals.
         </p>
@@ -27,38 +27,23 @@ const HomeHero = ({ loggedInUser }: { loggedInUser: any }) => {
           </Button>
           {/* if user is admin */}
           {loggedInUser?.role === "admin" && (
-            <Link
-              href={"/dashboard/admin"}
-              className="w-full hover:bg-primary-200"
-            >
-              <Button className="w-full hover:bg-primary-200">
-                Get Started
-              </Button>
-            </Link>
+            <Button className="w-full" asChild>
+              <Link href={"/dashboard/admin"}>Get Started</Link>
+            </Button>
           )}
 
           {/* if user is teacher */}
           {loggedInUser?.role === "teacher" && (
-            <Link
-              href={"/dashboard/teacher"}
-              className="w-full hover:bg-primary-200"
-            >
-              <Button className="w-full hover:bg-primary-200">
-                Get Started
-              </Button>
-            </Link>
+            <Button className="w-full" asChild>
+              <Link href={"/dashboard/teacher"}>Get Started</Link>
+            </Button>
           )}
 
           {/* if user is user */}
           {loggedInUser?.role === "user" && (
-            <Link
-              href={"/dashboard/user"}
-              className="w-full hover:bg-primary-200"
-            >
-              <Button className="w-full hover:bg-primary-200">
-                Get Started
-              </Button>
-            </Link>
+            <Button className="w-full" asChild>
+              <Link href={"/dashboard/user"}>Get Started</Link>
+            </Button>
           )}
         </div>
       </div>

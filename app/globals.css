@@ -85,7 +85,7 @@ body {
   }
 
   body::-webkit-scrollbar-thumb {
-    background: #ad49e1;
+    background: #0098ff;
   }
 }
 
@@ -98,19 +98,19 @@ body {
 }
 
 .logo-text {
-  background: -webkit-linear-gradient(16deg, #7a1cac, #1caca7);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .linear-text {
-  background: -webkit-linear-gradient(16deg, #7a1cac, #1caca7);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .linear-bg {
-  background: -webkit-linear-gradient(16deg, #7a1cac, #1caca7);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
 }
 
 .card-scroll::-webkit-scrollbar {
@@ -123,7 +123,7 @@ body {
 }
 
 .card-scroll::-webkit-scrollbar-thumb {
-  background: -webkit-linear-gradient(16deg, #7a1cac, #1caca7);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
 }
 
 .event-card-scroll::-webkit-scrollbar {
@@ -154,11 +154,11 @@ body {
   width: 100% !important;
   border: none !important;
   font-family: "Inter", sans-serif !important;
-  background: #17141c !important;
+  background: #1e1e1e !important;
 }
 
 .react-calendar__tile-active {
-  background-color: #7a1cac !important;
+  background-color: #0098ff !important;
   color: white !important;
 }
 
@@ -507,27 +507,27 @@ body {
 
 .floating-1 {
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  background: -webkit-linear-gradient(16deg, #0ec4e8, #9e30a9);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
 }
 
 .floating-2 {
   border-radius: 73% 27% 67% 33% / 30% 82% 18% 70%;
-  background: -webkit-linear-gradient(16deg, #0ec4e8, #9e30a9);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
 }
 
 .floating-3 {
   border-radius: 73% 27% 67% 33% / 76% 76% 24% 24%;
-  background: -webkit-linear-gradient(16deg, #0ec4e8, #9e30a9);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
 }
 
 .floating-4 {
   border-radius: 27% 73% 29% 71% / 76% 76% 24% 24%;
-  background: -webkit-linear-gradient(16deg, #0ec4e8, #9e30a9);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
 }
 
 .floating-5 {
   border-radius: 27% 73% 29% 71% / 76% 25% 75% 24%;
-  background: -webkit-linear-gradient(16deg, #0ec4e8, #9e30a9);
+  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
 }
 
 /* change the quill rich text editor font size */

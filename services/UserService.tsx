@@ -43,3 +43,12 @@ export const getUsersByRole = async (userRole: string) => {
     handleError(error);
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const data = await axios.get(api);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};

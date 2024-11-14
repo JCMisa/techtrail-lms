@@ -18,14 +18,14 @@ const HomeHeader = () => {
             alt="logo"
             width={1000}
             height={1000}
-            className="w-10 h-10"
+            className="w-8 h-8"
           />
           <Link
-            className="flex items-center text-light-100 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+            className="flex items-center text-light no-underline hover:no-underline font-bold text-xl lg:text-2xl"
             href="/"
           >
             Tech
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7A1CAC] via-[#AD49E1] to-[#1caca7]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0098ff] via-[#007acc] to-[#AD49E1]">
               Trail
             </span>
           </Link>

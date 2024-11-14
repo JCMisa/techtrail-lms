@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#17141c",
+        background: "#1e1e1e",
         foreground: "#ffffff",
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -23,8 +23,10 @@ const config: Config = {
           foreground: "hsl(var(--popover-foreground))",
         },
         dark: {
-          DEFAULT: "#17141c",
-          100: "#231f26",
+          DEFAULT: "#1e1e1e",
+          100: "#252525",
+          200: "#2d2d30",
+          300: "#3e3e42",
           foreground: "hsl(var(--primary-foreground))",
         },
         light: {
@@ -33,16 +35,16 @@ const config: Config = {
           foreground: "hsl(var(--primary-foreground))",
         },
         primary: {
+          DEFAULT: "#0098ff",
+          100: "#007acc",
+          200: "#0065a9",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
           DEFAULT: "#7A1CAC",
           100: "#AD49E1",
           200: "#2E073F",
           foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "#1caca7",
-          100: "#433D8B",
-          200: "#17153B",
-          foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -56,7 +58,7 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        border: "#231f26",
+        border: "#1e1e1e",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {

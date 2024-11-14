@@ -66,12 +66,6 @@ const Menu = () => {
       title: "MENU",
       items: [
         {
-          icon: <Home />,
-          label: "Home",
-          href: "/",
-          visible: ["admin", "teacher", "user"],
-        },
-        {
           icon: <LayoutGrid />,
           label: "Dashboard",
           href: `/dashboard/${loggedInUser?.role}`,
