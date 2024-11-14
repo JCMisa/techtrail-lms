@@ -8,8 +8,8 @@ import { and, eq, isNull } from "drizzle-orm";
 import { toast } from "sonner";
 import React, { useEffect, useState } from "react";
 import UserCourseCard from "./UserCourseCard";
-import { LoaderCircle } from "lucide-react";
 import Empty from "@/app/_components/Empty";
+import Spinner from "@/components/custom/Spinner";
 
 const UserCoursesList = () => {
   const { user } = useUser();
@@ -73,7 +73,7 @@ const UserCoursesList = () => {
     <>
       {loading ? (
         <div className="text-center flex items-center justify-center w-full">
-          <LoaderCircle className="w-10 h-10 animate-spin" />
+          <Spinner />
         </div>
       ) : (
         <>

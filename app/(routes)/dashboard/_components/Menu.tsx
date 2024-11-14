@@ -9,6 +9,7 @@ import {
   BookOpenText,
   Brain,
   Calendar,
+  Coins,
   GraduationCap,
   Home,
   LayoutGrid,
@@ -25,6 +26,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import UsageTrack from "./UsageTrack";
 
 const Menu = () => {
   const { user } = useUser();
@@ -108,6 +110,12 @@ const Menu = () => {
           visible: ["admin"],
         },
         {
+          icon: <Coins />,
+          label: "Upgrade",
+          href: "/dashboard/upgrade",
+          visible: ["teacher", "user"],
+        },
+        {
           icon: <Calendar />,
           label: "Events",
           href: "/dashboard/events",
@@ -127,7 +135,7 @@ const Menu = () => {
         {
           icon: <UserRoundPen />,
           label: "Profile",
-          href: "/profile",
+          href: "/dashboard/profile",
           visible: ["admin", "teacher", "user"],
         },
         {
@@ -164,6 +172,9 @@ const Menu = () => {
           )}
         </div>
       ))}
+      <div className="lg:flex items-center justify-center hidden">
+        <UsageTrack />
+      </div>
     </div>
   );
 };

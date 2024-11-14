@@ -84,6 +84,15 @@ export const stripeCustomer = pgTable("stripeCustomer", {
   updatedAt: varchar("updatedAt"),
 });
 
+export const subscribedUsers = pgTable("subscribedUsers", {
+  id: serial("id").primaryKey(),
+  userId: varchar("userId"),
+  userEmail: varchar("userEmail"),
+  stripeCustomerId: varchar("stripeCustomerId"),
+  createdAt: varchar("createdAt"),
+  updatedAt: varchar("updatedAt"),
+});
+
 // relationships
 export const categoryRelations = relations(category, ({ many }) => ({
   course: many(course),
