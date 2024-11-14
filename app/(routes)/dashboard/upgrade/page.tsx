@@ -235,7 +235,7 @@ const UpgradePage = () => {
                           options={{
                             mode: "payment",
                             amount: convertToSubcurrency(amount),
-                            currency: "PHP",
+                            currency: "php",
                           }}
                         >
                           <CheckoutPage amount={amount} />
@@ -243,7 +243,7 @@ const UpgradePage = () => {
                       </DialogDescription>
                     </DialogHeader>
                     <DialogFooter className="sm:justify-start">
-                      <DialogClose asChild>
+                      <DialogClose>
                         <Button
                           variant={"outline"}
                           className="mt-5 w-full flex items-end self-end"

@@ -3,7 +3,7 @@
 
 import { getAllUsers } from "@/services/UserService";
 import { db } from "@/utils/db";
-import { stripeCustomer } from "@/utils/schema";
+import { subscribedUsers } from "@/utils/schema";
 import { Bell, MoreHorizontal } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import {
@@ -16,13 +16,13 @@ import { toast } from "sonner";
 
 const RadialChart = () => {
   const [totalUsers, setTotalUsers] = useState<number | null>(0);
-  const [subscribedUsers, setSubscribedUsers] = useState<number | null>(0);
+  const [subscribed, setSubscribed] = useState<number | null>(0);
 
   const getTotalUsers = async () => {
     try {
       const result = await getAllUsers();
       if (result) {
-        setTotalUsers(result?.data?.length);
+        setTotalUsers(result?.data?.length as number);
       }
     } catch {
       toast(
@@ -35,9 +35,9 @@ const RadialChart = () => {
 
   const getSubscribedUsers = async () => {
     try {
-      const result = await db.select().from(stripeCustomer);
+      const result = await db.select().from(subscribedUsers);
       if (result) {
-        setSubscribedUsers(result?.length);
+        setSubscribed(result?.length as number);
       }
     } catch {
       toast(
@@ -61,12 +61,12 @@ const RadialChart = () => {
     },
     {
       name: "Not Subscribed",
-      count: totalUsers! - subscribedUsers!,
+      count: totalUsers! - subscribed!,
       fill: "#AD49E1",
     },
     {
       name: "Subscribed",
-      count: subscribedUsers || 0,
+      count: subscribed || 0,
       fill: "#0098ff",
     },
   ];
@@ -111,20 +111,17 @@ const RadialChart = () => {
         <div className="flex justify-center gap-16">
           <div className="flex flex-col gap-1 items-center">
             <div className="w-5 h-5 bg-secondary-100 rounded-full" />
-            <h1 className="font-bold">{totalUsers! - subscribedUsers!}</h1>
+            <h1 className="font-bold">{totalUsers! - subscribed!}</h1>
             <h2 className="text-[9px] text-gray-400">
               !Subscribed (
-              {Math.round(
-                ((totalUsers! - subscribedUsers!) / totalUsers!) * 100
-              )}{" "}
-              %)
+              {Math.round(((totalUsers! - subscribed!) / totalUsers!) * 100)} %)
             </h2>
           </div>
           <div className="flex flex-col gap-1 items-center justify-center">
             <div className="w-5 h-5 bg-primary rounded-full" />
-            <h1 className="font-bold">{subscribedUsers}</h1>
+            <h1 className="font-bold">{subscribed}</h1>
             <h2 className="text-[9px] text-gray-400">
-              Subscribed ({Math.round((subscribedUsers! / totalUsers!) * 100)}%)
+              Subscribed ({Math.round((subscribed! / totalUsers!) * 100)}%)
             </h2>
           </div>
         </div>
