@@ -560,7 +560,7 @@ body {
   animation: 1s spin linear infinite;
 }
 .loader:after {
-  color: #0098ff;
+  color: #7a1cac;
   transform: rotateY(70deg);
   animation-delay: 0.4s;
 }

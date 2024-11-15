@@ -47,7 +47,7 @@ const CourseReviewPage = () => {
 
   const [loading, setLoading] = useState(false);
   const [activeIndex, setactiveIndex] = useState(0);
-  const { userCourseInput, setUserCourseInput } = useContext(UserInputContext);
+  const { userCourseInput } = useContext(UserInputContext);
 
   // check if context array is empty, then disable te next button
   const checkStatus = () => {
@@ -131,7 +131,8 @@ const CourseReviewPage = () => {
   return (
     <>
       {(totalUsage < 5 && !userSubscription) ||
-      (totalUsage >= 5 && userSubscription) ? (
+      (totalUsage >= 5 && userSubscription) ||
+      (totalUsage < 5 && userSubscription) ? (
         <div className="mt-10">
           <h2 className="text-4xl font-medium text-center">
             Create Course Reviewer

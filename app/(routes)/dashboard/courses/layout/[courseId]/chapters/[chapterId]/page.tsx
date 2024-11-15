@@ -9,10 +9,16 @@ import LoadingDialog from "@/app/_components/LoadingDialog";
 import { IconBadge } from "@/components/custom/icon-badge";
 import { findUserByEmail } from "@/services/UserService";
 import { db } from "@/utils/db";
-import { chapter, course } from "@/utils/schema";
+import { chapter, chapterQuestion, course } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
-import { and, eq } from "drizzle-orm";
-import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
+import { and, asc, eq } from "drizzle-orm";
+import {
+  ArrowLeft,
+  Eye,
+  FileQuestion,
+  LayoutDashboard,
+  Video,
+} from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -22,6 +28,7 @@ import ChapterAccessForm from "./_components/ChapterAccessForm";
 import ChapterVideoForm from "./_components/ChapterVideoForm";
 import Banner from "@/components/custom/banner";
 import ChapterActions from "./_components/ChapterActions";
+import QuestionsForm from "./_components/QuestionsForm";
 
 interface PROPS {
   params: {
@@ -45,6 +52,7 @@ const ChapterEdit = ({ params }: PROPS) => {
   const [loading, setLoading] = useState(false);
   const [chapterRecord, setChapterRecord] = useState<any>();
   const [courseRecord, setCourseRecord] = useState<any>();
+  const [chapterQuestions, setChapterQuestions] = useState<any>();
 
   const getUserByEmail = async () => {
     setLoading(true);
@@ -140,6 +148,36 @@ const ChapterEdit = ({ params }: PROPS) => {
   useEffect(() => {
     user && getCourse();
   }, [user, params]);
+
+  const getAllChapterQuestions = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(chapterQuestion)
+        .where(
+          and(
+            eq(chapterQuestion?.courseId, params?.courseId),
+            eq(chapterQuestion?.chapterId, params?.chapterId)
+          )
+        )
+        .orderBy(asc(chapterQuestion.id));
+
+      if (result) {
+        setChapterQuestions(result);
+      }
+    } catch (error) {
+      toast(
+        <p className="font-bold text-sm text-red-500">
+          Internal error occured while fething the course chapters
+        </p>
+      );
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllChapterQuestions();
+  }, [params]);
 
   // get all required fields to be filled inside a single chapter
   const requiredFields = [
@@ -238,17 +276,32 @@ const ChapterEdit = ({ params }: PROPS) => {
                     </div>
                   </div>
 
-                  <div>
-                    <div className="flex items-center gap-x-2">
-                      <IconBadge icon={Video} />
-                      <h2 className="text-xl">Add a video</h2>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-center gap-x-2">
+                        <IconBadge icon={Video} />
+                        <h2 className="text-xl">Add a video</h2>
+                      </div>
+                      <ChapterVideoForm
+                        initialData={chapterRecord}
+                        courseId={params?.courseId}
+                        chapterId={params?.chapterId}
+                        refreshData={() => getChapter()}
+                      />
                     </div>
-                    <ChapterVideoForm
-                      initialData={chapterRecord}
-                      courseId={params?.courseId}
-                      chapterId={params?.chapterId}
-                      refreshData={() => getChapter()}
-                    />
+
+                    <div>
+                      <div className="flex items-center gap-x-2">
+                        <IconBadge icon={FileQuestion} />
+                        <h2 className="text-xl">Manage Questionnaires</h2>
+                      </div>
+                      <QuestionsForm
+                        initialData={chapterQuestions}
+                        courseId={params?.courseId}
+                        chapterId={params?.chapterId}
+                        refreshData={() => getAllChapterQuestions()}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

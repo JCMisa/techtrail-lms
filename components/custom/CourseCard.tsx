@@ -149,7 +149,7 @@ const CourseCard = ({
           />
         </div>
         <div className="flex flex-col p-2 pb-5 bg-dark rounded-b-md">
-          <div className="text-lg md:text-base font-medium group-hover:text-light-100 transition line-clamp-2">
+          <div className="text-lg md:text-base font-medium group-hover:text-light-100 transition line-clamp-1">
             {title}
           </div>
           <p className="text-xs text-muted-foreground">

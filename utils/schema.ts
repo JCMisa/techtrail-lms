@@ -55,6 +55,20 @@ export const chapter = pgTable("chapter", {
   createdBy: varchar("createdBy"),
 });
 
+export const chapterQuestion = pgTable("chapterQuestion", {
+  id: serial("id").primaryKey(),
+  courseId: varchar("courseId"),
+  chapterId: varchar("chapterId"),
+  questionId: varchar("questionId"),
+  question: varchar("question"),
+  answer: varchar("answer"),
+  explanation: varchar("explanation"),
+  optionOne: varchar("optionOne"),
+  optionTwo: varchar("optionTwo"),
+  optionThree: varchar("optionThree"),
+  optionFour: varchar("optionFour"),
+});
+
 export const userProgress = pgTable("userProgress", {
   id: serial("id").primaryKey(),
   userId: varchar("userId"),
