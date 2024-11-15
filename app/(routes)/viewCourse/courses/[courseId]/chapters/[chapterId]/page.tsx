@@ -8,6 +8,7 @@ import { db } from "@/utils/db";
 import {
   attachment,
   chapter,
+  chapterQuestion,
   course,
   purchase,
   userProgress,
@@ -23,6 +24,8 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/custom/preview";
 import { File } from "lucide-react";
 import CourseProgressButton from "./_components/CourseProgressButton";
+import { ChapterQuestionType } from "@/app/(routes)/dashboard/courses/layout/[courseId]/chapters/[chapterId]/questions/[questionId]/page";
+import QuestionCard from "./_components/QuestionCard";
 
 const ChapterIdPage = ({
   params,
@@ -41,6 +44,9 @@ const ChapterIdPage = ({
   const [purchaseRecordState, setPurchaseRecordState] = useState<[] | any>([]);
   const [courseRecordState, setCourseRecordState] = useState<any>();
   const [userProgressRecord, setUserProgressRecord] = useState<any>();
+  const [chapterQuestions, setChapterQuestions] = useState<
+    ChapterQuestionType[]
+  >([]);
 
   const getChapterInfo = async () => {
     try {
@@ -80,6 +86,20 @@ const ChapterIdPage = ({
 
         if (attachmentsRecord) {
           setCourseAttachments(attachmentsRecord); // array of attachments under a specific course
+        }
+
+        const questionsList = await db
+          .select()
+          .from(chapterQuestion)
+          .where(
+            and(
+              eq(chapterQuestion.courseId, params?.courseId),
+              eq(chapterQuestion.chapterId, params?.chapterId)
+            )
+          );
+
+        if (questionsList) {
+          setChapterQuestions(questionsList as ChapterQuestionType[]);
         }
       }
 
@@ -217,7 +237,7 @@ const ChapterIdPage = ({
           <div>
             <Preview value={chapterRecordState?.description} />
           </div>
-          {!!courseAttachments.length ? (
+          {!!courseAttachments?.length ? (
             <>
               <Separator />
               <div className="p-4 flex flex-col gap-2">
@@ -238,6 +258,22 @@ const ChapterIdPage = ({
             <Banner
               variant={"warning"}
               label="Buy this course to access course attachments if any."
+            />
+          )}
+
+          {!!chapterQuestions?.length ? (
+            <>
+              <Separator />
+              <div className="p-4 flex flex-col gap-5">
+                {chapterQuestions?.map((question: ChapterQuestionType) => (
+                  <QuestionCard key={question?.id} question={question} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <Banner
+              variant={"warning"}
+              label="Buy this course to access chapter questions if any."
             />
           )}
         </div>
