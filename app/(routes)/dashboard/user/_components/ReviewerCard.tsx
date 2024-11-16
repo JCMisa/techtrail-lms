@@ -46,13 +46,23 @@ const ReviewerCard = ({
   return (
     <div className="w-full bg-dark-100 border border-dark-100 rounded-lg shadow-md">
       <div>
-        <Image
-          src={reviewer?.courseBanner}
-          alt="banner"
-          width={1000}
-          height={1000}
-          className="rounded-t-lg w-full min-h-[200px] max-h-[200px]"
-        />
+        {reviewer?.courseBanner ? (
+          <Image
+            src={reviewer?.courseBanner && reviewer?.courseBanner}
+            alt="banner"
+            width={1000}
+            height={1000}
+            className="rounded-t-lg w-full min-h-[200px] max-h-[200px]"
+          />
+        ) : (
+          <Image
+            src={"/empty-img-placeholder.jpg"}
+            alt="banner"
+            width={1000}
+            height={1000}
+            className="rounded-t-lg w-full min-h-[200px] max-h-[200px]"
+          />
+        )}
       </div>
       <div className="p-5 flex flex-col gap-5">
         <div>
@@ -73,13 +83,24 @@ const ReviewerCard = ({
             />
           ) : (
             <div className="flex items-center gap-3 mt-2 overflow-hidden">
-              <Image
-                src={reviewer?.profileImage}
-                width={35}
-                height={35}
-                alt="img"
-                className="rounded-full"
-              />
+              {reviewer?.profileImage ? (
+                <Image
+                  src={reviewer?.profileImage && reviewer?.profileImage}
+                  width={35}
+                  height={35}
+                  alt="img"
+                  className="rounded-full"
+                />
+              ) : (
+                <Image
+                  src={"/empty-img-placeholder.jpg"}
+                  width={35}
+                  height={35}
+                  alt="img"
+                  className="rounded-full"
+                />
+              )}
+
               <h2 className="text-sm">{reviewer?.username}</h2>
             </div>
           )}

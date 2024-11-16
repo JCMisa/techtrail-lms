@@ -119,3 +119,12 @@ export const deleteReviewer = async (reviewerId: number) => {
     handleError(error);
   }
 };
+
+export const deleteReviewerByEmail = async (email: string) => {
+  try {
+    const data = await axios.delete(api + `email/${email}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};

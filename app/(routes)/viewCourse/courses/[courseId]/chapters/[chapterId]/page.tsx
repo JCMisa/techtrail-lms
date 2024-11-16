@@ -237,7 +237,7 @@ const ChapterIdPage = ({
           <div>
             <Preview value={chapterRecordState?.description} />
           </div>
-          {purchaseRecordState?.length > 0 ? (
+          {purchaseRecordState?.length > 0 || chapterRecordState?.isFree ? (
             <>
               <Separator />
               <div className="p-4 flex flex-col gap-2">
@@ -261,7 +261,7 @@ const ChapterIdPage = ({
             />
           )}
 
-          {purchaseRecordState?.length > 0 ? (
+          {purchaseRecordState?.length > 0 || chapterRecordState?.isFree ? (
             <>
               <Separator />
               <div className="p-4 flex flex-col gap-5">

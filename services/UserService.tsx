@@ -35,6 +35,15 @@ export const findUserByEmail = async (userEmail: string) => {
   }
 };
 
+export const findUserById = async (id: number) => {
+  try {
+    const data = await axios.get(api + `${id}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const getUsersByRole = async (userRole: string) => {
   try {
     const data = await axios.get(api + `userRole/${userRole}`);
@@ -47,6 +56,26 @@ export const getUsersByRole = async (userRole: string) => {
 export const getAllUsers = async () => {
   try {
     const data = await axios.get(api);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const deleteUserById = async (id: number) => {
+  try {
+    const data = await axios.delete(api + id);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const updateUserRole = async (id: number, role: string) => {
+  try {
+    const data = await axios.put(api + id, {
+      role: role,
+    });
     return data;
   } catch (error) {
     handleError(error);

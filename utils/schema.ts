@@ -67,6 +67,7 @@ export const chapterQuestion = pgTable("chapterQuestion", {
   optionTwo: varchar("optionTwo"),
   optionThree: varchar("optionThree"),
   optionFour: varchar("optionFour"),
+  createdBy: varchar("createdBy"),
 });
 
 export const userProgress = pgTable("userProgress", {

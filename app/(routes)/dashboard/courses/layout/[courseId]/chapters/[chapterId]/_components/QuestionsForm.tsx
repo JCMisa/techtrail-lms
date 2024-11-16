@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "@/components/custom/Spinner";
 import { Textarea } from "@/components/ui/textarea";
 import QuestionList from "./QuestionList";
+import { useUser } from "@clerk/nextjs";
 
 interface QuestionsFormProps {
   initialData: any;
@@ -26,6 +27,7 @@ const QuestionsForm = ({
   chapterId,
   refreshData,
 }: QuestionsFormProps) => {
+  const { user } = useUser();
   const router = useRouter();
 
   const [isCreating, setIsCreating] = useState(false);
@@ -57,6 +59,7 @@ const QuestionsForm = ({
         optionTwo: optionTwo,
         optionThree: optionThree,
         optionFour: optionFour,
+        createdBy: user?.primaryEmailAddress?.emailAddress,
       });
       if (result) {
         toast(

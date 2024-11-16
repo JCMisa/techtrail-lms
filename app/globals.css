@@ -736,3 +736,50 @@ body {
     transform: scale(1.09);
   }
 }
+
+/* From Uiverse.io by vinodjangid07 */
+.card-profile {
+  width: 80%;
+  height: 100vh;
+  background: rgb(39, 39, 39);
+  border-radius: 12px;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.123);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition-duration: 0.5s;
+}
+
+.profileImage-profile {
+  background: linear-gradient(to right, rgb(54, 54, 54), rgb(32, 32, 32));
+  margin-top: 20px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.329);
+}
+
+.textContainer-profile {
+  width: 100%;
+  text-align: left;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.name-profile {
+  letter-spacing: 0.5px;
+}
+
+.profile-profile {
+  font-size: 0.84em;
+  color: rgb(194, 194, 194);
+  letter-spacing: 0.2px;
+}
+
+.card-profile:hover {
+  background-color: rgb(43, 43, 43);
+  transition-duration: 0.5s;
+}

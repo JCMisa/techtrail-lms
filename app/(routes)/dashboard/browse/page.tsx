@@ -81,7 +81,7 @@ const BrowseCourses = () => {
           items={categories}
           selectCategory={(categoryId) => setSelectedCategory(categoryId)}
         />
-        <CourseList items={courses} />
+        <CourseList items={courses?.length > 0 ? courses : []} />
       </div>
     </>
   );

@@ -24,7 +24,7 @@ const CourseList = ({ items }: { items: any }) => {
       {items && items?.length === 0 && (
         <Empty
           header="No Courses Found"
-          subheader="Please wait while we retrieve related information from the database"
+          subheader="Please try navigating to other categories or search for the course you are looking for."
         />
       )}
     </div>

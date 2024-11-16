@@ -100,13 +100,13 @@ const Menu = () => {
         {
           icon: <GraduationCap />,
           label: "Teachers",
-          href: "/list/teachers",
+          href: "/dashboard/manage/teachers",
           visible: ["admin"],
         },
         {
           icon: <UserRound />,
           label: "Students",
-          href: "/list/students",
+          href: "/dashboard/manage/students",
           visible: ["admin"],
         },
         {

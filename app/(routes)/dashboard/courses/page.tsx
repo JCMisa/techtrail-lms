@@ -25,7 +25,12 @@ const CoursesPage = async () => {
 
   return (
     <div className="p-6">
-      <DataTable columns={columns} data={courses} />
+      <DataTable
+        columns={columns}
+        data={courses}
+        topic="title"
+        showCreate={true}
+      />
     </div>
   );
 };
