@@ -45,12 +45,13 @@ const DescriptionForm = ({
           JSON.parse(result?.response?.text())?.aiDescription
         );
       }
-    } catch {
+    } catch (error) {
       toast(
         <p className="font-bold text-sm text-red-500">
-          Internal error occured while generate AI response
+          Internal error occured while generating AI response
         </p>
       );
+      console.log("ai response error: ", error);
     } finally {
       setLoading(false);
     }

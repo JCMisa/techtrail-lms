@@ -237,7 +237,7 @@ const ChapterIdPage = ({
           <div>
             <Preview value={chapterRecordState?.description} />
           </div>
-          {!!courseAttachments?.length ? (
+          {purchaseRecordState?.length > 0 ? (
             <>
               <Separator />
               <div className="p-4 flex flex-col gap-2">
@@ -261,7 +261,7 @@ const ChapterIdPage = ({
             />
           )}
 
-          {!!chapterQuestions?.length ? (
+          {purchaseRecordState?.length > 0 ? (
             <>
               <Separator />
               <div className="p-4 flex flex-col gap-5">

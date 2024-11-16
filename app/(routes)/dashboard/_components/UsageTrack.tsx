@@ -13,14 +13,48 @@ import { UserSubscriptionContext } from "@/app/_context/UserSubscriptionContext"
 import { subscribedUsers } from "@/utils/schema";
 import { getAllReviewersByUserEmail } from "@/services/AiOutputService";
 import { Button } from "@/components/ui/button";
+import { findUserByEmail } from "@/services/UserService";
+import { toast } from "sonner";
 
 const UsageTrack = () => {
   const { user } = useUser();
   const router = useRouter();
 
+  const [loggedInUser, setLoggedInUser] = useState<{
+    id: number;
+    email: string;
+    firstname: string;
+    lastname: string;
+    imageUrl: string;
+    createdAt: string;
+    role: string;
+  }>();
   const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
   const { setUserSubscription } = useContext(UserSubscriptionContext);
   const [maxReviewers, setMaxReviewers] = useState(5);
+
+  const getUserRole = async () => {
+    try {
+      const result = await findUserByEmail(
+        user?.primaryEmailAddress?.emailAddress as string
+      );
+      if (result?.data?.role === "admin") {
+        setLoggedInUser(result?.data);
+        setUserSubscription(true);
+        setMaxReviewers(1000);
+      }
+    } catch {
+      toast(
+        <p className="text-sm font-bold text-red-500">
+          Internal error occured while fetching the user
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    user && getUserRole();
+  }, [user]);
 
   const isUserSubscribed = async () => {
     const result = await db
@@ -33,10 +67,7 @@ const UsageTrack = () => {
         )
       );
 
-    if (
-      result.length != 0 ||
-      user?.primaryEmailAddress?.emailAddress === "johncarlomisa399@gmail.com"
-    ) {
+    if (result.length > 0) {
       // if yung current user is in the subscribedUsers schema, then he is subscribed and paid already
       setUserSubscription(true);
       setMaxReviewers(1000);
@@ -73,17 +104,22 @@ const UsageTrack = () => {
           </Button>
         </div>
 
-        <Progress value={(totalUsage / maxReviewers) * 100} />
+        <Progress
+          value={(totalUsage / maxReviewers) * 100}
+          className="bg-dark"
+        />
         <h2 className="text-xs my-2">
           {totalUsage}/{maxReviewers} credits used
         </h2>
       </div>
-      <Button
-        onClick={() => router.push("/dashboard/upgrade")}
-        className="w-full my-3"
-      >
-        Upgrade
-      </Button>
+      {loggedInUser?.role !== "admin" && (
+        <Button
+          onClick={() => router.push("/dashboard/upgrade")}
+          className="w-full my-3"
+        >
+          Upgrade
+        </Button>
+      )}
     </div>
   );
 };

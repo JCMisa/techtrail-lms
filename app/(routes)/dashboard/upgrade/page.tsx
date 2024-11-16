@@ -248,7 +248,7 @@ const UpgradePage = () => {
                           variant={"outline"}
                           className="mt-5 w-full flex items-end self-end"
                         >
-                          Close
+                          Cancel
                         </Button>
                       </DialogClose>
                     </DialogFooter>

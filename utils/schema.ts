@@ -87,6 +87,7 @@ export const purchase = pgTable("purchase", {
   courseId: varchar("courseId"),
   createdAt: varchar("createdAt"),
   updatedAt: varchar("updatedAt"),
+  price: decimal("price"),
 });
 
 export const stripeCustomer = pgTable("stripeCustomer", {

@@ -84,6 +84,7 @@ export async function POST(
         courseId: courseResult[0]?.courseId,
         createdAt: moment().format("MM-DD-YYYY"),
         updatedAt: moment().format("MM-DD-YYYY"),
+        price: courseResult[0]?.price,
       });
     }
 
