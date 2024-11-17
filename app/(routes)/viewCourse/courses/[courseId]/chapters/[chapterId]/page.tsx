@@ -182,29 +182,29 @@ const ChapterIdPage = ({
     user && getUserProgress();
   }, [user, params?.chapterId]);
 
-  const checkIfCompleted = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(userProgress)
-        .where(eq(userProgress.courseId, params?.courseId));
-      if (result?.length > 0) {
-        const statusArray = result?.map((item) => item?.isCompleted);
-        console.log("status: ", statusArray);
-        const allSame = statusArray.every((item) => item === statusArray[0]);
+  // const checkIfCompleted = async () => {
+  //   try {
+  //     const result = await db
+  //       .select()
+  //       .from(userProgress)
+  //       .where(eq(userProgress.courseId, params?.courseId));
+  //     if (result?.length > 0) {
+  //       const statusArray = result?.map((item) => item?.isCompleted);
+  //       console.log("status: ", statusArray);
+  //       const allSame = statusArray.every((item) => item === statusArray[0]);
 
-        if (allSame) {
-          setIsCourseCompleted(true);
-        }
-      }
-    } catch (error) {
-      console.log("check completed error: ", error);
-    }
-  };
+  //       if (allSame) {
+  //         setIsCourseCompleted(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("check completed error: ", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    checkIfCompleted();
-  }, [params?.courseId]);
+  // useEffect(() => {
+  //   checkIfCompleted();
+  // }, [params?.courseId]);
 
   // is locked if the chapter record is not free and if the user does not purchase to course
   const isLocked: boolean =
@@ -241,6 +241,7 @@ const ChapterIdPage = ({
                   chapterId={params?.chapterId}
                   nextChapterId={nextChapter?.chapterId}
                   isCompleted={!!userProgressRecord?.isCompleted}
+                  setIsCompleted={(status) => setIsCourseCompleted(status)}
                   refreshData={() => getUserProgress()}
                 />
               ) : (
@@ -256,6 +257,7 @@ const ChapterIdPage = ({
                 chapterId={params?.chapterId}
                 nextChapterId={nextChapter?.chapterId}
                 isCompleted={!!userProgressRecord?.isCompleted}
+                setIsCompleted={(status) => setIsCourseCompleted(status)}
                 refreshData={() => getUserProgress()}
               />
             )}
@@ -308,7 +310,12 @@ const ChapterIdPage = ({
             <div className="p-4">
               <CertificateComponent />
               <div className="mt-10">
-                <LeaveCourseReview />
+                <LeaveCourseReview
+                  courseId={params?.courseId}
+                  userId={user?.id as string}
+                  userEmail={user?.primaryEmailAddress?.emailAddress as string}
+                  courseName={courseRecordState?.title as string}
+                />
               </div>
             </div>
           )}

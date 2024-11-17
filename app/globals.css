@@ -89,6 +89,33 @@ body {
   }
 }
 
+/* print certificate */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #certificate-section,
+  #certificate-section * {
+    visibility: visible;
+  }
+  #certificate-section {
+    /* position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center; */
+    margin: 0 auto;
+    width: 80%; /* Adjust as needed for your content width */
+    text-align: center;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
 .unauthorized-error {
   background-image: url("/401.avif");
 }

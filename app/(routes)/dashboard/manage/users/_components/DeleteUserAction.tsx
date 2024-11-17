@@ -27,6 +27,7 @@ import {
 import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { deleteReviewerByEmail } from "@/services/AiOutputService";
+import { batchDeleteByEmail } from "@/services/CourseReviewService";
 
 const DeleteUserAction = ({
   userId,
@@ -90,14 +91,22 @@ const DeleteUserAction = ({
                       );
 
                       if (deleteReviewers?.data) {
-                        const deleteUser = await deleteUserById(userId);
-                        if (deleteUser) {
-                          toast(
-                            <p className="font-bold text-sm text-green-500">
-                              User deleted successfully
-                            </p>
-                          );
-                          refreshData();
+                        const deleteCourseReviews = await batchDeleteByEmail(
+                          userInfo?.email as string
+                        );
+
+                        if (deleteCourseReviews?.data) {
+                          const deleteUser = await deleteUserById(userId);
+                          if (deleteUser) {
+                            toast(
+                              <p className="font-bold text-sm text-green-500">
+                                User deleted successfully
+                              </p>
+                            );
+                            refreshData();
+                          } else {
+                            return;
+                          }
                         } else {
                           return;
                         }

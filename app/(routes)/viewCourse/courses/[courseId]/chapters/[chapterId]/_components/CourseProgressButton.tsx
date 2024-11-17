@@ -16,12 +16,14 @@ const CourseProgressButton = ({
   chapterId,
   nextChapterId,
   isCompleted,
+  setIsCompleted,
   refreshData,
 }: {
   courseId: string;
   chapterId: string;
   nextChapterId: string;
   isCompleted?: boolean;
+  setIsCompleted: (status: boolean) => void;
   refreshData: () => void;
 }) => {
   const { user } = useUser();
@@ -74,6 +76,7 @@ const CourseProgressButton = ({
 
       if (!isCompleted && !nextChapterId) {
         confetti.onOpen();
+        setIsCompleted(true);
       }
 
       if (!isCompleted && nextChapterId) {
