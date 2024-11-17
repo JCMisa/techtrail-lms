@@ -123,6 +123,7 @@ const CourseReviewPage = () => {
           Internal error occured while generating AI response
         </p>
       );
+      console.log("generate ai response error: ", error);
     } finally {
       setLoading(false);
     }

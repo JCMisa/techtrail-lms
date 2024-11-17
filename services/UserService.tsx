@@ -44,6 +44,15 @@ export const findUserById = async (id: number) => {
   }
 };
 
+export const filterUserByEmail = async (userEmail: string) => {
+  try {
+    const data = await axios.get(api + `filterEmail/${userEmail}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const getUsersByRole = async (userRole: string) => {
   try {
     const data = await axios.get(api + `userRole/${userRole}`);

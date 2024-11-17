@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash } from "lucide-react";
 import { deleteUserById } from "@/services/UserService";
-import { useRouter } from "next/navigation";
 import { db } from "@/utils/db";
 import {
   attachment,
@@ -29,79 +28,76 @@ import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { deleteReviewerByEmail } from "@/services/AiOutputService";
 
-const DeleteAction = ({
-  teacherId,
-  teacherInfo,
+const DeleteUserAction = ({
+  userId,
+  userInfo,
+  refreshData,
 }: {
-  teacherId: number;
-  teacherInfo: any;
+  userId: number;
+  userInfo: any;
+  refreshData: () => void;
 }) => {
-  const router = useRouter();
-
   const handleDelete = async () => {
     try {
       const deleteAttachments = await db
         .delete(attachment)
-        .where(eq(attachment.updatedBy, teacherInfo?.email as string));
+        .where(eq(attachment.updatedBy, userInfo?.email as string));
 
       if (deleteAttachments) {
         const deleteChapters = await db
           .delete(chapter)
-          .where(eq(chapter.createdBy, teacherInfo?.email as string));
+          .where(eq(chapter.createdBy, userInfo?.email as string));
 
         if (deleteChapters) {
           const deleteQuestions = await db
             .delete(chapterQuestion)
-            .where(eq(chapterQuestion.createdBy, teacherInfo?.email as string));
+            .where(eq(chapterQuestion.createdBy, userInfo?.email as string));
 
           if (deleteQuestions) {
             const deleteCourse = await db
               .delete(course)
-              .where(eq(course.userEmail, teacherInfo?.email as string));
+              .where(eq(course.userEmail, userInfo?.email as string));
 
             if (deleteCourse) {
               const deletePurchases = await db
                 .delete(purchase)
-                .where(eq(purchase.userEmail, teacherInfo?.email as string));
+                .where(eq(purchase.userEmail, userInfo?.email as string));
 
               if (deletePurchases) {
                 const deleteStripeCustomer = await db
                   .delete(stripeCustomer)
                   .where(
-                    eq(stripeCustomer.userEmail, teacherInfo?.email as string)
+                    eq(stripeCustomer.userEmail, userInfo?.email as string)
                   );
 
                 if (deleteStripeCustomer) {
                   const deleteSubscription = await db
                     .delete(subscribedUsers)
                     .where(
-                      eq(
-                        subscribedUsers.userEmail,
-                        teacherInfo?.email as string
-                      )
+                      eq(subscribedUsers.userEmail, userInfo?.email as string)
                     );
 
                   if (deleteSubscription) {
                     const deleteProgress = await db
                       .delete(userProgress)
                       .where(
-                        eq(userProgress.userEmail, teacherInfo?.email as string)
+                        eq(userProgress.userEmail, userInfo?.email as string)
                       );
 
                     if (deleteProgress) {
                       const deleteReviewers = await deleteReviewerByEmail(
-                        teacherInfo?.email as string
+                        userInfo?.email as string
                       );
 
                       if (deleteReviewers?.data) {
-                        const deleteUser = await deleteUserById(teacherId);
+                        const deleteUser = await deleteUserById(userId);
                         if (deleteUser) {
                           toast(
                             <p className="font-bold text-sm text-green-500">
                               User deleted successfully
                             </p>
                           );
-                          router.replace("/dashboard/manage/teachers");
+                          refreshData();
                         } else {
                           return;
                         }
@@ -141,10 +137,11 @@ const DeleteAction = ({
       );
     }
   };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Trash className="text-red-500 hover:text-red-600 transition-all w-5 h-5 cursor-pointer absolute top-5 right-5" />
+        <Trash className="text-red-500 hover:text-red-600 transition-all w-5 h-5 cursor-pointer" />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -165,4 +162,4 @@ const DeleteAction = ({
   );
 };
 
-export default DeleteAction;
+export default DeleteUserAction;
