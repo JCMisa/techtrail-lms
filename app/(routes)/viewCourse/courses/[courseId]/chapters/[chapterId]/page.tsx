@@ -26,6 +26,8 @@ import { File } from "lucide-react";
 import CourseProgressButton from "./_components/CourseProgressButton";
 import { ChapterQuestionType } from "@/app/(routes)/dashboard/courses/layout/[courseId]/chapters/[chapterId]/questions/[questionId]/page";
 import QuestionCard from "./_components/QuestionCard";
+import CertificateComponent from "./_components/CertificateComponent";
+import LeaveCourseReview from "./_components/LeaveCourseReview";
 
 const ChapterIdPage = ({
   params,
@@ -47,6 +49,7 @@ const ChapterIdPage = ({
   const [chapterQuestions, setChapterQuestions] = useState<
     ChapterQuestionType[]
   >([]);
+  const [isCourseCompleted, setIsCourseCompleted] = useState(false);
 
   const getChapterInfo = async () => {
     try {
@@ -179,6 +182,30 @@ const ChapterIdPage = ({
     user && getUserProgress();
   }, [user, params?.chapterId]);
 
+  const checkIfCompleted = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(userProgress)
+        .where(eq(userProgress.courseId, params?.courseId));
+      if (result?.length > 0) {
+        const statusArray = result?.map((item) => item?.isCompleted);
+        console.log("status: ", statusArray);
+        const allSame = statusArray.every((item) => item === statusArray[0]);
+
+        if (allSame) {
+          setIsCourseCompleted(true);
+        }
+      }
+    } catch (error) {
+      console.log("check completed error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    checkIfCompleted();
+  }, [params?.courseId]);
+
   // is locked if the chapter record is not free and if the user does not purchase to course
   const isLocked: boolean =
     chapterRecordState?.isFree == false && purchaseRecordState?.length == 0;
@@ -275,6 +302,15 @@ const ChapterIdPage = ({
               variant={"warning"}
               label="Buy this course to access chapter questions if any."
             />
+          )}
+
+          {isCourseCompleted && (
+            <div className="p-4">
+              <CertificateComponent />
+              <div className="mt-10">
+                <LeaveCourseReview />
+              </div>
+            </div>
           )}
         </div>
       </div>

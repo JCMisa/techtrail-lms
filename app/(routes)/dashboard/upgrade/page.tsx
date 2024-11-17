@@ -63,9 +63,9 @@ const UpgradePage = () => {
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       className="w-3 h-3"
                       viewBox="0 0 24 24"
                     >
@@ -79,9 +79,9 @@ const UpgradePage = () => {
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       className="w-3 h-3"
                       viewBox="0 0 24 24"
                     >
@@ -95,9 +95,9 @@ const UpgradePage = () => {
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       className="w-3 h-3"
                       viewBox="0 0 24 24"
                     >
@@ -111,9 +111,9 @@ const UpgradePage = () => {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-4 h-4 ml-auto"
                     viewBox="0 0 24 24"
                   >
@@ -144,9 +144,9 @@ const UpgradePage = () => {
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       className="w-3 h-3"
                       viewBox="0 0 24 24"
                     >
@@ -160,9 +160,9 @@ const UpgradePage = () => {
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       className="w-3 h-3"
                       viewBox="0 0 24 24"
                     >
@@ -176,9 +176,9 @@ const UpgradePage = () => {
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       className="w-3 h-3"
                       viewBox="0 0 24 24"
                     >
@@ -192,9 +192,9 @@ const UpgradePage = () => {
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2.5"
                       className="w-3 h-3"
                       viewBox="0 0 24 24"
                     >
@@ -214,9 +214,9 @@ const UpgradePage = () => {
                       <svg
                         fill="none"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         className="w-4 h-4 ml-auto"
                         viewBox="0 0 24 24"
                       >

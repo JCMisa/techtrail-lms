@@ -783,3 +783,103 @@ body {
   background-color: rgb(43, 43, 43);
   transition-duration: 0.5s;
 }
+
+/* form to leave a course review */
+.post-card-rev {
+  width: 100%;
+  height: 340px;
+  background: #1f1f1f;
+  padding: 10px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-card-rev textarea {
+  resize: none;
+  width: 100%;
+  height: 40%;
+  padding: 5px;
+  font-family: Sans-serif;
+  font-size: 16px;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+}
+
+.hr-rev {
+  border: 1px solid #464646;
+  width: 100%;
+  border-radius: 10em;
+}
+
+.button-row-rev {
+  margin-top: 7px;
+  margin-bottom: 3px;
+}
+
+.button-row-rev button {
+  border-radius: 10px;
+  border: none;
+  width: 77px;
+  height: 58px;
+  font-family: Sans-serif;
+  color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+.button-row-rev button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
+}
+
+.upload-rev {
+  font-size: 14px;
+  background: linear-gradient(180deg, #cecb00 0%, #ef4949 100%);
+}
+
+.feeling-rev {
+  font-size: 14px;
+  background: linear-gradient(180deg, #31c300 0%, #ab7811 100%);
+}
+
+.life-event-rev {
+  font-size: 13.7px;
+  background: linear-gradient(180deg, #ff1024 0%, #ffb34a 100%);
+}
+
+.people-rev {
+  font-size: 13.5px;
+  background: linear-gradient(180deg, #0095b7 0%, #5012ba 100%);
+}
+
+.location-rev {
+  font-size: 14px;
+  background: linear-gradient(180deg, #c329c9 0%, #2b5dff 100%);
+}
+
+.live-video-rev {
+  font-size: 13.8px;
+  background: linear-gradient(180deg, #c800ff 0%, #ff076a 51%, #ff6c6c 100%);
+}
+
+.post-rev {
+  width: 100%;
+  padding: 10px;
+  margin-top: 7px;
+  border: none;
+  border-radius: 11px;
+  font-size: 18px;
+  font-family: Sans-serif;
+  color: #fff;
+  background-size: 200% 100%;
+  background-image: linear-gradient(145deg, #ff00e1, #0000ff, #00d9ff);
+  transition: 0.3s ease-out;
+}
+
+.post-rev:hover {
+  background-position: 99%;
+}
