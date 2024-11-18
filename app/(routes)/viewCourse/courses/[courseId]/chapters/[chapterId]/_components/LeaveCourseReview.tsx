@@ -2,7 +2,10 @@
 import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { addReview, getUserReviews } from "@/services/CourseReviewService";
+import {
+  addReview,
+  getUserReviewsForSpecificCourse,
+} from "@/services/CourseReviewService";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -46,9 +49,9 @@ const LeaveCourseReview = ({
     { label: "👎🏻", value: "thumbsDown", style: "life-event-rev" },
   ];
 
-  const getOwnReviews = async () => {
+  const getOwnReviewsForSpecificCourse = async () => {
     try {
-      const result = await getUserReviews(userEmail);
+      const result = await getUserReviewsForSpecificCourse(userEmail, courseId);
       if (result?.data) {
         setOwnReviews(result?.data);
       }
@@ -62,8 +65,8 @@ const LeaveCourseReview = ({
   };
 
   useEffect(() => {
-    getOwnReviews();
-  }, [userEmail]);
+    getOwnReviewsForSpecificCourse();
+  }, [userEmail, courseId]);
 
   const handleSubmit = async () => {
     try {
@@ -84,7 +87,7 @@ const LeaveCourseReview = ({
             Review posted successfully
           </p>
         );
-        getOwnReviews();
+        getOwnReviewsForSpecificCourse();
       }
     } catch {
       toast(
@@ -187,7 +190,7 @@ const LeaveCourseReview = ({
                   <ReviewCard
                     review={review}
                     showDelete={true}
-                    refreshData={() => getOwnReviews()}
+                    refreshData={() => getOwnReviewsForSpecificCourse()}
                   />
                 </div>
               )

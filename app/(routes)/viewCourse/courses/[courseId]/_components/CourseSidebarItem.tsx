@@ -42,7 +42,7 @@ const CourseSidebarItem = ({
         <Icon
           className={cn("w-4 h-4 text-gray-400", isActive && "text-light")}
         />
-        {label ? label : ""}
+        <p className="text-start">{label ? label : ""}</p>
       </div>
       <div
         className={cn(

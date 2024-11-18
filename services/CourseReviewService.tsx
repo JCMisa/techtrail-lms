@@ -37,6 +37,20 @@ export const getUserReviews = async (userEmail: string) => {
   }
 };
 
+export const getUserReviewsForSpecificCourse = async (
+  userEmail: string,
+  courseId: string
+) => {
+  try {
+    const data = await axios.get(
+      api + `userEmail/${userEmail}/courseId/${courseId}`
+    );
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const deleteReview = async (reviewId: number) => {
   try {
     const data = await axios.delete(api + reviewId);

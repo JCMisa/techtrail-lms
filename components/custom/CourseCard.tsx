@@ -10,10 +10,11 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IconBadge } from "./icon-badge";
-import { BookOpen } from "lucide-react";
+import { BookOpen, EllipsisVertical } from "lucide-react";
 import { formatCurrency } from "@/lib/formatCurrency";
 import { Badge } from "../ui/badge";
 import { useUser } from "@clerk/nextjs";
+import CourseOptions from "./CourseOptions";
 
 interface CourseCardProps {
   courseId: string;
@@ -166,22 +167,25 @@ const CourseCard = ({
               </span>
             </div>
           </div>
-          {/* todo: show progress */}
-          {isPurchased && (
-            <Badge className="w-[50%] flex items-center justify-center text-xs text-white bg-emerald-600 hover:bg-emerald-700">
-              Purchased
-            </Badge>
-          )}
-          {!isPurchased && !isFree && (
-            <p className="text-md md:text-sm font-medium text-gray-600">
-              {formatCurrency(price)}
-            </p>
-          )}
-          {isFree && (
-            <Badge className="w-[50%] flex items-center justify-center text-xs">
-              Free
-            </Badge>
-          )}
+          <div className="flex items-center justify-between">
+            {isPurchased && (
+              <Badge className="w-[50%] flex items-center justify-center text-xs text-white bg-emerald-600 hover:bg-emerald-700">
+                Purchased
+              </Badge>
+            )}
+            {!isPurchased && !isFree && (
+              <p className="text-md md:text-sm font-medium text-gray-600">
+                {formatCurrency(price)}
+              </p>
+            )}
+            {isFree && (
+              <Badge className="w-[50%] flex items-center justify-center text-xs">
+                Free
+              </Badge>
+            )}
+
+            <CourseOptions icon={<EllipsisVertical />} courseId={courseId} />
+          </div>
         </div>
       </div>
     </Link>

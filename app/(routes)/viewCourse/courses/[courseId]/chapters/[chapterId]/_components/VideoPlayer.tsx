@@ -1,4 +1,3 @@
-import Spinner from "@/components/custom/Spinner";
 import { Lock } from "lucide-react";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
@@ -16,7 +15,7 @@ const VideoPlayer = ({
     <div className="relative aspect-video">
       {!isReady && !isLocked && (
         <div className="absolute inset-0 flex items-center justify-center bg-dark-100">
-          <Spinner />
+          <p className="text-xs">No video to show.</p>
         </div>
       )}
       {isLocked && (
