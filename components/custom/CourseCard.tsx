@@ -142,12 +142,21 @@ const CourseCard = ({
     <Link href={`/viewCourse/courses/${courseId}`}>
       <div className="group hover:shadow-md transition overflow-hidden rounded-lg p-3 h-full">
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
-          <Image
-            fill
-            className="object-cover"
-            alt="courseImage"
-            src={imageUrl}
-          />
+          {imageUrl ? (
+            <Image
+              fill
+              className="object-cover"
+              alt="courseImage"
+              src={imageUrl}
+            />
+          ) : (
+            <Image
+              fill
+              className="object-cover"
+              alt="courseImage"
+              src={"/empty-img-placeholder.jpg"}
+            />
+          )}
         </div>
         <div className="flex flex-col p-2 pb-5 bg-dark rounded-b-md">
           <div className="text-lg md:text-base font-medium group-hover:text-light-100 transition line-clamp-1">

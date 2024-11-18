@@ -68,3 +68,12 @@ export const batchDeleteByEmail = async (userEmail: string) => {
     handleError(error);
   }
 };
+
+export const getPublishedReviewsByCourseId = async (courseId: string) => {
+  try {
+    const data = await axios.get(api + `courseId/${courseId}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};

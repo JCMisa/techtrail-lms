@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import CourseOptions from "@/components/custom/CourseOptions";
 import { IconBadge } from "@/components/custom/icon-badge";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/formatCurrency";
@@ -5,7 +9,7 @@ import { db } from "@/utils/db";
 import { category, chapter, course, purchase } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq } from "drizzle-orm";
-import { BookOpen } from "lucide-react";
+import { BookOpen, EllipsisVertical } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -30,7 +34,7 @@ const UserCourseCard = ({ courseId }: { courseId: string }) => {
       if (result) {
         setCourseRecord(result[0]);
       }
-    } catch (error) {
+    } catch {
       toast(
         <p className="text-sm font-bold text-red-500">
           Internal error occured while fetching course
@@ -165,7 +169,7 @@ const UserCourseCard = ({ courseId }: { courseId: string }) => {
           )}
         </div>
         <div className="flex flex-col p-2 pb-5 bg-dark-100 rounded-b-md">
-          <div className="text-lg md:text-base font-medium group-hover:text-light-100 transition line-clamp-2">
+          <div className="text-lg md:text-base font-medium group-hover:text-light-100 transition line-clamp-1">
             {courseRecord?.title}
           </div>
           <p className="text-xs text-muted-foreground">
@@ -182,22 +186,24 @@ const UserCourseCard = ({ courseId }: { courseId: string }) => {
               </span>
             </div>
           </div>
-          {/* todo: show progress */}
-          {isPurchased && (
-            <Badge className="w-[50%] flex items-center justify-center text-xs text-white bg-emerald-600 hover:bg-emerald-700">
-              Purchased
-            </Badge>
-          )}
-          {!isPurchased && !isFree && (
-            <p className="text-md md:text-sm font-medium text-gray-600">
-              {formatCurrency(courseRecord?.price)}
-            </p>
-          )}
-          {isFree && (
-            <Badge className="w-[50%] flex items-center justify-center text-xs">
-              Free
-            </Badge>
-          )}
+          <div className="flex items-center justify-between">
+            {isPurchased && (
+              <Badge className="w-[50%] flex items-center justify-center text-xs text-white bg-emerald-600 hover:bg-emerald-700">
+                Purchased
+              </Badge>
+            )}
+            {!isPurchased && !isFree && (
+              <p className="text-md md:text-sm font-medium text-gray-600">
+                {formatCurrency(courseRecord?.price)}
+              </p>
+            )}
+            {isFree && (
+              <Badge className="w-[50%] flex items-center justify-center text-xs">
+                Free
+              </Badge>
+            )}
+            <CourseOptions icon={<EllipsisVertical />} courseId={courseId} />
+          </div>
         </div>
       </div>
     </Link>

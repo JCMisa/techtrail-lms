@@ -26,8 +26,7 @@ const CourseOptions = ({ icon, courseId }: { icon: any; courseId: string }) => {
 
           <DropdownMenuItem className="cursor-pointer">
             <Link
-              // todo: create a details page of the course
-              href={`/viewCourse/courses/${courseId}/details`}
+              href={`/dashboard/details/${courseId}`}
               className="flex items-center gap-1"
             >
               <Eye className="w-3 h-3" /> Details
