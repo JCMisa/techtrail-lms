@@ -109,6 +109,17 @@ export const subscribedUsers = pgTable("subscribedUsers", {
   updatedAt: varchar("updatedAt"),
 });
 
+export const certificate = pgTable("certificate", {
+  id: serial("id").primaryKey(),
+  courseId: varchar("courseId"),
+  courseTitle: varchar("courseTitle"),
+  courseDescription: varchar("courseDescription"),
+  userId: varchar("userId"),
+  userEmail: varchar("userEmail"),
+  creatorEmail: varchar("creatorEmail"),
+  createdAt: varchar("createdAt"),
+});
+
 // relationships
 export const categoryRelations = relations(category, ({ many }) => ({
   course: many(course),

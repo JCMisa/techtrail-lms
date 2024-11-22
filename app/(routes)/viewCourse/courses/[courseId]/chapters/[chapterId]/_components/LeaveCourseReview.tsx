@@ -172,7 +172,7 @@ const LeaveCourseReview = ({
       </div>
       {/* your reviews preview */}
       <div className="mt-10">
-        <h1 className="text-2xl font-bold">My Feedbacks to this Course</h1>
+        <h1 className="text-2xl font-bold">Your Feedbacks to this Course</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
           {ownReviews && ownReviews?.length > 0 ? (
             ownReviews?.map(

@@ -7,6 +7,7 @@ import Banner from "@/components/custom/banner";
 import { db } from "@/utils/db";
 import {
   attachment,
+  certificate,
   chapter,
   chapterQuestion,
   course,
@@ -26,8 +27,8 @@ import { File } from "lucide-react";
 import CourseProgressButton from "./_components/CourseProgressButton";
 import { ChapterQuestionType } from "@/app/(routes)/dashboard/courses/layout/[courseId]/chapters/[chapterId]/questions/[questionId]/page";
 import QuestionCard from "./_components/QuestionCard";
-import CertificateComponent from "./_components/CertificateComponent";
 import LeaveCourseReview from "./_components/LeaveCourseReview";
+import moment from "moment";
 
 const ChapterIdPage = ({
   params,
@@ -182,29 +183,40 @@ const ChapterIdPage = ({
     user && getUserProgress();
   }, [user, params?.chapterId]);
 
-  // const checkIfCompleted = async () => {
-  //   try {
-  //     const result = await db
-  //       .select()
-  //       .from(userProgress)
-  //       .where(eq(userProgress.courseId, params?.courseId));
-  //     if (result?.length > 0) {
-  //       const statusArray = result?.map((item) => item?.isCompleted);
-  //       console.log("status: ", statusArray);
-  //       const allSame = statusArray.every((item) => item === statusArray[0]);
+  const setCourseComplete = async (status: boolean) => {
+    setIsCourseCompleted(status);
 
-  //       if (allSame) {
-  //         setIsCourseCompleted(true);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log("check completed error: ", error);
-  //   }
-  // };
+    try {
+      const result = await db
+        .select()
+        .from(certificate)
+        .where(
+          and(
+            eq(certificate.courseId, params?.courseId as string),
+            eq(certificate.userId, user?.id as string)
+          )
+        );
+      if (result?.length === 0) {
+        const addCert = await db.insert(certificate).values({
+          courseId: params?.courseId as string,
+          courseTitle: courseRecordState?.title as string,
+          courseDescription: courseRecordState?.description as string,
+          userId: user?.id as string,
+          userEmail: user?.primaryEmailAddress?.emailAddress as string,
+          creatorEmail: courseRecordState?.userEmail as string,
+          createdAt: moment().format("MM-DD-YYYY"),
+        });
 
-  // useEffect(() => {
-  //   checkIfCompleted();
-  // }, [params?.courseId]);
+        if (addCert) {
+          console.log("certificate for this course added successfully");
+        }
+      }
+
+      console.log("user already has certificate for this course");
+    } catch (error) {
+      console.log("add user certificate error: ", error);
+    }
+  };
 
   // is locked if the chapter record is not free and if the user does not purchase to course
   const isLocked: boolean =
@@ -241,7 +253,7 @@ const ChapterIdPage = ({
                   chapterId={params?.chapterId}
                   nextChapterId={nextChapter?.chapterId}
                   isCompleted={!!userProgressRecord?.isCompleted}
-                  setIsCompleted={(status) => setIsCourseCompleted(status)}
+                  setIsCompleted={(status) => setCourseComplete(status)}
                   refreshData={() => getUserProgress()}
                 />
               ) : (
@@ -257,7 +269,7 @@ const ChapterIdPage = ({
                 chapterId={params?.chapterId}
                 nextChapterId={nextChapter?.chapterId}
                 isCompleted={!!userProgressRecord?.isCompleted}
-                setIsCompleted={(status) => setIsCourseCompleted(status)}
+                setIsCompleted={(status) => setCourseComplete(status)}
                 refreshData={() => getUserProgress()}
               />
             )}
@@ -308,7 +320,7 @@ const ChapterIdPage = ({
 
           {isCourseCompleted && (
             <div className="p-4">
-              <CertificateComponent />
+              {/* <CertificateComponent userCertificate={userCertificate} /> */}
               <div className="mt-10">
                 <LeaveCourseReview
                   courseId={params?.courseId}
