@@ -25,12 +25,12 @@ const ProfilePage = () => {
       </div>
 
       {/* user reviewers */}
-      <div className="w-full">
-        <UserReviewers />
+      <div className="w-full min-h-80 max-h-80 overflow-auto card-scroll">
+        <UserReviewers user={user} />
       </div>
 
       {/* user certificates */}
-      <div className="w-full">
+      <div className="w-full min-h-80 max-h-80 overflow-auto card-scroll">
         <UserCertificates user={user} />
       </div>
       <UsageTrack />

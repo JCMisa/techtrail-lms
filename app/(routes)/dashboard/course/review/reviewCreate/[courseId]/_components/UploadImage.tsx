@@ -62,13 +62,23 @@ const UploadImage = ({
     <div>
       <div>
         <label htmlFor="upload-image">
-          <Image
-            src={selectedFile ? selectedFile : course?.courseBanner}
-            width={700}
-            height={700}
-            alt={"banner"}
-            className="rounded-xl object-cover cursor-pointer"
-          />
+          {selectedFile ? (
+            <Image
+              src={selectedFile ? selectedFile : course?.courseBanner}
+              width={700}
+              height={700}
+              alt={"banner"}
+              className="rounded-xl object-cover cursor-pointer"
+            />
+          ) : (
+            <Image
+              src={"/empty-img-placeholder.jpg"}
+              width={700}
+              height={700}
+              alt={"banner"}
+              className="rounded-xl object-cover cursor-pointer"
+            />
+          )}
         </label>
         {edit && (
           <input
