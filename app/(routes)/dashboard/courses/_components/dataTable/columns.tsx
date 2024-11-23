@@ -3,7 +3,12 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, PencilIcon } from "lucide-react";
+import {
+  ArrowUpDown,
+  ListCollapse,
+  MoreHorizontal,
+  PencilIcon,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -96,6 +101,12 @@ export const columns: ColumnDef<any>[] = [
               <DropdownMenuItem>
                 <PencilIcon className="h-4 w-4 mr-2" />
                 Edit
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/dashboard/courses/details/${courseId}`}>
+              <DropdownMenuItem>
+                <ListCollapse className="h-4 w-4 mr-2" />
+                Details
               </DropdownMenuItem>
             </Link>
           </DropdownMenuContent>
