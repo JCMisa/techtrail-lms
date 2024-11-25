@@ -2,6 +2,8 @@
 import React from "react";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RWebShare } from "react-web-share";
+import { toast } from "sonner";
 
 const CertificateComponent = ({
   userCertificate,
@@ -65,8 +67,29 @@ const CertificateComponent = ({
           </div>
         </div>
       </div>
-      <div className="mt-5 flex flex-col">
-        <Button onClick={() => window.print()}>Print</Button>
+      <div className="flex justify-center gap-5 items-center my-10">
+        <Button onClick={() => window.print()} className="w-full">
+          Print
+        </Button>
+
+        <RWebShare
+          data={{
+            text: "Hello everyone, this is my course completion certificate, open URL to view",
+            url: `${process.env.NEXT_PUBLIC_APP_URL}/viewCertificate/${userCertificate?.id}`,
+            title: `${userCertificate?.courseTitle}'s Certificate`,
+          }}
+          onClick={() =>
+            toast(
+              <p className="text-xs text-green-500 font-bold">
+                Sharing you certificate
+              </p>
+            )
+          }
+        >
+          <Button className="w-full bg-white hover:bg-light-100 transition-all text-dark-100">
+            Share
+          </Button>
+        </RWebShare>
       </div>
     </>
   );

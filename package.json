@@ -55,6 +55,7 @@
     "react-player": "^2.16.0",
     "react-quill": "^2.0.0",
     "react-toastify": "^10.0.6",
+    "react-web-share": "^2.0.2",
     "recharts": "^2.13.0",
     "sonner": "^1.5.0",
     "stripe": "^17.3.1",
