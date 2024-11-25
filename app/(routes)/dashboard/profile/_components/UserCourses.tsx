@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Empty from "@/app/_components/Empty";
 import { db } from "@/utils/db";
-import { purchase } from "@/utils/schema";
+import { userProgress } from "@/utils/schema";
 import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -16,16 +16,31 @@ const UserCourses = ({ user }: { user: any }) => {
     try {
       const result = await db
         .select()
-        .from(purchase)
+        .from(userProgress)
         .where(
           eq(
-            purchase.userEmail,
+            userProgress.userEmail,
             user?.primaryEmailAddress?.emailAddress as string
           )
         );
 
       if (result?.length > 0) {
-        setUserCourses(result);
+        // this will remove all duplicates from userProgress based on courseId
+        const userCoursesInProgress = result?.reduce(
+          (acc: any, current: any) => {
+            const x = acc.find(
+              (item: any) => item?.courseId === current.courseId
+            );
+            if (!x) {
+              return acc.concat([current]);
+            } else {
+              return acc;
+            }
+          },
+          []
+        );
+
+        setUserCourses(userCoursesInProgress);
       }
     } catch {
       toast(

@@ -4,7 +4,7 @@
 import { db } from "@/utils/db";
 import { course, purchase } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
-import { and, eq, isNull } from "drizzle-orm";
+import { and, eq, isNull, or } from "drizzle-orm";
 import { toast } from "sonner";
 import React, { useEffect, useState } from "react";
 import UserCourseCard from "./UserCourseCard";
@@ -50,7 +50,12 @@ const UserCoursesList = () => {
       const result = await db
         .select()
         .from(course)
-        .where(and(isNull(course.price), eq(course.isPublished, true)));
+        .where(
+          or(
+            eq(course.price, "0"),
+            and(isNull(course.price), eq(course.isPublished, true))
+          )
+        );
 
       if (result) {
         setfreeCourses(result);

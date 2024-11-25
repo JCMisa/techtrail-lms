@@ -145,7 +145,10 @@ const CourseDetailsPage = async ({
                 <p className="text-xs text-gray-400">PRICE</p>
               </div>
               <h2 className="text-sm">
-                {courseRecord && formatCurrency(Number(courseRecord[0]?.price))}
+                {courseRecord &&
+                  formatCurrency(
+                    Number(courseRecord[0]?.price ? courseRecord[0]?.price : 0)
+                  )}
               </h2>
             </div>
             <div className="flex flex-col gap-1 items-center">

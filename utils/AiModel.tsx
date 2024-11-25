@@ -14,8 +14,8 @@ const model = genAI.getGenerativeModel({
 
 const generationConfig = {
   temperature: 1,
-  topP: 0.95,
-  topK: 64,
+  topP: 0.85, // ranger from .1 to .9, the higher it is, the more diverse the output is
+  topK: 40, //ranges to 1 to 41 the higher, the higher the probability and more relevant output but longer waiting response
   maxOutputTokens: 8192,
   responseMimeType: "application/json",
 };
