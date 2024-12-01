@@ -2,7 +2,7 @@ import React from "react";
 
 const HomeContact = () => {
   return (
-    <section className="bg-dark body-font relative">
+    <section className="bg-dark body-font relative" id="contact">
       <h1 className="text-3xl flex items-center justify-center">
         Get in Touch with TechTrail
       </h1>

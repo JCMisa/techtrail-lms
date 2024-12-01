@@ -28,9 +28,18 @@ const HomeHeader = () => {
           <a className="mr-5 hover:text-white cursor-pointer" href="#top">
             Home
           </a>
-          <a className="mr-5 hover:text-white cursor-pointer">Guide</a>
-          <a className="mr-5 hover:text-white cursor-pointer">Testimonial</a>
-          <a className="mr-5 hover:text-white cursor-pointer">Contact</a>
+          <a className="mr-5 hover:text-white cursor-pointer" href="#guide">
+            Guide
+          </a>
+          <a
+            className="mr-5 hover:text-white cursor-pointer"
+            href="#testimonial"
+          >
+            Testimonial
+          </a>
+          <a className="mr-5 hover:text-white cursor-pointer" href="#contact">
+            Contact
+          </a>
         </nav>
         {user ? (
           <div className="flex items-center gap-3">

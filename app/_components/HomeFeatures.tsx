@@ -13,7 +13,7 @@ import React from "react";
 
 const HomeFeatures = () => {
   return (
-    <section className="body-font">
+    <section className="body-font" id="guide">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col items-center justify-center ">
           <h1 className="text-3xl">Discover What Sets Us Apart</h1>

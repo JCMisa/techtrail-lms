@@ -106,8 +106,12 @@ body {
     width: 100%;
     text-align: center; */
     margin: 0 auto;
-    width: 80%; /* Adjust as needed for your content width */
+    padding: 0;
+    width: 100%; /* Adjust as needed for your content width */
     text-align: center;
+  }
+  #certificate-section {
+    padding: 0;
   }
   body {
     margin: 0;

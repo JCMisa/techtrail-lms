@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { addUser, findUserByEmail } from "@/services/UserService";
 import moment from "moment";
+import Link from "next/link";
+import { ArrowUp } from "lucide-react";
 
 export default function Home() {
   const { user } = useUser();
@@ -77,10 +79,16 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div>
+    <div className="relative">
       <HomeHeader />
       <HomeHero loggedInUser={userLoggedIn} />
       <HomeFooter />
+      <Link
+        href={"#top"}
+        className="cursor-pointer p-3 rounded-full bg-primary hover:bg-primary-100 transition-all fixed bottom-5 right-5"
+      >
+        <ArrowUp className="w-5 h-5" />
+      </Link>
       <LoadingDialog loading={loading} />
     </div>
   );

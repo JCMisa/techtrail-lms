@@ -45,7 +45,7 @@ const UpgradePage = () => {
                 Free
               </button>
               <button className="py-1 px-4 text-gray-300 focus:outline-none">
-                Forever
+                Lifetime
               </button>
             </div>
           </div>
@@ -121,7 +121,7 @@ const UpgradePage = () => {
                   </svg>
                 </button>
                 <p className="text-xs text-gray-400 mt-3">
-                  Literally you probably haven&apos;t heard of them jean shorts.
+                  Continue with your free plan and access free features.
                 </p>
               </div>
             </div>
@@ -136,7 +136,7 @@ const UpgradePage = () => {
                 <h1 className="text-5xl text-white leading-none flex items-center pb-4 mb-4 border-b border-primary-100">
                   <span>Php 3000</span>
                   <span className="text-lg ml-1 font-normal text-gray-400">
-                    /forever
+                    /lifetime
                   </span>
                 </h1>
                 <p className="flex items-center text-gray-400 mb-2">
@@ -256,7 +256,7 @@ const UpgradePage = () => {
                 </Dialog>
 
                 <p className="text-xs text-gray-400 mt-3">
-                  Literally you probably haven&apos;t heard of them jean shorts.
+                  Upgrade to PRO plan and explore unlimited possibilities.
                 </p>
               </div>
             </div>
