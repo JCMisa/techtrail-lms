@@ -25,9 +25,11 @@ const HomeHeader = () => {
           <p className="ml-3 text-xl logo-text">TechTrail</p>
         </Link>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-white cursor-pointer">Home</a>
-          <a className="mr-5 hover:text-white cursor-pointer">About</a>
+          <a className="mr-5 hover:text-white cursor-pointer" href="#top">
+            Home
+          </a>
           <a className="mr-5 hover:text-white cursor-pointer">Guide</a>
+          <a className="mr-5 hover:text-white cursor-pointer">Testimonial</a>
           <a className="mr-5 hover:text-white cursor-pointer">Contact</a>
         </nav>
         {user ? (
