@@ -111,6 +111,15 @@ export const getAllReviewersByUserEmail = async (userEmail: string) => {
   }
 };
 
+export const getAllReviewersByCategory = async (category: string) => {
+  try {
+    const data = await axios.get(api + `category/${category}`);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const deleteReviewer = async (reviewerId: number) => {
   try {
     const data = await axios.delete(api + reviewerId);

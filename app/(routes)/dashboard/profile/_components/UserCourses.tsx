@@ -62,7 +62,11 @@ const UserCourses = ({ user }: { user: any }) => {
         {userCourses?.length > 0 ? (
           userCourses?.map((course: any) => (
             <div key={course?.id}>
-              <UserCourseCard purchasedCourse={course} user={user} />
+              <UserCourseCard
+                purchasedCourse={course}
+                user={user}
+                refreshData={() => getUserCourses()}
+              />
             </div>
           ))
         ) : (

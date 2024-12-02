@@ -1,7 +1,8 @@
 "use client";
 
+import { getAllReviewersByCategory } from "@/services/AiOutputService";
 import { MoreHorizontal } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -13,30 +14,112 @@ import {
 } from "recharts";
 
 const LineTypeChart = () => {
+  const [programmingCount, setProgrammingCount] = useState<number>(0);
+  const [aiCount, setAiCount] = useState<number>(0);
+  const [networkingCount, setNetworkingCount] = useState<number>(0);
+  const [webDevCount, setWebDevCount] = useState<number>(0);
+  const [cybersecurityCount, setCybersecurityCount] = useState<number>(0);
+  const [dataAnalyticsCount, setDataAnalyticsCount] = useState<number>(0);
+
+  const getProgrammingCount = async () => {
+    try {
+      const result = await getAllReviewersByCategory("Programming");
+      if (result?.data) {
+        setProgrammingCount(result?.data?.length as number);
+      }
+    } catch (error) {
+      console.log("get programming reviewers count error: ", error);
+    }
+  };
+
+  const getAiCount = async () => {
+    try {
+      const result = await getAllReviewersByCategory("Artificial Intelligence");
+      if (result?.data) {
+        setAiCount(result?.data?.length as number);
+      }
+    } catch (error) {
+      console.log("get ai reviewers count error: ", error);
+    }
+  };
+
+  const getNetworkingCount = async () => {
+    try {
+      const result = await getAllReviewersByCategory("Networking");
+      if (result?.data) {
+        setNetworkingCount(result?.data?.length as number);
+      }
+    } catch (error) {
+      console.log("get networking reviewers count error: ", error);
+    }
+  };
+
+  const getWebDevCount = async () => {
+    try {
+      const result = await getAllReviewersByCategory("Web Development");
+      if (result?.data) {
+        setWebDevCount(result?.data?.length as number);
+      }
+    } catch (error) {
+      console.log("get web dev reviewers count error: ", error);
+    }
+  };
+
+  const getCyberCount = async () => {
+    try {
+      const result = await getAllReviewersByCategory("Cybersecurity");
+      if (result?.data) {
+        setCybersecurityCount(result?.data?.length as number);
+      }
+    } catch (error) {
+      console.log("get cybersecurity reviewers count error: ", error);
+    }
+  };
+
+  const getDataAnalyticsCount = async () => {
+    try {
+      const result = await getAllReviewersByCategory("Data Analytics");
+      if (result?.data) {
+        setDataAnalyticsCount(result?.data?.length as number);
+      }
+    } catch (error) {
+      console.log("get data analytics reviewers count error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    getProgrammingCount();
+    getAiCount();
+    getNetworkingCount();
+    getWebDevCount();
+    getCyberCount();
+    getDataAnalyticsCount();
+  }, []);
+
   const data = [
     {
       name: "Programming",
-      count: 40,
+      count: programmingCount,
     },
     {
       name: "AI",
-      count: 10,
+      count: aiCount,
     },
     {
       name: "Networking",
-      count: 23,
+      count: networkingCount,
     },
     {
       name: "Web Development",
-      count: 31,
+      count: webDevCount,
     },
     {
       name: "Cybersecurity",
-      count: 42,
+      count: cybersecurityCount,
     },
     {
       name: "Data Analytics",
-      count: 12,
+      count: dataAnalyticsCount,
     },
   ];
 

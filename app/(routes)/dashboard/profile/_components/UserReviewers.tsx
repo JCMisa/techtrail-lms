@@ -38,7 +38,10 @@ const UserReviewers = ({ user }: { user: any }) => {
         {userReviewers?.length > 0 ? (
           userReviewers?.map((reviewer: any) => (
             <div key={reviewer?.id}>
-              <UserReviewerCard reviewer={reviewer} />
+              <UserReviewerCard
+                reviewer={reviewer}
+                refreshData={() => getUserReviewers()}
+              />
             </div>
           ))
         ) : (
