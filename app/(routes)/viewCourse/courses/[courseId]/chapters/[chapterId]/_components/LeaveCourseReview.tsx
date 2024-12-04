@@ -121,7 +121,7 @@ const LeaveCourseReview = ({
           <p className="text-sm text-gray-200">
             Best wishes for continued success!
           </p>
-          <p className="text-sm text-gray-500 italic">~ BCM</p>
+          <p className="text-sm text-gray-500 italic">~ BBCM</p>
         </div>
         {/* form */}
         <div className="post-card-rev flex flex-col gap-3 shadow-lg">

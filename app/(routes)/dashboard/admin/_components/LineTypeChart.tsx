@@ -128,7 +128,7 @@ const LineTypeChart = () => {
       <div className="bg-dark rounded-xl w-full h-full p-4 flex flex-col gap-8">
         {/* title */}
         <div className="flex justify-between items-center">
-          <h1 className="text-lg font-semibold">Course Type Analytics</h1>
+          <h1 className="text-lg font-semibold">Reviewer Category Generated</h1>
           <MoreHorizontal width={20} height={20} />
         </div>
         {/* chart */}

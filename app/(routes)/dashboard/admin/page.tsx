@@ -21,6 +21,7 @@ import Announcements from "./_components/Announcements";
 import { getAllCurrentEvents } from "@/services/EventService";
 import moment from "moment";
 import { getAllLatestAnnouncements } from "@/services/AnnouncementService";
+import CourseCountCard from "./_components/CourseCountCard";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
@@ -112,6 +113,7 @@ const AdminDashboardPage = () => {
               <UserCard type="user" />
               <UserCard type="teacher" />
               <UserCard type="admin" />
+              <CourseCountCard />
             </div>
             {/* middle charts */}
             <div className="flex gap-4 flex-col lg:flex-row">
