@@ -68,7 +68,10 @@ const CourseDetailsPage = async ({
                   Start
                 </Link>
               </Button>
-              <div className="flex flex-row items-center gap-2">
+              <Link
+                href={`/dashboard/teacherProfile/${courseOwner?.data?.id}`}
+                className="flex flex-row items-center gap-2 cursor-pointer"
+              >
                 {courseOwner?.data ? (
                   <Image
                     src={courseOwner?.data?.imageUrl as string}
@@ -92,7 +95,7 @@ const CourseDetailsPage = async ({
                   </p>
                   <span className="text-xs">{courseOwner?.data?.email}</span>
                 </div>
-              </div>
+              </Link>
             </div>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col items-start">
