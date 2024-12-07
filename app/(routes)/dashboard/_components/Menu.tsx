@@ -85,7 +85,13 @@ const Menu = () => {
           icon: <BookOpenText />,
           label: "Courses",
           href: "/dashboard/courses",
-          visible: ["admin", "teacher"],
+          visible: ["teacher"],
+        },
+        {
+          icon: <BookOpenText />,
+          label: "Courses",
+          href: "/dashboard/courses/all",
+          visible: ["admin"],
         },
         {
           icon: <Brain />,
