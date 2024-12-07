@@ -5,8 +5,8 @@ import { attachment } from "@/utils/schema";
 import { File, PlusCircle, Trash } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import FileUpload from "../../../_components/FileUpload";
-import moment from "moment";
+// import FileUpload from "../../../_components/FileUpload";
+// import moment from "moment";
 import { useUser } from "@clerk/nextjs";
 import {
   AlertDialog,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { eq } from "drizzle-orm";
 import Spinner from "@/components/custom/Spinner";
+import UploadCourseAttachment from "./UploadCourseAttachment";
 
 interface AttachmentFormProps {
   initialData: any;
@@ -40,35 +41,35 @@ const AttachmentForm = ({
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
-  const onSubmit = async (attachments: any) => {
-    try {
-      const result = await db.insert(attachment).values({
-        name:
-          attachments?.attachmentUrl &&
-          attachments?.attachmentUrl?.split("/").pop(),
-        url: attachments?.attachmentUrl,
-        courseId: courseId,
-        createdAt: moment().format("MM-DD-YYYY"),
-        updatedBy: user?.primaryEmailAddress?.emailAddress,
-      });
+  // const onSubmit = async (attachments: any) => {
+  //   try {
+  //     const result = await db.insert(attachment).values({
+  //       name:
+  //         attachments?.attachmentUrl &&
+  //         attachments?.attachmentUrl?.split("/").pop(),
+  //       url: attachments?.attachmentUrl,
+  //       courseId: courseId,
+  //       createdAt: moment().format("MM-DD-YYYY"),
+  //       updatedBy: user?.primaryEmailAddress?.emailAddress,
+  //     });
 
-      if (result) {
-        toast(
-          <p className="font-bold text-sm text-green-500">
-            Course attachment added successfully
-          </p>
-        );
-        refreshData();
-        setIsEditing(false);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while inserting attachment
-        </p>
-      );
-    }
-  };
+  //     if (result) {
+  //       toast(
+  //         <p className="font-bold text-sm text-green-500">
+  //           Course attachment added successfully
+  //         </p>
+  //       );
+  //       refreshData();
+  //       setIsEditing(false);
+  //     }
+  //   } catch {
+  //     toast(
+  //       <p className="font-bold text-sm text-red-500">
+  //         Internal error occured while inserting attachment
+  //       </p>
+  //     );
+  //   }
+  // };
 
   const deleteAttachment = async (attachmentId: number) => {
     setLoading(true);
@@ -122,7 +123,7 @@ const AttachmentForm = ({
               {initialData?.map((attachment: any) => (
                 <div
                   key={attachment?.id}
-                  className="flex items-center p-3 w-full bg-dark-100 border-dark-100 text-light-100 rounded-md"
+                  className="flex items-center justify-between p-3 w-full bg-dark-100 border-dark-100 text-light-100 rounded-md"
                 >
                   <File className="h-4 w-4 mr-2 flex-shrink-0" />
                   <p className="text-xs line-clamp-1 mr-2">
@@ -160,13 +161,19 @@ const AttachmentForm = ({
       )}
       {isEditing && (
         <div>
-          <FileUpload
+          {/* <FileUpload
             endpoint="courseAttachment"
             onChange={(url) => {
               if (url) {
                 onSubmit({ attachmentUrl: url });
               }
             }}
+          /> */}
+          <UploadCourseAttachment
+            courseId={courseId}
+            refreshData={() => refreshData()}
+            user={user}
+            setIsEditing={(value: boolean) => setIsEditing(value)}
           />
           <div className="text-xs text-muted-foreground mt-4">
             Add anything your students might need to complete the course.

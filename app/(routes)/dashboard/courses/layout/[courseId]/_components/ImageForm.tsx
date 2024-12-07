@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import { db } from "@/utils/db";
-import { course } from "@/utils/schema";
-import { eq } from "drizzle-orm";
+// import { db } from "@/utils/db";
+// import { course } from "@/utils/schema";
+// import { eq } from "drizzle-orm";
 import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import { toast } from "sonner";
-import FileUpload from "../../../_components/FileUpload";
+// import { toast } from "sonner";
+// import FileUpload from "../../../_components/FileUpload";
+import UploadCourseImage from "./UploadCourseImage";
 
 interface ImageFormProps {
   initialData: any;
@@ -20,32 +21,32 @@ const ImageForm = ({ initialData, courseId, refreshData }: ImageFormProps) => {
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
-  const onSubmit = async (image: any) => {
-    try {
-      const result = await db
-        .update(course)
-        .set({
-          imageUrl: image?.imageUrl,
-        })
-        .where(eq(course?.courseId, courseId));
+  // const onSubmit = async (image: any) => {
+  //   try {
+  //     const result = await db
+  //       .update(course)
+  //       .set({
+  //         imageUrl: image?.imageUrl,
+  //       })
+  //       .where(eq(course?.courseId, courseId));
 
-      if (result) {
-        toast(
-          <p className="font-bold text-sm text-green-500">
-            Course image updated successfully
-          </p>
-        );
-        refreshData();
-        setIsEditing(false);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while updating image
-        </p>
-      );
-    }
-  };
+  //     if (result) {
+  //       toast(
+  //         <p className="font-bold text-sm text-green-500">
+  //           Course image updated successfully
+  //         </p>
+  //       );
+  //       refreshData();
+  //       setIsEditing(false);
+  //     }
+  //   } catch {
+  //     toast(
+  //       <p className="font-bold text-sm text-red-500">
+  //         Internal error occured while updating image
+  //       </p>
+  //     );
+  //   }
+  // };
 
   return (
     <div className="mt-6 border bg-dark rounded-md p-4">
@@ -86,13 +87,17 @@ const ImageForm = ({ initialData, courseId, refreshData }: ImageFormProps) => {
         ))}
       {isEditing && (
         <div>
-          <FileUpload
+          {/* <FileUpload
             endpoint="courseImage"
             onChange={(url) => {
               if (url) {
                 onSubmit({ imageUrl: url });
               }
             }}
+          /> */}
+          <UploadCourseImage
+            courseId={courseId}
+            refreshData={() => refreshData()}
           />
           <div className="text-xs text-muted-foreground mt-4">
             16:9 aspect ratio recommended

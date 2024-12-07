@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import FileUpload from "@/app/(routes)/dashboard/courses/_components/FileUpload";
+// import FileUpload from "@/app/(routes)/dashboard/courses/_components/FileUpload";
 import { Button } from "@/components/ui/button";
-import { db } from "@/utils/db";
-import { chapter } from "@/utils/schema";
-import { and, eq } from "drizzle-orm";
+// import { db } from "@/utils/db";
+// import { chapter } from "@/utils/schema";
+// import { and, eq } from "drizzle-orm";
 import { Pencil, PlusCircle, VideoIcon } from "lucide-react";
 import React, { useState } from "react";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import ReactPlayer from "react-player";
+import UploadChapterVideo from "./UploadChapterVideo";
 
 interface ChapterVideoFormProps {
   initialData: any;
@@ -27,33 +28,33 @@ const ChapterVideoForm = ({
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
-  const onSubmit = async (video: any) => {
-    try {
-      const result = await db
-        .update(chapter)
-        .set({
-          videoUrl: video?.videoUrl,
-        })
-        .where(
-          and(eq(chapter?.courseId, courseId), eq(chapter.chapterId, chapterId))
-        );
-      if (result) {
-        toast(
-          <p className="font-bold text-sm text-green-500">
-            Chapter video url updated successfully
-          </p>
-        );
-        refreshData();
-        setIsEditing(false);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while updating video url
-        </p>
-      );
-    }
-  };
+  // const onSubmit = async (video: any) => {
+  //   try {
+  //     const result = await db
+  //       .update(chapter)
+  //       .set({
+  //         videoUrl: video?.videoUrl,
+  //       })
+  //       .where(
+  //         and(eq(chapter?.courseId, courseId), eq(chapter.chapterId, chapterId))
+  //       );
+  //     if (result) {
+  //       toast(
+  //         <p className="font-bold text-sm text-green-500">
+  //           Chapter video url updated successfully
+  //         </p>
+  //       );
+  //       refreshData();
+  //       setIsEditing(false);
+  //     }
+  //   } catch {
+  //     toast(
+  //       <p className="font-bold text-sm text-red-500">
+  //         Internal error occured while updating video url
+  //       </p>
+  //     );
+  //   }
+  // };
 
   return (
     <div className="mt-6 border bg-dark rounded-md p-4">
@@ -97,13 +98,19 @@ const ChapterVideoForm = ({
         ))}
       {isEditing && (
         <div>
-          <FileUpload
+          {/* <FileUpload
             endpoint="chapterVideo"
             onChange={(url) => {
               if (url) {
                 onSubmit({ videoUrl: url });
               }
             }}
+          /> */}
+          <UploadChapterVideo
+            courseId={courseId}
+            chapterId={chapterId}
+            refreshData={() => refreshData()}
+            setIsEditing={(value: boolean) => setIsEditing(value)}
           />
           <div className="text-xs text-muted-foreground mt-4">
             Upload the chapter&apos;s video
