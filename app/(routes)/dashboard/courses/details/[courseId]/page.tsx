@@ -114,7 +114,7 @@ const CourseDetails = ({ params }: { params: { courseId: string } }) => {
           {/* user in progress table */}
           <div>
             <h2 className="font-bold text-2xl text-gray-400">
-              Course Students
+              Students in Progress
             </h2>
             <p className="text-sm text-gray-400">
               Discover the dedicated individuals who are currently enrolled in
