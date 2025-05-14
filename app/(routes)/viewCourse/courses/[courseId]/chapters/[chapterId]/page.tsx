@@ -28,7 +28,7 @@ import CourseProgressButton from "./_components/CourseProgressButton";
 import { ChapterQuestionType } from "@/app/(routes)/dashboard/courses/layout/[courseId]/chapters/[chapterId]/questions/[questionId]/page";
 import QuestionCard from "./_components/QuestionCard";
 import LeaveCourseReview from "./_components/LeaveCourseReview";
-import moment from "moment";
+import { format } from "date-fns";
 
 const ChapterIdPage = ({
   params,
@@ -204,7 +204,7 @@ const ChapterIdPage = ({
           userId: user?.id as string,
           userEmail: user?.primaryEmailAddress?.emailAddress as string,
           creatorEmail: courseRecordState?.userEmail as string,
-          createdAt: moment().format("MM-DD-YYYY"),
+          createdAt: format(new Date(), "MM-dd-yyyy"),
         });
 
         if (addCert) {

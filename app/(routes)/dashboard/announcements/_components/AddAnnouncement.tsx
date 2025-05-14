@@ -18,8 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { addAnnouncement } from "@/services/AnnouncementService";
-import moment from "moment";
 import { toast } from "sonner";
+import { format } from "date-fns";
 
 const AddAnnouncement = ({ refreshData }: { refreshData: () => void }) => {
   const { user } = useUser();
@@ -40,7 +40,7 @@ const AddAnnouncement = ({ refreshData }: { refreshData: () => void }) => {
       const result = await addAnnouncement(
         eventInput.title,
         eventInput.description,
-        moment(eventInput.date).format("MM-DD-YYYY"),
+        format(new Date(eventInput.date), "MM-dd-yyyy"),
         user?.primaryEmailAddress?.emailAddress as string
       );
       if (result) {

@@ -19,9 +19,9 @@ import LineTypeChart from "./_components/LineTypeChart";
 import EventCalendar from "./_components/EventCalendar";
 import Announcements from "./_components/Announcements";
 import { getAllCurrentEvents } from "@/services/EventService";
-import moment from "moment";
 import { getAllLatestAnnouncements } from "@/services/AnnouncementService";
 import CourseCountCard from "./_components/CourseCountCard";
+import { format } from "date-fns";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
@@ -66,7 +66,9 @@ const AdminDashboardPage = () => {
 
   const getCurrentEvents = async () => {
     try {
-      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
+      const result = await getAllCurrentEvents(
+        format(new Date(), "MM-dd-yyyy")
+      );
       if (result) {
         setCurrentEvents(result?.data);
       }

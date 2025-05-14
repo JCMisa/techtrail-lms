@@ -4,9 +4,9 @@ import { useConfettiStore } from "@/hooks/use-confetti-store";
 import { db } from "@/utils/db";
 import { userProgress } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
+import { format } from "date-fns";
 import { and, eq } from "drizzle-orm";
 import { CheckCircle, XCircle } from "lucide-react";
-import moment from "moment";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -68,8 +68,8 @@ const CourseProgressButton = ({
           courseId: courseId,
           chapterId: chapterId,
           isCompleted: !isCompleted,
-          createdAt: moment().format("MM-DD-YYYY"),
-          updatedAt: moment().format("MM-DD-YYYY"),
+          createdAt: format(new Date(), "MM-dd-yyyy"),
+          updatedAt: format(new Date(), "MM-dd-yyyy"),
         });
         refreshData();
       }

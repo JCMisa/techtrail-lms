@@ -33,6 +33,9 @@ const CourseNavbar = ({
           width={1000}
           height={1000}
           className="w-7 h-7 rounded-full"
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="/blur.jpg"
         />
       </div>
     </div>

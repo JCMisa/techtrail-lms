@@ -28,6 +28,9 @@ const TestimonialCard = ({
           className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
           width={1000}
           height={1000}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="/blur.jpg"
         />
         <span className="flex-grow flex flex-col pl-4">
           <span className="title-font font-medium text-white">{name}</span>

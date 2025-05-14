@@ -11,7 +11,7 @@ import LoadingDialog from "./_components/LoadingDialog";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { addUser, findUserByEmail } from "@/services/UserService";
-import moment from "moment";
+import { format } from "date-fns";
 import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 
@@ -73,7 +73,7 @@ export default function Home() {
         user?.firstName as string,
         user?.lastName as string,
         user?.imageUrl as string,
-        moment().format("MM-DD-YYYY"),
+        format(new Date(), "MM-dd-yyyy"),
         "user"
       );
   }, [user]);

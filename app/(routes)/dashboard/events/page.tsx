@@ -16,7 +16,6 @@ import {
   getAllExpiredEvents,
   getAllUpcomingEvents,
 } from "@/services/EventService";
-import moment from "moment";
 import CurrentEventList from "./_components/CurrentEventList";
 import PastEventsList from "./_components/PastEventsList";
 import UpcomingEventsList from "./_components/UpcomingEventsList";
@@ -25,6 +24,7 @@ import AllEventsList from "./_components/AllEventsList";
 import CurrentEvents from "./_components/NonAdminEventsPage/CurrentEvents";
 import UpcommingEvents from "./_components/NonAdminEventsPage/UpcommingEvents";
 import ExpiredEvents from "./_components/NonAdminEventsPage/ExpiredEvents";
+import { format } from "date-fns";
 
 const EventsPage = () => {
   const { user } = useUser();
@@ -72,7 +72,9 @@ const EventsPage = () => {
   const getCurrentEvents = async () => {
     setLoading(true);
     try {
-      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
+      const result = await getAllCurrentEvents(
+        format(new Date(), "MM-dd-yyyy")
+      );
       if (result) {
         setCurrentEventList(result?.data);
       }
@@ -90,7 +92,9 @@ const EventsPage = () => {
   const getExpiredEvents = async () => {
     setLoading(true);
     try {
-      const result = await getAllExpiredEvents(moment().format("MM-DD-YYYY"));
+      const result = await getAllExpiredEvents(
+        format(new Date(), "MM-dd-yyyy")
+      );
       if (result) {
         setPastEventList(result?.data);
       }
@@ -108,7 +112,9 @@ const EventsPage = () => {
   const getUpcommingEvents = async () => {
     setLoading(true);
     try {
-      const result = await getAllUpcomingEvents(moment().format("MM-DD-YYYY"));
+      const result = await getAllUpcomingEvents(
+        format(new Date(), "MM-dd-yyyy")
+      );
       if (result) {
         setUpcommingEventList(result?.data);
       }

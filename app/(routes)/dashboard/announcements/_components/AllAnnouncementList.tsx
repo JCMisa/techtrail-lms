@@ -39,10 +39,10 @@ import {
   filterAnnouncementsByTitle,
   updateAnnouncement,
 } from "@/services/AnnouncementService";
-import moment from "moment";
 import { Search, SquarePen, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { format } from "date-fns";
 
 const AllAnnouncementList = ({
   announcementList,
@@ -88,7 +88,7 @@ const AllAnnouncementList = ({
         announcementId,
         newTitle,
         newDescription,
-        moment(newDate).format("MM-DD-YYYY")
+        format(new Date(newDate), "MM-dd-yyyy")
       );
       if (result) {
         toast(

@@ -7,13 +7,13 @@ import { chapter } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { desc, eq } from "drizzle-orm";
 import { PlusCircle } from "lucide-react";
-import moment from "moment";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import uuid4 from "uuid4";
 import ChapterList from "./ChapterList";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/custom/Spinner";
+import { format } from "date-fns";
 
 interface ChaptersFormProps {
   initialData: any;
@@ -53,8 +53,8 @@ const ChaptersForm = ({
         title: chapterTitle,
         courseId: courseId,
         position: newPosition,
-        createdAt: moment().format("MM-DD-YYYY"),
-        updatedAt: moment().format("MM-DD-YYYY"),
+        createdAt: format(new Date(), "MM-dd-yyyy"),
+        updatedAt: format(new Date(), "MM-dd-yyyy"),
         createdBy: user?.primaryEmailAddress?.emailAddress,
         chapterId: chapterId,
       });

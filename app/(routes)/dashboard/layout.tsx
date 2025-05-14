@@ -42,6 +42,9 @@ const DashboardLayout = ({
                     alt="logo"
                     width={20}
                     height={20}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="/blur.jpg"
                   />
                   <p className="lg:flex items-center text-light-100 no-underline hover:no-underline font-bold text-lg lg:text-xl hidden">
                     Tech

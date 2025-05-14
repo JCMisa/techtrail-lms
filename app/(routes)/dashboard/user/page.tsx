@@ -16,9 +16,9 @@ import Announcements from "../admin/_components/Announcements";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ReviewersList from "./_components/ReviewersList";
 import { getAllCurrentEvents } from "@/services/EventService";
-import moment from "moment";
 import { getAllLatestAnnouncements } from "@/services/AnnouncementService";
 import UserCoursesList from "./_components/UserCoursesList";
+import { format } from "date-fns";
 
 const UserDashboardPage = () => {
   const { user } = useUser();
@@ -63,7 +63,9 @@ const UserDashboardPage = () => {
 
   const getCurrentEvents = async () => {
     try {
-      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
+      const result = await getAllCurrentEvents(
+        format(new Date(), "MM-dd-yyyy")
+      );
       if (result) {
         setCurrentEvents(result?.data);
       }

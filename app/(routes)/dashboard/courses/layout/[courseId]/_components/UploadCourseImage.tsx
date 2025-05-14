@@ -88,6 +88,9 @@ const UploadCourseImage = ({
               height={700}
               alt={"banner"}
               className="rounded-xl object-cover cursor-pointer"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           ) : (
             <Image
@@ -96,6 +99,9 @@ const UploadCourseImage = ({
               height={700}
               alt={"banner"}
               className="rounded-xl object-cover cursor-pointer"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           )}
         </label>

@@ -5,7 +5,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import moment from "moment";
+import { format } from "date-fns";
 
 export async function POST(
   req: Request,
@@ -72,8 +72,8 @@ export async function POST(
         userId: user?.id,
         userEmail: user?.primaryEmailAddress?.emailAddress,
         stripeCustomerId: customer?.id,
-        createdAt: moment().format("MM-DD-YYYY"),
-        updatedAt: moment().format("MM-DD-YYYY"),
+        createdAt: format(new Date(), "MM-dd-yyyy"),
+        updatedAt: format(new Date(), "MM-dd-yyyy"),
       });
     }
 
@@ -82,8 +82,8 @@ export async function POST(
         userId: user?.id,
         userEmail: user?.primaryEmailAddress?.emailAddress,
         courseId: courseResult[0]?.courseId,
-        createdAt: moment().format("MM-DD-YYYY"),
-        updatedAt: moment().format("MM-DD-YYYY"),
+        createdAt: format(new Date(), "MM-dd-yyyy"),
+        updatedAt: format(new Date(), "MM-dd-yyyy"),
         price: courseResult[0]?.price,
       });
     }

@@ -20,11 +20,11 @@ import {
   getExpiredAnnouncements,
   getUpcommingAnnouncements,
 } from "@/services/AnnouncementService";
-import moment from "moment";
 import CurrentAnnouncementList from "./_components/CurrentAnnouncementList";
 import UpcommingAnnouncementList from "./_components/UpcommingAnnouncementList";
 import PastAnnouncementList from "./_components/PastAnnouncementList";
 import AllAnnouncementList from "./_components/AllAnnouncementList";
+import { format } from "date-fns";
 
 const AnnouncementsPage = () => {
   const { user } = useUser();
@@ -76,7 +76,7 @@ const AnnouncementsPage = () => {
     setLoading(true);
     try {
       const result = await getCurrentAnnouncements(
-        moment().format("MM-DD-YYYY")
+        format(new Date(), "MM-dd-yyyy")
       );
       if (result) {
         setCurrentAnnouncementList(result?.data);
@@ -96,7 +96,7 @@ const AnnouncementsPage = () => {
     setLoading(true);
     try {
       const result = await getExpiredAnnouncements(
-        moment().format("MM-DD-YYYY")
+        format(new Date(), "MM-dd-yyyy")
       );
       if (result) {
         setPastAnnouncementList(result?.data);
@@ -116,7 +116,7 @@ const AnnouncementsPage = () => {
     setLoading(true);
     try {
       const result = await getUpcommingAnnouncements(
-        moment().format("MM-DD-YYYY")
+        format(new Date(), "MM-dd-yyyy")
       );
       if (result) {
         setUpcommingAnnouncementList(result?.data);

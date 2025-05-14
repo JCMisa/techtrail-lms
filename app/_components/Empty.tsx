@@ -16,6 +16,9 @@ const Empty = ({
         width={1000}
         height={1000}
         className="w-52 h-52"
+        loading="lazy"
+        placeholder="blur"
+        blurDataURL="/blur.jpg"
       />
       <p className="text-lg -mt-10">{header}</p>
       <p className="text-sm text-gray-400">{subheader}</p>

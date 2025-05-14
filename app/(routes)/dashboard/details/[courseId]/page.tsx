@@ -10,9 +10,9 @@ import { getPublishedReviewsByCourseId } from "@/services/CourseReviewService";
 import { findUserByEmail } from "@/services/UserService";
 import { db } from "@/utils/db";
 import { category, course } from "@/utils/schema";
+import { format } from "date-fns";
 import { eq } from "drizzle-orm";
 import { Calendar, Coins, LayoutGrid } from "lucide-react";
-import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 // import React, { useEffect, useState } from "react";
@@ -51,6 +51,9 @@ const CourseDetailsPage = async ({
               width={1000}
               height={1000}
               className="rounded-lg"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           ) : (
             <Image
@@ -58,6 +61,9 @@ const CourseDetailsPage = async ({
               alt="courseBanner"
               width={1000}
               height={1000}
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           )}
           {/* course owner details */}
@@ -79,6 +85,9 @@ const CourseDetailsPage = async ({
                     width={1000}
                     height={1000}
                     className="w-10 h-10 rounded-full"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="/blur.jpg"
                   />
                 ) : (
                   <Image
@@ -87,6 +96,9 @@ const CourseDetailsPage = async ({
                     width={1000}
                     height={1000}
                     className="w-10 h-10 rounded-full"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="/blur.jpg"
                   />
                 )}
                 <div className="flex flex-col items-start">
@@ -101,7 +113,10 @@ const CourseDetailsPage = async ({
               <div className="flex flex-col items-start">
                 <span className="text-xs text-gray-500">JOINED AT</span>
                 <span className="text-sm">
-                  {moment(courseOwner?.data?.createdAt).format("MMM-DD-YYYY")}
+                  {format(
+                    new Date(courseOwner?.data?.createdAt),
+                    "MMM-dd-yyyy"
+                  )}
                 </span>
               </div>
               <div className="flex flex-col items-start">
@@ -161,7 +176,10 @@ const CourseDetailsPage = async ({
               </div>
               <h2 className="text-sm">
                 {courseRecord &&
-                  moment(courseRecord[0]?.createdAt).format("MMM/DD/YYYY")}
+                  format(
+                    new Date(courseRecord[0]?.createdAt as string),
+                    "MMM-dd-yyyy"
+                  )}
               </h2>
             </div>
           </div>

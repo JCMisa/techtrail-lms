@@ -82,6 +82,9 @@ const ImageForm = ({ initialData, courseId, refreshData }: ImageFormProps) => {
               fill
               className="object-cover rounded-md"
               src={initialData?.imageUrl}
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           </div>
         ))}

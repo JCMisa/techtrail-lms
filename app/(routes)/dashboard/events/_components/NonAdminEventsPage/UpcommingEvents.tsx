@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getAllUpcomingEvents } from "@/services/EventService";
-import moment from "moment";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -12,7 +12,9 @@ const UpcommingEvents = () => {
   const getAllUpcommingEventsList = async () => {
     setLoading(true);
     try {
-      const result = await getAllUpcomingEvents(moment().format("MM-DD-YYYY"));
+      const result = await getAllUpcomingEvents(
+        format(new Date(), "MM-dd-yyyy")
+      );
       if (result) {
         setUpcommingEvents(result?.data);
       }

@@ -15,6 +15,9 @@ const SignInPage = () => {
               className="absolute inset-0 h-full w-full object-cover opacity-80"
               width={1000}
               height={1000}
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
 
             <div className="hidden lg:relative lg:block lg:p-12">
@@ -25,6 +28,9 @@ const SignInPage = () => {
                   width={1000}
                   height={1000}
                   className="h-8 sm:h-10"
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="/blur.jpg"
                 />
               </a>
 
@@ -53,6 +59,9 @@ const SignInPage = () => {
                     width={1000}
                     height={1000}
                     className="h-8 sm:h-10"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="/blur.jpg"
                   />
                 </a>
 

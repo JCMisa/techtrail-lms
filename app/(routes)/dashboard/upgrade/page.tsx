@@ -31,7 +31,7 @@ const UpgradePage = () => {
   const amount = 3000;
   return (
     <div>
-      <section className="text-gray-400 bg-dark rounded-lg body-font overflow-hidden">
+      <section className="text-gray-400 bg-dark-100 rounded-lg overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
             <h1 className="sm:text-4xl text-3xl font-medium title-font mb-2 text-white">
@@ -41,7 +41,7 @@ const UpgradePage = () => {
               Upgrade your plan to enjoy limitless possibilities.
             </p>
             <div className="flex mx-auto border-2 border-dark-500 rounded overflow-hidden mt-6">
-              <button className="py-1 px-4 bg-dark-100 text-white focus:outline-none">
+              <button className="py-1 px-4 bg-dark text-white focus:outline-none">
                 Free
               </button>
               <button className="py-1 px-4 text-gray-300 focus:outline-none">

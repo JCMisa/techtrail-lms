@@ -6,10 +6,10 @@ import {
   addReview,
   getUserReviewsForSpecificCourse,
 } from "@/services/CourseReviewService";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ReviewCard from "../../../_components/ReviewCard";
+import { format } from "date-fns";
 
 const LeaveCourseReview = ({
   courseId,
@@ -78,7 +78,7 @@ const LeaveCourseReview = ({
         message as string,
         reaction as string,
         isChecked,
-        moment().format("MM-DD-YYYY")
+        format(new Date(), "MM-dd-yyyy")
       );
 
       if (result?.data) {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import moment from "moment";
+import { format } from "date-fns";
 import Link from "next/link";
 import React from "react";
 
@@ -11,7 +11,7 @@ const CertificateCard = ({ certificate }: { certificate: any }) => {
           {certificate?.courseTitle}
         </h2>
         <p className="text-xs text-gray-400">
-          {moment(certificate?.createdAt).format("MMM/DD/YYYY")}
+          {format(new Date(certificate?.createdAt), "MM-dd-yyyy")}
         </p>
       </div>
       <div className="flex items-end justify-between gap-5">

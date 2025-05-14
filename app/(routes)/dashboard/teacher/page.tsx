@@ -13,11 +13,11 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Unauthorized from "../_components/Unauthorized";
 import { getAllCurrentEvents } from "@/services/EventService";
-import moment from "moment";
 import EventCalendar from "../admin/_components/EventCalendar";
 import Announcements from "../admin/_components/Announcements";
 import { getAllLatestAnnouncements } from "@/services/AnnouncementService";
 import Analytics from "./_components/Analytics";
+import { format } from "date-fns";
 
 const TeacherDashboardPage = () => {
   const { user } = useUser();
@@ -62,7 +62,9 @@ const TeacherDashboardPage = () => {
 
   const getCurrentEvents = async () => {
     try {
-      const result = await getAllCurrentEvents(moment().format("MM-DD-YYYY"));
+      const result = await getAllCurrentEvents(
+        format(new Date(), "MM-dd-yyyy")
+      );
       if (result) {
         setCurrentEvents(result?.data);
       }

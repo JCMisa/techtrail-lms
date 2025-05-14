@@ -12,6 +12,9 @@ const UserInfo = ({ user }: { user: any }) => {
           width={1000}
           height={1000}
           className="w-52 h-52 rounded-full"
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="/blur.jpg"
         />
       </div>
       <div className="flex flex-col items-center mt-5">

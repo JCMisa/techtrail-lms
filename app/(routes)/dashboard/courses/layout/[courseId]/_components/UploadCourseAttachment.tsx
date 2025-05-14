@@ -7,9 +7,9 @@
 import { db } from "@/utils/db";
 import { storage } from "@/utils/FirebaseConfig";
 import { attachment, course } from "@/utils/schema";
+import { format } from "date-fns";
 import { eq } from "drizzle-orm";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -60,7 +60,7 @@ const UploadCourseAttachment = ({
               name: downloadUrl && downloadUrl?.split("/").pop(),
               url: downloadUrl,
               courseId: courseId,
-              createdAt: moment().format("MM-DD-YYYY"),
+              createdAt: format(new Date(), "MM-dd-yyyy"),
               updatedBy: user?.primaryEmailAddress?.emailAddress,
             });
             if (result) {

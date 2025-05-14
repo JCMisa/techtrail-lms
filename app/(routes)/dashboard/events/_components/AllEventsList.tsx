@@ -42,7 +42,7 @@ import { Search, SquarePen, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import moment from "moment";
+import { format } from "date-fns";
 
 const AllEventsList = ({
   eventList,
@@ -90,7 +90,7 @@ const AllEventsList = ({
         newDescription,
         newStartTime,
         newEndTime,
-        moment(newDate).format("MM-DD-YYYY")
+        format(new Date(newDate), "MM-dd-yyyy")
       );
       if (result) {
         toast(

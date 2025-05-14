@@ -11,9 +11,9 @@ import convertToSubcurrency from "@/lib/convertToSubcurrency";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/utils/db";
 import { subscribedUsers } from "@/utils/schema";
-import moment from "moment";
 import { toast } from "sonner";
 import { eq } from "drizzle-orm";
+import { format } from "date-fns";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const { user } = useUser();
@@ -56,8 +56,8 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
           userId: user?.id as string,
           userEmail: user?.primaryEmailAddress?.emailAddress as string,
           stripeCustomerId: paymentIntentId,
-          createdAt: moment().format("MM-DD-YYYY"),
-          updatedAt: moment().format("MM-DD-YYYY"),
+          createdAt: format(new Date(), "MM-dd-yyyy"),
+          updatedAt: format(new Date(), "MM-dd-yyyy"),
         });
         if (result1) {
           toast(

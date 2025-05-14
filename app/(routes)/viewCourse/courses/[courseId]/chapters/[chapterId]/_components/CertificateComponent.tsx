@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { RWebShare } from "react-web-share";
 import { toast } from "sonner";
 import Image from "next/image";
-import moment from "moment";
+import { format } from "date-fns";
 
 const CertificateComponent = ({
   userCertificate,
@@ -25,6 +25,9 @@ const CertificateComponent = ({
               width={1000}
               height={1000}
               className="w-20 h-20"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
             <div className="flex items-center flex-col">
               <Image
@@ -33,6 +36,9 @@ const CertificateComponent = ({
                 width={1000}
                 height={1000}
                 className="w-10 h-10"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL="/blur.jpg"
               />
               <h2 className="font-bold text-primary text-xl">TechTrail</h2>
             </div>
@@ -57,9 +63,9 @@ const CertificateComponent = ({
             </p>
             <p className="text-gray-500 text-md">
               Issued on{" "}
-              {moment(userCertificate?.createdAt as string).format(
-                "MMMM DD, YYYY"
-              )}{" "}
+              {userCertificate?.createdAt
+                ? format(new Date(userCertificate.createdAt), "MMMM dd, yyyy")
+                : format(new Date(), "MMMM dd, yyyy")}{" "}
               | Issued by: TechTrail <br />
               Verified by: https://www.techtrail.com/
             </p>

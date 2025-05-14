@@ -16,11 +16,11 @@ import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import moment from "moment";
 import { toast } from "sonner";
 import LoadingDialog from "@/app/_components/LoadingDialog";
 import { addEvent } from "@/services/EventService";
 import { useUser } from "@clerk/nextjs";
+import { format } from "date-fns";
 
 const AddEvent = ({ refreshData }: { refreshData: () => void }) => {
   const { user } = useUser();
@@ -43,7 +43,7 @@ const AddEvent = ({ refreshData }: { refreshData: () => void }) => {
         eventInput.description,
         eventInput.startTime,
         eventInput.endTime,
-        moment(eventInput.date).format("MM-DD-YYYY"),
+        format(new Date(eventInput.date), "MM-dd-yyyy"),
         user?.primaryEmailAddress?.emailAddress as string
       );
       if (result) {

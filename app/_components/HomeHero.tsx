@@ -21,6 +21,9 @@ const HomeHero = ({ loggedInUser }: { loggedInUser: any }) => {
               alt="mac-svg"
               width={1000}
               height={1000}
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           </div>
           <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">

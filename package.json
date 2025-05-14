@@ -38,6 +38,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.35.3",
     "firebase": "^11.0.0",
     "lucide-react": "^0.453.0",

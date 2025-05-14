@@ -129,19 +129,19 @@ body {
 }
 
 .logo-text {
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .linear-text {
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .linear-bg {
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
 }
 
 .card-scroll::-webkit-scrollbar {
@@ -154,7 +154,7 @@ body {
 }
 
 .card-scroll::-webkit-scrollbar-thumb {
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
 }
 
 .event-card-scroll::-webkit-scrollbar {
@@ -538,27 +538,27 @@ body {
 
 .floating-1 {
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
 }
 
 .floating-2 {
   border-radius: 73% 27% 67% 33% / 30% 82% 18% 70%;
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
 }
 
 .floating-3 {
   border-radius: 73% 27% 67% 33% / 76% 76% 24% 24%;
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
 }
 
 .floating-4 {
   border-radius: 27% 73% 29% 71% / 76% 76% 24% 24%;
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
 }
 
 .floating-5 {
   border-radius: 27% 73% 29% 71% / 76% 25% 75% 24%;
-  background: -webkit-linear-gradient(16deg, #0098ff, #7a1cac);
+  background: -webkit-linear-gradient(16deg, #0098ff, #b148e9);
 }
 
 /* change the quill rich text editor font size */
@@ -591,7 +591,7 @@ body {
   animation: 1s spin linear infinite;
 }
 .loader:after {
-  color: #7a1cac;
+  color: #b148e9;
   transform: rotateY(70deg);
   animation-delay: 0.4s;
 }

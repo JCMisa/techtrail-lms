@@ -53,6 +53,9 @@ const ReviewerCard = ({
             width={1000}
             height={1000}
             className="rounded-t-lg w-full min-h-[200px] max-h-[200px]"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL="/blur.jpg"
           />
         ) : (
           <Image
@@ -61,6 +64,9 @@ const ReviewerCard = ({
             width={1000}
             height={1000}
             className="rounded-t-lg w-full min-h-[200px] max-h-[200px]"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL="/blur.jpg"
           />
         )}
       </div>
@@ -90,6 +96,9 @@ const ReviewerCard = ({
                   height={35}
                   alt="img"
                   className="rounded-full"
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="/blur.jpg"
                 />
               ) : (
                 <Image
@@ -98,6 +107,9 @@ const ReviewerCard = ({
                   height={35}
                   alt="img"
                   className="rounded-full"
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="/blur.jpg"
                 />
               )}
 

@@ -158,6 +158,9 @@ const UserCourseCard = ({ courseId }: { courseId: string }) => {
               className="object-cover"
               alt="courseImage"
               src={courseRecord?.imageUrl && courseRecord?.imageUrl}
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           ) : (
             <Image
@@ -165,6 +168,9 @@ const UserCourseCard = ({ courseId }: { courseId: string }) => {
               className="object-cover"
               alt="courseImage"
               src={"/empty-img-placeholder.jpg"}
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/blur.jpg"
             />
           )}
         </div>

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Empty from "@/app/_components/Empty";
 import { getUpcommingAnnouncements } from "@/services/AnnouncementService";
-import moment from "moment";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -16,7 +16,7 @@ const UpcommingAnnouncements = () => {
     setLoading(true);
     try {
       const result = await getUpcommingAnnouncements(
-        moment().format("MM-DD-YYYY")
+        format(new Date(), "MM-dd-yyyy")
       );
       if (result) {
         setUpcommingAnnouncements(result?.data);

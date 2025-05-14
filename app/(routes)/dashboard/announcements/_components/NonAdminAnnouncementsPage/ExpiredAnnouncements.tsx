@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Empty from "@/app/_components/Empty";
 import { getExpiredAnnouncements } from "@/services/AnnouncementService";
-import moment from "moment";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -16,7 +16,7 @@ const ExpiredAnnouncements = () => {
     setLoading(true);
     try {
       const result = await getExpiredAnnouncements(
-        moment().format("MM-DD-YYYY")
+        format(new Date(), "MM-dd-yyyy")
       );
       if (result) {
         setExpiredAnnouncements(result?.data);
