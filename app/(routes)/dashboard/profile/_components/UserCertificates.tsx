@@ -6,28 +6,19 @@ import { db } from "@/utils/db";
 import { certificate } from "@/utils/schema";
 import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
 import CertificateCard from "./CertificateCard";
 
 const UserCertificates = ({ user }: { user: any }) => {
   const [userCertificates, setUserCertificates] = useState<any>([]);
 
   const getUserCertificates = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(certificate)
-        .where(eq(certificate.userId, user?.id as string));
+    const result = await db
+      .select()
+      .from(certificate)
+      .where(eq(certificate.userId, user?.id as string));
 
-      if (result?.length > 0) {
-        setUserCertificates(result);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching user certificates
-        </p>
-      );
+    if (result?.length > 0) {
+      setUserCertificates(result);
     }
   };
 

@@ -14,7 +14,6 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { toast } from "sonner";
 
 const BarTrailChart = () => {
   const [programmingCourses, setProgrammingCourses] = useState(0);
@@ -25,116 +24,68 @@ const BarTrailChart = () => {
   const [dataAnalytics, setDataAnalytics] = useState(0);
 
   const getAllProgrammingCourses = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(course)
-        .where(eq(course.categoryId, "1"));
+    const result = await db
+      .select()
+      .from(course)
+      .where(eq(course.categoryId, "1"));
 
-      if (result?.length > 0) {
-        setProgrammingCourses(result?.length);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching all programming courses
-        </p>
-      );
+    if (result?.length > 0) {
+      setProgrammingCourses(result?.length);
     }
   };
 
   const getAllAICourses = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(course)
-        .where(eq(course.categoryId, "2"));
+    const result = await db
+      .select()
+      .from(course)
+      .where(eq(course.categoryId, "2"));
 
-      if (result?.length > 0) {
-        setAiCourses(result?.length);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching all AI courses
-        </p>
-      );
+    if (result?.length > 0) {
+      setAiCourses(result?.length);
     }
   };
 
   const getAllNetworkingCourses = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(course)
-        .where(eq(course.categoryId, "3"));
+    const result = await db
+      .select()
+      .from(course)
+      .where(eq(course.categoryId, "3"));
 
-      if (result?.length > 0) {
-        setNetworkingCourses(result?.length);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching all Networking courses
-        </p>
-      );
+    if (result?.length > 0) {
+      setNetworkingCourses(result?.length);
     }
   };
 
   const getAllWebDevelopmentCourses = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(course)
-        .where(eq(course.categoryId, "4"));
+    const result = await db
+      .select()
+      .from(course)
+      .where(eq(course.categoryId, "4"));
 
-      if (result?.length > 0) {
-        setWebDevelopmentCourses(result?.length);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching all Web Development courses
-        </p>
-      );
+    if (result?.length > 0) {
+      setWebDevelopmentCourses(result?.length);
     }
   };
 
   const getAllCyberSecurityCourses = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(course)
-        .where(eq(course.categoryId, "5"));
+    const result = await db
+      .select()
+      .from(course)
+      .where(eq(course.categoryId, "5"));
 
-      if (result?.length > 0) {
-        setCyberSecurity(result?.length);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching all Cybersecurity courses
-        </p>
-      );
+    if (result?.length > 0) {
+      setCyberSecurity(result?.length);
     }
   };
 
   const getAllDataAnalyticsCourses = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(course)
-        .where(eq(course.categoryId, "6"));
+    const result = await db
+      .select()
+      .from(course)
+      .where(eq(course.categoryId, "6"));
 
-      if (result?.length > 0) {
-        setDataAnalytics(result?.length);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching all Data Analytics courses
-        </p>
-      );
+    if (result?.length > 0) {
+      setDataAnalytics(result?.length);
     }
   };
 

@@ -92,12 +92,12 @@ const UsageTrack = () => {
   return (
     <div className="m-5 w-full">
       <div className="bg-dark-100 text-white rounded-lg p-3">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between gap-5 mb-3">
           <h2 className="font-medium">Credits</h2>
           <Button
             variant={"outline"}
             size={"sm"}
-            className="text-primary border-primary-100 hover:bg-dark-100 hover:text-primary-100"
+            className="text-primary border-primary-100 hover:bg-dark-100 hover:text-primary-100 text-xs"
             onClick={() => getTotalUsage()}
           >
             Refresh

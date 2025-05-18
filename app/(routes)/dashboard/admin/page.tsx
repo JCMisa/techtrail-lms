@@ -25,7 +25,6 @@ import { format } from "date-fns";
 
 const AdminDashboardPage = () => {
   const { user } = useUser();
-  const router = useRouter();
 
   const [currentEvents, setCurrentEvents] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,7 @@ const AdminDashboardPage = () => {
       if (result) {
         setLoggedInUser(result?.data);
       }
-    } catch (error) {
+    } catch {
       toast(
         <p className="text-sm font-bold text-red-500">
           Internal error occured while fetching the user

@@ -5,7 +5,6 @@ import { db } from "@/utils/db";
 import { course, purchase } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { and, eq, isNull, or } from "drizzle-orm";
-import { toast } from "sonner";
 import React, { useEffect, useState } from "react";
 import UserCourseCard from "./UserCourseCard";
 import Empty from "@/app/_components/Empty";
@@ -19,24 +18,15 @@ const UserCoursesList = () => {
   const [freeCourses, setfreeCourses] = useState<[] | any>([]);
 
   const getUserCourses = async () => {
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      const result = await db
-        .select()
-        .from(purchase)
-        .where(eq(purchase.userId, user?.id as string));
+    const result = await db
+      .select()
+      .from(purchase)
+      .where(eq(purchase.userId, user?.id as string));
 
-      if (result) {
-        setUserCourses(result);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching your courses
-        </p>
-      );
-    } finally {
+    if (result) {
+      setUserCourses(result);
       setLoading(false);
     }
   };
@@ -46,27 +36,19 @@ const UserCoursesList = () => {
   }, [user]);
 
   const getFreeCourses = async () => {
-    try {
-      const result = await db
-        .select()
-        .from(course)
-        .where(
-          or(
-            eq(course.price, "0"),
-            and(isNull(course.price), eq(course.isPublished, true))
-          )
-        );
-
-      if (result) {
-        setfreeCourses(result);
-        console.log("free courses: ", result);
-      }
-    } catch {
-      toast(
-        <p className="font-bold text-sm text-red-500">
-          Internal error occured while fetching your courses
-        </p>
+    const result = await db
+      .select()
+      .from(course)
+      .where(
+        or(
+          eq(course.price, "0"),
+          and(isNull(course.price), eq(course.isPublished, true))
+        )
       );
+
+    if (result) {
+      setfreeCourses(result);
+      console.log("free courses: ", result);
     }
   };
 
